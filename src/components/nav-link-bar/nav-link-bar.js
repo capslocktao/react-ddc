@@ -1,45 +1,49 @@
 import React, {Component} from 'react';
 import PropsTypes from 'prop-types';
 import { TabBar } from 'antd-mobile';
-import { withRouter } from 'react-router-dom';
-import { HOST } from '../../const/host'
+import { withRouter,NavLink } from 'react-router-dom';
+import './nav-link-bar.less';
+import { HOST } from '../../const/host';
 import { connect } from 'react-redux';
-
 @withRouter
 
 class NavLinkBar extends Component {
-    static propTypes = {
+/*    static propTypes = {
         data:PropsTypes.array.isRequired
-    };
+    };*/
+
     constructor(props) {
         super(props);
         this.state = {}
     }
-
+    componentDidMount(){
+    }
     render() {
         const navList = this.props.data;
         const {pathname} = this.props.location;
-
+        const itemWidth = `${100/this.props.data.length}%`;
         return (
             <div className="tabbar">
-                <TabBar>
+                <div className="nav-bar">
                     {
                         navList.map(v=> (
-                                <TabBar.Item
-                                    key={v.path}
-                                    title={v.name}
-                                    selected={pathname == v.path}
-                                    icon={"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1520770460728&di=73f7d6bc01aeb5c16292874c11eaa68f&imgtype=0&src=http%3A%2F%2Fp3.gexing.com%2Fshaitu%2F2007-3%2F3212440192007t.gif"}
-                                    onPress={()=>{
-                                        this.props.history.push(v.path)
-                                    }}
+                            <div className="nav-item" ref="navItem" key={v.path} style={{width:itemWidth}}>
+                                <NavLink
+                                    to={v.path}
+                                    activeClassName="active"
                                 >
+                                    <div className="nav-inner">
+                                        <div className="nav-icon">
+                                            <span className={v.icon}></span>
+                                        </div>
+                                        <div className="nav-name">{v.name}</div>
+                                    </div>
+                                </NavLink>
 
-                                </TabBar.Item>
-
-                            ))
+                            </div>
+                        ))
                     }
-                </TabBar>
+                </div>
             </div>
         )
     }

@@ -40,25 +40,25 @@ class Container extends Component {
                 {
                     path:`${HOST}/index/team`,
                     name:`团队管理`,
-                    icon:"",
+                    icon:"icon-team",
                     component:TeamManagement
                 },
                 {
                     path:`${HOST}/index/customer`,
                     name:`客户管理`,
-                    icon:"",
+                    icon:"icon-customer",
                     component:CustomerManagement
                 },
                 {
                     path:`${HOST}/index/stockCheck`,
                     name:`库存查询`,
-                    icon:"",
+                    icon:"icon-stockCheck",
                     component:StockCheck
                 },
                 {
                     path:`${HOST}/index/userCenter`,
                     name:`我的`,
-                    icon:"",
+                    icon:"icon-user",
                     component:UserCenter
                 },
 
@@ -67,25 +67,25 @@ class Container extends Component {
                 {
                     path:`${HOST}/index/customerOrderForm`,
                     name:`客户订单`,
-                    icon:"",
+                    icon:"icon-orderForm",
                     component:CustomerOrderForm
                 },
                 {
                     path:`${HOST}/index/customer`,
                     name:`客户管理`,
-                    icon:"",
+                    icon:"icon-customer",
                     component:CustomerManagement
                 },
                 {
                     path:`${HOST}/index/team`,
                     name:`团队管理`,
-                    icon:"",
+                    icon:"icon-team",
                     component:TeamManagement
                 },
                 {
                     path:`${HOST}/index/userCenter`,
                     name:`我的`,
-                    icon:"",
+                    icon:"icon-user",
                     component:UserCenter
                 },
 
@@ -94,19 +94,19 @@ class Container extends Component {
                 {
                     path:`${HOST}/index/customerOrderForm`,
                     name:`客户订单`,
-                    icon:"",
+                    icon:"icon-orderForm",
                     component:CustomerOrderForm
                 },
                 {
                     path:`${HOST}/index/visitPlan`,
                     name:`拜访计划`,
-                    icon:"",
+                    icon:"icon-visitPlan",
                     component:VisitPlan
                 },
                 {
                     path:`${HOST}/index/userCenter`,
                     name:`我的`,
-                    icon:"",
+                    icon:"icon-user",
                     component:UserCenter
                 },
 
@@ -115,25 +115,25 @@ class Container extends Component {
                 {
                     path:`${HOST}/index/purchase`,
                     name:`商品采购`,
-                    icon:"",
+                    icon:"icon-purchase",
                     component:Purchase
                 },
                 {
                     path:`${HOST}/index/materialApply`,
                     name:`物料申请`,
-                    icon:"",
+                    icon:"icon-material",
                     component:MaterialApply
                 },
                 {
                     path:`${HOST}/index/presentApply`,
                     name:`赠品申请`,
-                    icon:"",
+                    icon:"icon-gift",
                     component:PresentApply
                 },
                 {
                     path:`${HOST}/index/userCenter`,
                     name:`我的`,
-                    icon:"",
+                    icon:"icon-user",
                     component:UserCenter
                 },
 
@@ -142,13 +142,13 @@ class Container extends Component {
                 {
                     path:`${HOST}/index/paymentCheck`,
                     name:`付款审核`,
-                    icon:"",
+                    icon:"icon-payCheck",
                     component:PaymentCheck
                 },
                 {
                     path:`${HOST}/index/userCenter`,
                     name:`我的`,
-                    icon:"",
+                    icon:"icon-user",
                     component:UserCenter
                 },
 
@@ -157,19 +157,19 @@ class Container extends Component {
                 {
                     path:`${HOST}/index/materialCheck`,
                     name:`物料审核`,
-                    icon:"",
+                    icon:"icon-stockCheck",
                     component:MaterialCheck
                 },
                 {
                     path:`${HOST}/index/presentCheck`,
                     name:`赠品审核`,
-                    icon:"",
+                    icon:"icon-gift",
                     component:PresentCheck
                 },
                 {
                     path:`${HOST}/index/userCenter`,
                     name:`我的`,
-                    icon:"",
+                    icon:"icon-user",
                     component:UserCenter
                 },
 
