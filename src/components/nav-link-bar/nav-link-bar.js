@@ -20,9 +20,11 @@ class NavLinkBar extends Component {
     }
     render() {
         const navList = this.props.data;
+        console.log(navList);
         const {pathname} = this.props.location;
-        const itemWidth = `${100/this.props.data.length}%`;
+        const itemWidth = navList?`${100/this.props.data.length}%`:0;
         return (
+            navList?
             <div className="tabbar">
                 <div className="nav-bar">
                     {
@@ -45,6 +47,8 @@ class NavLinkBar extends Component {
                     }
                 </div>
             </div>
+                :
+                ""
         )
     }
 }

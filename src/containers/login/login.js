@@ -46,8 +46,29 @@ class Login extends Component {
                 }
             })
         }*/
-        sessionStorage.setItem("roleSymbol","0");
-        this.props.history.push(`${HOST}/index`);
+        let id = 2;
+        sessionStorage.setItem("roleSymbol",id);
+        switch (id){
+            case 0:
+                this.props.history.push(`${HOST}/index/team`);
+                break;
+            case 1:
+                this.props.history.push(`${HOST}/index/customerOrderForm`);
+                break;
+            case 2:
+                this.props.history.push(`${HOST}/index/customerOrderForm`);
+                break;
+            case 3:
+                this.props.history.push(`${HOST}/index/purchase`);
+                break;
+            case 4:
+                this.props.history.push(`${HOST}/index/paymentCheck`);
+                break;
+            case 5:
+                this.props.history.push(`${HOST}/index/materialCheck`);
+
+        }
+
     }
 
     render() {

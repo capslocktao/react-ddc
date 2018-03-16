@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import { Redirect } from 'react-router-dom';
-import {HOST} from '../const/host'
+import { Redirect,withRouter } from 'react-router-dom';
+import {HOST} from '../const/host';
+@withRouter
 class AuthRoute extends Component {
     constructor(props) {
         super(props);
@@ -8,7 +9,7 @@ class AuthRoute extends Component {
     };
     componentWillMount(){
         if(sessionStorage.getItem("roleSymbol")){
-            this.props.history.push(`${HOST}/index`)
+            // this.props.history.push(`${HOST}/index`)
 
         }else{
             this.props.history.push(`${HOST}/login`)

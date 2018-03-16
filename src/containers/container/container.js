@@ -36,6 +36,7 @@ class Container extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            //总管理员
             topManager:[
                 {
                     path:`${HOST}/index/team`,
@@ -63,6 +64,7 @@ class Container extends Component {
                 },
 
             ],
+            //分公司管理员
             branchManager:[
                 {
                     path:`${HOST}/index/customerOrderForm`,
@@ -90,6 +92,7 @@ class Container extends Component {
                 },
 
             ],
+            //销售角色
             roleSale:[
                 {
                     path:`${HOST}/index/customerOrderForm`,
@@ -111,6 +114,7 @@ class Container extends Component {
                 },
 
             ],
+            //客户
             roleCustomer:[
                 {
                     path:`${HOST}/index/purchase`,
@@ -138,6 +142,7 @@ class Container extends Component {
                 },
 
             ],
+            //财务
             roleAccountant:[
                 {
                     path:`${HOST}/index/paymentCheck`,
@@ -153,6 +158,7 @@ class Container extends Component {
                 },
 
             ],
+            //运营
             roleOperation:[
                 {
                     path:`${HOST}/index/materialCheck`,
@@ -232,7 +238,12 @@ class Container extends Component {
         };
     };
     componentDidMount(){
-
+        console.log(this.roleMenu());
+        if(this.roleMenu()){
+            //sessionStorage.setItem("homePage",this.roleMenu()[0].path);
+            //console.log(this.roleMenu()[0].path);
+        }
+        //this.props.history.push(this.roleMenu()[0].path)
     }
     roleMenu(){
         let roleSymbol = sessionStorage.getItem('roleSymbol');

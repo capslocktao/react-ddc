@@ -14,14 +14,15 @@ class Router extends Component {
         this.state = {}
     }
     componentWillMount(){
-        console.log(this.props.num)
+
     }
 
     render() {
         return (
                 <BrowserRouter>
+
                     <div>
-                        <Route path={`${HOST}/`} component={AuthRoute}/>
+                        <AuthRoute/>
                         <Route path={`${HOST}/index`} component={Container}/>
                         <Route path={`${HOST}/login`} component={Login}/>
                     </div>
