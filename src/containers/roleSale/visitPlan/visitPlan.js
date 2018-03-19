@@ -1,23 +1,33 @@
 import React, {Component} from 'react';
-import { NavBar, Icon,ListView } from 'antd-mobile';
+import { NavBar, Icon,} from 'antd-mobile';
 import {HOST} from "../../../const/host";
 import { Link } from 'react-router-dom';
 class VisitPlan extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            data:[
+                {
+                    name:"我的第一个访客"
+                },
+                {
+                    name:"我的第二个访客"
+                },
+                {
+                    name:"我的第三个访客"
+                },
+                {
+                    name:"我的第四个访客"
+                },
+            ]
+        };
+
     };
-    function MyBody(props) {
-        return (
-            <div className="am-list-body my-body">
-                <span style={{ display: 'none' }}>you can custom body wrap element</span>
-                {props.children}
-            </div>
-        );
-    }
+
+
     render() {
         return (
-            <div className="visit-plan">
+            <div className="visit-plan" >
                 <NavBar
                     mode="dark"
                     leftContent={
@@ -28,31 +38,25 @@ class VisitPlan extends Component {
                     rightContent={
                         <Icon key="1" type="ellipsis" />
                     }
-                >拜访计划</NavBar>,
-                <ListView
-                    ref={el => this.lv = el}
-                    dataSource={this.state.dataSource}
-                    renderHeader={() => <span>header</span>}
-                    renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
-                        {this.state.isLoading ? 'Loading...' : 'Loaded'}
-                    </div>)}
-                    renderSectionHeader={sectionData => (
-                        <div>{`Task ${sectionData.split(' ')[1]}`}</div>
-                    )}
-                    renderBodyComponent={() => <MyBody />}
-                    renderRow={row}
-                    renderSeparator={separator}
-                    style={{
-                        height: this.state.height,
-                        overflow: 'auto',
-                    }}
-                    pageSize={4}
-                    onScroll={() => { console.log('scroll'); }}
-                    scrollRenderAheadDistance={500}
-                    onEndReached={this.onEndReached}
-                    onEndReachedThreshold={10}
-                />
-            </div>
+                >拜访计划</NavBar>
+                {
+                    this.state.data.map(v=>
+                        <Link to={`${HOST}/addVisitPlan`} key={v.name} style={{marginBottom:"45px"}}>
+                                <div className="textcontent" style={{height:"100px",backgroundColor:"white", padding: '15px 0',margin:"12px 0", lineHeight:"5px"}}>
+                                  <div>
+                                      <div style={{padding:"0 40px",width:"50%", display:"inline",float:"left"}}>
+                                          <p>{v.name}</p>
+                                          <p style={{marginTop:'10%',width:"50%", display:"inline",float:"left"}}>123456789</p>
+                                      </div>
+                                      <div style={{lineHeight:"80px"}}>
+                                          <p>首次拜访</p>
+                                      </div>
+                                  </div>
+                               </div>
+                        </Link>
+                    )
+                }
+              </div>
         )
     }
 }

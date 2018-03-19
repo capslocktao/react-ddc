@@ -6,6 +6,7 @@ import AuthRoute from "./components/authroute"
 import {HOST} from './const/host'//全局服务器路径
 import { connect } from 'react-redux'
 import Search from "./containers/publicView/search/search";
+import AddVisitPlan from "./containers/roleSale/visitPlan/addVisitPlan/addVisitPlan";
 @connect(
     state=>state.count
 )
@@ -26,6 +27,10 @@ class Router extends Component {
                     path:`${HOST}/search`,
                     component:Search
                 },
+                {
+                    path:`${HOST}/addVisitPlan`,
+                    component:AddVisitPlan
+                }
             ]
         }
     }

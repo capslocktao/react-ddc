@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { NavBar, Icon } from 'antd-mobile';
 
 class AddVisitPlan extends Component {
     constructor(props) {
@@ -9,7 +10,14 @@ class AddVisitPlan extends Component {
     render() {
         return (
             <div>
-
+                <NavBar
+                    mode="dark"
+                    icon={<Icon type="left" />}
+                    onLeftClick={() => console.log('onLeftClick')}
+                    rightContent={[
+                        <Icon key="0" type="ellipsis" />,
+                    ]}
+                >拜访计划</NavBar>
             </div>
         )
     }
