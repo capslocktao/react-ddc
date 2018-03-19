@@ -123,7 +123,7 @@ class Container extends Component {
                     icon:"icon-purchase",
                     component:Purchase
                 },
-                {
+/*                {
                     path:`${HOST}/index/materialApply`,
                     name:`物料申请`,
                     icon:"icon-material",
@@ -134,7 +134,7 @@ class Container extends Component {
                     name:`赠品申请`,
                     icon:"icon-gift",
                     component:PresentApply
-                },
+                },*/
                 {
                     path:`${HOST}/index/userCenter`,
                     name:`我的`,
