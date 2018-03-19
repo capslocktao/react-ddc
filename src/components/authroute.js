@@ -8,6 +8,7 @@ class AuthRoute extends Component {
         this.state = {};
     };
     componentWillMount(){
+
         if(sessionStorage.getItem("roleSymbol")){
             // this.props.history.push(`${HOST}/index`)
 
