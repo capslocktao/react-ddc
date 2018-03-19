@@ -51,7 +51,7 @@ class Purchase extends Component {
                     }
                 >商品采购</NavBar>
                 <div className="pruchase-body">
-                    <GoodsList data={this.state.data}/>
+                    <GoodsList data={this.state.goods}/>
                 </div>
             </div>
         )

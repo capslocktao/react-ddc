@@ -11,7 +11,7 @@ class GoodsList extends Component {
             <div className="goods-list">
                 {
                     this.props.data.map(v=>
-                        <div className="goods-item">
+                        <div className="goods-item" key={v.id}>
                             <h1 className="title">{v.productName}</h1>
                             <div className="info">
                                 <div className="size">{v.modelSize}</div>
