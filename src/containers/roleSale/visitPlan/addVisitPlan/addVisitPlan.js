@@ -13,7 +13,7 @@ class AddVisitPlan extends Component {
                 <NavBar
                     mode="dark"
                     icon={<Icon type="left" />}
-                    onLeftClick={() => console.log('onLeftClick')}
+                    onLeftClick={() => {this.props.history.push(`../index/visitPlan`)}}
                     rightContent={[
                         <Icon key="0" type="ellipsis" />,
                     ]}
