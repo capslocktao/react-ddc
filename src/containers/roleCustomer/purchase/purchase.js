@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import { NavBar, Icon,WhiteSpace } from 'antd-mobile';
+import { NavBar } from 'antd-mobile';
 import GoodsList from "../../../components/goodsList/goodsList";
+import { HOST } from "../../../const/host"
+import axios from "axios";
 import './purchase.less';
 class Purchase extends Component {
     constructor(props) {
@@ -12,42 +14,48 @@ class Purchase extends Component {
                     modelSize:"NB",
                     price:"200",
                     id:1,
-                    unit:"包"
+                    unit:"包",
+                    num:1
                 },
                 {
                     productName:"纸尿裤",
                     modelSize:"S",
                     price:"200",
                     id:2,
-                    unit:"包"
+                    unit:"包",
+                    num:1
                 },
                 {
                     productName:"纸尿裤大号",
                     modelSize:"XXL",
                     price:"210",
                     id:3,
-                    unit:"包"
+                    unit:"包",
+                    num:1
                 },
                 {
                     productName:"纸尿裤",
                     modelSize:"XL",
                     price:"150",
                     id:4,
-                    unit:"包"
+                    unit:"包",
+                    num:1
                 },
                 {
                     productName:"纸尿裤",
                     modelSize:"XL",
                     price:"150",
                     id:6,
-                    unit:"包"
+                    unit:"包",
+                    num:1
                 },
                 {
                     productName:"纸尿裤",
                     modelSize:"L",
                     price:"200",
                     id:5,
-                    unit:"包"
+                    unit:"包",
+                    num:1
                 }
             ],
             selectedGoods:[],
@@ -57,6 +65,12 @@ class Purchase extends Component {
         this.numChange = this.numChange.bind(this);
         this.submitOrder = this.submitOrder.bind(this)
     };
+    componentDidMount(){
+        axios.post(`http://192.168.31.168:8080/base/stockInfo/findAllStockInfo`).then(response=>{
+            let res = response.data;
+            console.log(res);
+        })
+    }
     selectGood(data){
         this.setState({
             selectedGoods:data
@@ -80,8 +94,16 @@ class Purchase extends Component {
                 }
             })
         });
-
+/*        axios.post(`url`,{...this.state.selectedGoods}).then(response=>{
+            let res = response.data;
+            if(res.result){
+                this.props.history.push()
+            }
+        });*/
+        console.log(this.state.nums);
+        this.props.history.push(`${HOST}/pay`);
         console.log(this.state.selectedGoods)
+        sessionStorage.setItem("goodsData",JSON.stringify(this.state.selectedGoods))
     }
     render() {
         return (

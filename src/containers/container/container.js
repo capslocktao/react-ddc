@@ -239,7 +239,7 @@ class Container extends Component {
         };
     };
     componentDidMount(){
-        console.log(this.roleMenu());
+        //console.log(this.roleMenu());
         if(this.roleMenu()){
             //sessionStorage.setItem("homePage",this.roleMenu()[0].path);
             //console.log(this.roleMenu()[0].path);

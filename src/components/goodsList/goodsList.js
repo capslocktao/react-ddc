@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {WingBlank} from "antd-mobile";
+import QueueAnim from 'rc-queue-anim';
 import './goodsList.less';
-let current = ""
+
 class GoodsList extends Component {
     constructor(props) {
         super(props);
@@ -62,12 +63,12 @@ class GoodsList extends Component {
     }
     render() {
         return (
-            <div className="goods-list">
+            <QueueAnim delay={300} type="top" className="goods-list">
                 {
                     this.props.data.map((v,i)=>
                         <div className="goods-item" key={v.id}>
                             <WingBlank>
-                                <h1 className="title">{v.productName}</h1>
+                                <div className="title">{v.productName}</div>
                                 <div className="info">
                                     <div className="size"><span>型号</span>{v.modelSize}</div>
                                     <div className="price"><span>¥</span>{parseInt(v.price).toFixed(2)}</div>
@@ -91,7 +92,7 @@ class GoodsList extends Component {
                         </div>
                     )
                 }
-            </div>
+            </QueueAnim>
         )
     }
 }
