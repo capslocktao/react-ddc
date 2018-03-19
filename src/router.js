@@ -3,15 +3,31 @@ import { BrowserRouter, Route,Switch,Redirect } from 'react-router-dom';
 import Login from './containers/login/login'
 import Container from './containers/container/container'
 import AuthRoute from "./components/authroute"
-import {HOST} from './const/host'
+import {HOST} from './const/host'//全局服务器路径
 import { connect } from 'react-redux'
+import Search from "./containers/publicView/search/search";
 @connect(
     state=>state.count
 )
 class Router extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            routes:[
+                {
+                    path:`${HOST}/index`,
+                    component:Container
+                },
+                {
+                    path:`${HOST}/login`,
+                    component:Login
+                },
+                {
+                    path:`${HOST}/search`,
+                    component:Search
+                },
+            ]
+        }
     }
     componentWillMount(){
 
@@ -23,8 +39,12 @@ class Router extends Component {
 
                     <div>
                         <AuthRoute/>
-                        <Route path={`${HOST}/index`} component={Container}/>
-                        <Route path={`${HOST}/login`} component={Login}/>
+
+                        {
+                            this.state.routes.map(v=>(
+                                <Route path={v.path} key={v.path}  component={v.component}/>
+                            ))
+                        }
                     </div>
                 </BrowserRouter>
         )
