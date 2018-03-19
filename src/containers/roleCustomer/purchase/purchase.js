@@ -33,6 +33,12 @@ class Purchase extends Component {
                 },
                 {
                     productName:"纸尿裤",
+                    modelSize:"XL",
+                    price:"150",
+                    id:6
+                },
+                {
+                    productName:"纸尿裤",
                     modelSize:"L",
                     price:"200",
                     id:5
@@ -44,12 +50,15 @@ class Purchase extends Component {
     render() {
         return (
             <div className="purchase">
-                <NavBar
-                    mode="dark"
-                    rightContent={
-                        <Icon type="check" />
-                    }
-                >商品采购</NavBar>
+                <div className="header">
+                    <NavBar
+                        mode="dark"
+                        rightContent={
+                            <Icon type="check" />
+                        }
+                    >商品采购</NavBar>
+                </div>
+
                 <div className="pruchase-body">
                     <GoodsList data={this.state.goods}/>
                 </div>
