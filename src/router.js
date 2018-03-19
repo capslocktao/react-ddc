@@ -5,7 +5,7 @@ import Container from './containers/container/container'
 import AuthRoute from "./components/authroute"
 import {HOST} from './const/host'//全局服务器路径
 import { connect } from 'react-redux'
-import Search from "./containers/publicView/search/search";
+import Search from "./containers/publicView/customerOrderForm/search/search";//销售订单搜索
 @connect(
     state=>state.count
 )
@@ -22,8 +22,8 @@ class Router extends Component {
                     path:`${HOST}/login`,
                     component:Login
                 },
-                {
-                    path:`${HOST}/search`,
+                {//销售搜索
+                    path:`${HOST}/customerOrderForm/search`,
                     component:Search
                 },
             ]

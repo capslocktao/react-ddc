@@ -42,11 +42,16 @@ class CustomerOrderForm extends Component {
                     <NavBar
                         mode="dark"
                         leftContent={
-                            <Link to={`${HOST}/search`}>
-                                <Icon key="0" type="search" style={{ marginRight: '16px' }} />
+                            <Link to={`${HOST}/customerOrderForm/add`}>
+                                 <Icon key="0" type="up" style={{ marginRight: '16px' }} />
                             </Link>
-                            }
-                        rightContent={<Icon key="1" type="ellipsis" />}
+                        }
+                        rightContent={
+                            [<Link to={`${HOST}/customerOrderForm/search`}>
+                                <Icon key="0" type="search" style={{ marginRight: '16px' }} />
+                            </Link>,
+                            <Icon key="1" type="ellipsis" />]
+                        }
 
                     >客户订单</NavBar>
                 </div>
