@@ -53,14 +53,15 @@ class Purchase extends Component {
             selectedGoods:[],
             nums:[]
         };
-        this.selectGood = this.selectGood.bind(this)
-        this.numChange = this.numChange.bind(this)
+        this.selectGood = this.selectGood.bind(this);
+        this.numChange = this.numChange.bind(this);
         this.submitOrder = this.submitOrder.bind(this)
     };
     selectGood(data){
         this.setState({
             selectedGoods:data
         })
+
     };
     numChange(data){
         this.setState({
@@ -68,14 +69,13 @@ class Purchase extends Component {
         })
     }
     submitOrder(){
-        console.log(this.state.selectedGoods);
+
         this.state.nums.forEach(v=>{
             v = parseInt(v)
         });
         this.state.goods.findIndex((v,i)=>{
             this.state.selectedGoods.forEach(k=>{
                 if(k.id === v.id){
-                    console.log(i);
                     k.num = this.state.nums[i]
                 }
             })
