@@ -1,22 +1,30 @@
 import React, {Component} from 'react';
-import { NavBar,Icon } from 'antd-mobile';
+import { NavBar,Icon,Radio } from 'antd-mobile';
 import {WingBlank} from "antd-mobile";
 import { Link } from "react-router-dom";
 import {HOST} from "../../../const/host";
 import './pay.less';
+const RadioItem = Radio.RadioItem;
 class Pay extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            goodsData:JSON.parse(sessionStorage.getItem("goodsData"))
+            goodsData:JSON.parse(sessionStorage.getItem("goodsData")),
+            payMethod:[
+                { value:"1",label:"转账支付" },
+                { value:"2",label:"未付款先发货" }
+            ],
+            payType:"1"
         };
+        this.changePayType = this.changePayType.bind(this)
     };
     componentDidMount(){
-        console.log(this.state.goodsData);
-    }
-
-    componentDidMount(){
         console.log(JSON.parse(sessionStorage.getItem("goodsData")));
+    }
+    changePayType(val){
+        this.setState({
+            payType:val
+        })
     }
     render() {
         return (
@@ -62,6 +70,13 @@ class Pay extends Component {
                                 )
                             }
 
+                    </div>
+                    <div className="pay-method">
+                        {this.state.payMethod.map(i => (
+                            <RadioItem key={i.value} checked={this.state.payType === i.value} onChange={() => this.changePayType(i.value)}>
+                                {i.label}
+                            </RadioItem>
+                        ))}
                     </div>
                 </div>
             </div>
