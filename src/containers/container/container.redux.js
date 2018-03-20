@@ -1,5 +1,5 @@
 const initialState={
-    num:0
+    num:2
 };
 const ADD = "ADD";
 const SUB = "SUB";

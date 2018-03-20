@@ -19,6 +19,7 @@ import StockCheck from '../topManager/stockCheck/stockCheck';//库存查询
 //销售
 import VisitPlan from '../roleSale/visitPlan/visitPlan';//拜访计划
 
+
 //客户
 import Purchase from '../roleCustomer/purchase/purchase';//商品采购
 import MaterialApply from '../roleCustomer/materialApply/material';//物料申请
@@ -234,7 +235,8 @@ class Container extends Component {
                 {
                    path:`${HOST}/index/presentCheck`,
                    component:PresentCheck
-                }
+                },
+
             ]
         };
     };
