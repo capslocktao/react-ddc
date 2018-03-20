@@ -111,7 +111,8 @@ class OrderManagement extends Component {
                                             onClick={() => {}}
                                             platform="android"
                                         >
-                                            {v.title}<Brief>There may have water ripple effect of</Brief>
+                                            {v.title} 订单号 收货人
+                                            <Brief>货物地址状态</Brief>
                                         </Item>
                                     </List>
                                 </Link>

@@ -31,11 +31,7 @@ class Login extends Component {
                         if(k === "x-auth-token"){
                             //this.$store.dispatch('saveUserInfo',response.data.data);//请求回来后，把用户信息存储到VUEX里
                             sessionStorage.setItem('user',JSON.stringify(response.data.data));//为了防止刷新后用户数据丢失，存到sessionStorege里一份
-                            localStorage.setItem('xAuthToken',response.headers[k]);//将token长期存储，便于下次进入系统验证
-<<<<<<< HEAD
-
-=======
->>>>>>> 6c083ad5506a18bb525adb5681fa7f8abcfe61d7
+                            localStorage.setItem('xAuthToken',response.headers[k]);//将token长期存储，便于下次进入系统验证dd
                             switch (response.data.data.roleCode){
                                 case 0:
                                     this.props.history.push(`${HOST}/index/team`);
