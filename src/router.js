@@ -5,12 +5,12 @@ import Container from './containers/container/container'
 import AuthRoute from "./components/authroute"
 import {HOST} from './const/host'//全局服务器路径
 import { connect } from 'react-redux'
-import Search from "./containers/publicView/search/search";
-
+import Search from "./containers/roleSale/search/search";
+import ellipsis from "./containers/roleSale/ellipsis/ellipsis";
 import Pay from "./containers/roleCustomer/pay/pay"
 
-import AddVisitPlan from "./containers/roleSale/visitPlan/addVisitPlan/addVisitPlan";
 
+import VisitDetail from "./containers/roleSale/visitPlan/visitDetail/visitDetail";
 @connect(
     state=>state.count
 )
@@ -37,8 +37,12 @@ class Router extends Component {
                     component:Pay
                 },
                 {
-                    path:`${HOST}/addVisitPlan`,
-                    component:AddVisitPlan
+                    path:`${HOST}/visitDetail/:id`,
+                    component:VisitDetail
+                },
+                {
+                    path:`${HOST}/ellipsis`,
+                    component:ellipsis
                 }
 
             ]

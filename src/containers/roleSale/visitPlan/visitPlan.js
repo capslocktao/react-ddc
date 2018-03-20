@@ -1,49 +1,28 @@
 import React, {Component} from 'react';
-import { NavBar, Icon,} from 'antd-mobile';
+import { NavBar, Icon,WingBlank} from 'antd-mobile';
 import {HOST} from "../../../const/host";
 import { Link } from 'react-router-dom';
 import './visitPlan.less';
+import axios from "axios/index";
+const API = "http://192.168.31.13:8080";
 class VisitPlan extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data:[
-                {
-                    name:"我的第一个访客",
-                    num:"2222",
-                    state:"2018-1-2"
-                },
-                {
-                    name:"我的第二个访客",
-                    num:"12312312",
-                    state:"2018-1-2"
-                },
-                {
-                    name:"我的第三个访客",
-                    num:"134567498",
-                    state:"2018-1-2"
-                },
-                {
-                    name:"我的第四个访客",
-                    num:"1313456",
-                    state:"2018-1-2"
-                },
-                {
-                    name:"我的第5个访客",
-                    num:"4678945",
-                    state:"2018-1-2"
-                },
-                {
-                    name:"我的第6个访客",
-                    num:"15646879",
-                    state:"2018-1-2"
-                }
-
-            ]
+            content:"",
         };
 
     };
-
+    componentDidMount(){
+        console.log(API)
+        axios.post(`${API}/base/visitPlan/findAll`,).then((response)=>{
+            console.log(response.data)
+            let res = response.data;
+            this.setState({
+                content:res
+            })
+        })
+    }
 
     render() {
         return (
@@ -53,30 +32,35 @@ class VisitPlan extends Component {
                     mode="dark"
                     leftContent={
                         <Link to={`${HOST}/search`}>
-                            <Icon key="0" type="search" style={{ marginRight: '16px' }} />
+                            <Icon key="0" type="search" style={{ marginRight: '16px',color:"white" }} />
                         </Link>
                     }
                     rightContent={
-                        <Icon key="1" type="ellipsis" />
+                        <Link to={`${HOST}/ellipsis`} style={{color:"white"}}>
+                        <Icon key="1" type="" />添加
+                        </Link>
                     }
                 >拜访计划</NavBar>
                 </div>
                 {
-                    this.state.data.map(v=>
-                        <Link to={`${HOST}/addVisitPlan`} key={v.name}>
+                    this.state.content?
+                    this.state.content.map((v=>
+                        <Link to={`${HOST}/visitDetail/${v.id}`} key={v.name}>
                                 <div className="goods-item ">
-                                      <div className="big-title">
-                                              <div className="title" >
-                                                  <p>{v.name}</p>
-                                                  <p>[客户]{v.num}</p>
+                                      <WingBlank className="big-title">
+                                              <div className ="title" >
+                                                  <p>客户名称：{v.customerName}</p>
+                                                  <p>[客户]：{v.status}</p>
                                               </div>
                                               <div className="next-text">
-                                                  <p>{v.state}</p>
+                                                  <p>{v.visitTime}</p>
                                               </div>
-                                      </div>
+                                      </WingBlank>
                                 </div>
                         </Link>
+                        )
                     )
+                        :""
                 }
               </div>
         )
