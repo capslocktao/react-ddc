@@ -18,9 +18,11 @@ class GoodsList extends Component {
     };
 
     componentWillMount(){
+
         this.props.data.forEach(v=>{
             this.state.nums.push(1)
         })
+
     }
     selecteItem(e,index){
         let selects = document.getElementsByClassName("select");
@@ -42,23 +44,29 @@ class GoodsList extends Component {
         //this.props.onNumChange(e.target.value)
         this.state.nums[i] = e.target.value
         this.setState({},()=>{
+            this.props.data[i].num = this.state.nums[i]
             this.props.onNumChange(this.state.nums)
+
         })
 
     }
     add(i){
         this.state.nums[i]++;
         this.setState({},()=>{
-            this.props.onNumChange(this.state.nums)
+            this.props.data[i].num = this.state.nums[i]
+            this.props.onNumChange(this.state.nums);
+
         })
 
 
     }
-    sub(i){
+    sub(i){ 
         if(this.state.nums[i]>0){
             this.state.nums[i]--;
             this.setState({},()=>{
+                this.props.data[i].num = this.state.nums[i]
                 this.props.onNumChange(this.state.nums)
+
             })
         }
 
@@ -68,9 +76,9 @@ class GoodsList extends Component {
             <QueueAnim delay={300} type="top" className="goods-list">
                 {
                     this.props.data.map((v,i)=>
-                        <div className="goods-item" key={v.id}>
+                        <div className="goods-item" key={i}>
                             <WingBlank>
-                                <div className="title">{v.productName}</div>
+                                <div className="title">{v.goodsName}</div>
                                 <div className="info">
                                     <div className="size"><span>型号</span>{v.modelSize}</div>
                                     <div className="price"><span>¥</span>{parseInt(v.price).toFixed(2)}</div>
@@ -83,7 +91,7 @@ class GoodsList extends Component {
                                             <div className="add" onClick={()=>{this.add(i)}}>+</div>
                                         </div>
 
-                                        <span className="unit">{v.unit}</span>
+                                        <span className="unit">{v.units}</span>
 
                                     </div>
                                     <div ref = "item" className="select" onClick={(e)=>{this.selecteItem(e,i)}}> </div>

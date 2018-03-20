@@ -16,6 +16,7 @@ axios.interceptors.request.use((config)=>{
 });
 axios.interceptors.response.use((config)=>{
     Toast.hide();
+    console.log(config);
     if(config.data.flag === 'SESSION_INVALID'){
         console.log('失效');
         window.location.pathname="/login";

@@ -11,6 +11,9 @@ class Pay extends Component {
             goodsData:JSON.parse(sessionStorage.getItem("goodsData"))
         };
     };
+    componentDidMount(){
+        console.log(this.state.goodsData);
+    }
 
     componentDidMount(){
         console.log(JSON.parse(sessionStorage.getItem("goodsData")));
@@ -42,8 +45,8 @@ class Pay extends Component {
                     <div className="goods-box">
 
                             {
-                                this.state.goodsData.map(v=>
-                                    <div key={v.id} className="goods-item">
+                                this.state.goodsData.map((v,i)=>
+                                    <div key={i} className="goods-item">
                                         <WingBlank>
                                             <div className="top">
                                                 <div className="name">{v.productName}</div>

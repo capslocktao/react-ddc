@@ -8,56 +8,7 @@ class Purchase extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            goods:[
-                {
-                    productName:"纸尿裤",
-                    modelSize:"NB",
-                    price:"200",
-                    id:1,
-                    unit:"包",
-                    num:1
-                },
-                {
-                    productName:"纸尿裤",
-                    modelSize:"S",
-                    price:"200",
-                    id:2,
-                    unit:"包",
-                    num:1
-                },
-                {
-                    productName:"纸尿裤大号",
-                    modelSize:"XXL",
-                    price:"210",
-                    id:3,
-                    unit:"包",
-                    num:1
-                },
-                {
-                    productName:"纸尿裤",
-                    modelSize:"XL",
-                    price:"150",
-                    id:4,
-                    unit:"包",
-                    num:1
-                },
-                {
-                    productName:"纸尿裤",
-                    modelSize:"XL",
-                    price:"150",
-                    id:6,
-                    unit:"包",
-                    num:1
-                },
-                {
-                    productName:"纸尿裤",
-                    modelSize:"L",
-                    price:"200",
-                    id:5,
-                    unit:"包",
-                    num:1
-                }
-            ],
+            goods:[],
             selectedGoods:[],
             nums:[]
         };
@@ -67,8 +18,14 @@ class Purchase extends Component {
     };
     componentDidMount(){
         axios.post(`http://192.168.31.168:8080/base/stockInfo/findAllStockInfo`).then(response=>{
-            let res = response.data;
-            console.log(res);
+            if(response){
+                let res = response.data;
+                this.setState({
+                    goods:res
+                })
+
+            }
+
         })
     }
     selectGood(data){
@@ -78,29 +35,29 @@ class Purchase extends Component {
 
     };
     numChange(data){
-        this.setState({
+/*        this.setState({
             nums:data
-        })
+        })*/
     }
     submitOrder(){
-
-        this.state.nums.forEach(v=>{
+/*        this.state.nums.forEach(v=>{
             v = parseInt(v)
         });
         this.state.goods.findIndex((v,i)=>{
             this.state.selectedGoods.forEach(k=>{
                 if(k.id === v.id){
-                    k.num = this.state.nums[i]
+                    //k.num = this.state.nums[i]
                 }
             })
-        });
-/*        axios.post(`url`,{...this.state.selectedGoods}).then(response=>{
+        });*/
+        axios.post(`http://192.168.31.34:8080/base/order/addOrder`,{...this.state.selectedGoods}).then(response=>{
             let res = response.data;
+            console.log(res);
             if(res.result){
                 this.props.history.push()
             }
-        });*/
-
+        });
+        console.log(this.state.selectedGoods);
         this.props.history.push(`${HOST}/pay`);
 
         sessionStorage.setItem("goodsData",JSON.stringify(this.state.selectedGoods))
@@ -122,7 +79,13 @@ class Purchase extends Component {
                 </div>
 
                 <div className="pruchase-body">
-                    <GoodsList data={this.state.goods} onSelect={this.selectGood} onNumChange={this.numChange}/>
+                    {
+                        this.state.goods.length!==0?
+                            <GoodsList data={this.state.goods} onSelect={this.selectGood} onNumChange={this.numChange}/>
+                            :
+                            ""
+                    }
+
                 </div>
             </div>
         )
