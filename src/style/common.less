@@ -2,7 +2,35 @@
 @fontGray: #a8a8a8;
 @fontSize:16px;
 @brandColor:#f68b0e;
-@borderColor: #ebebeb;
+@borderColor: #f3f3f3;
+.checked{
+  position: relative;
+  &:before{
+    content: "";
+    display: block;
+    border-radius: 2px;
+    width: 6px;
+    height: 2px;
+    background: #fff;
+    position: absolute;
+    top: 8px;
+    left:1px;
+    transform: rotate(45deg);
+  }
+  &:after{
+    content: "";
+    display: block;
+    border-radius: 2px;
+    width: 9px;
+    height: 2px;
+    background: #fff;
+    position: absolute;
+    top:7px;
+    right:2px;
+    transform: rotate(140deg);
+  }
+
+}
 .blank{
   width: 95%;
   margin:0 auto;

@@ -49,7 +49,7 @@ class Pay extends Component {
                                     <div key={i} className="goods-item">
                                         <WingBlank>
                                             <div className="top">
-                                                <div className="name">{v.productName}</div>
+                                                <div className="name">{v.goodsName}</div>
                                                 <div className="price">¥{v.price}</div>
                                             </div>
                                             <div className="bottom">

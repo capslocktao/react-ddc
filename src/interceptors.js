@@ -3,6 +3,7 @@
  */
 import axios from 'axios';
 import { Toast } from 'antd-mobile';
+
 axios.interceptors.request.use((config)=>{
     Toast.loading("加载中",0);
     let xAuthToken = localStorage.getItem('xAuthToken');
@@ -16,10 +17,9 @@ axios.interceptors.request.use((config)=>{
 });
 axios.interceptors.response.use((config)=>{
     Toast.hide();
-    console.log(config);
     if(config.data.flag === 'SESSION_INVALID'){
         console.log('失效');
-        window.location.pathname="/login";
+        window.location.pathname = "/login";
         return
     }
 

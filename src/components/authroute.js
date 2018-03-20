@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Redirect,withRouter } from 'react-router-dom';
 import axios from "axios";
+import { Toast } from "antd-mobile";
 import {HOST} from '../const/host';
 @withRouter
 class AuthRoute extends Component {
@@ -8,9 +9,9 @@ class AuthRoute extends Component {
         super(props);
         this.state = {};
     };
-    componentWillMount(){
+/*    componentWillMount(){
 
-/*        this.user = JSON.parse(localStorage.getItem('user'));
+        this.user = JSON.parse(localStorage.getItem('user'));
         //验证token
         console.log('进入');
         let xAuthToken = localStorage.getItem('xAuthToken');
@@ -34,18 +35,40 @@ class AuthRoute extends Component {
 
                 }
             })
-        };*/
+        };
         console.log(window.location.pathname);
-        /*        if(sessionStorage.getItem("roleSymbol")){
+        /!*        if(sessionStorage.getItem("roleSymbol")){
                     // this.props.history.push(`${HOST}/index`)
 
                 }else{
                     this.props.history.push(`${HOST}/login`)
 
-                }*/
-    }
-    redirect(){
-        this.props.history.push(`${HOST}/login`)
+                }*!/
+    }*/
+    componentDidMount(){
+        axios.interceptors.request.use((config)=>{
+            Toast.loading("加载中",0);
+            let xAuthToken = localStorage.getItem('xAuthToken');
+            if(xAuthToken){
+                config.headers['token'] = xAuthToken
+            }else{
+
+            }
+            //携带token
+            return config
+        });
+        axios.interceptors.response.use((config)=>{
+            Toast.hide();
+            if(config.data.flag === 'SESSION_INVALID'){
+                console.log('失效');
+                this.props.history.push('/login')
+
+                return
+            }
+
+            //获取token,验证，跳转
+            return config
+        })
     }
     render() {
         return (

@@ -40,13 +40,11 @@ class GoodsList extends Component {
         this.props.onSelect(tempArr)
     }
     changeNum(e,i){
-
         //this.props.onNumChange(e.target.value)
         this.state.nums[i] = e.target.value
         this.setState({},()=>{
             this.props.data[i].num = this.state.nums[i]
             this.props.onNumChange(this.state.nums)
-
         })
 
     }

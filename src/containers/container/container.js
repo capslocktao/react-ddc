@@ -244,20 +244,25 @@ class Container extends Component {
 
     }
     roleMenu(){
-        let roleCode = JSON.parse(sessionStorage.getItem('user')).roleCode;
-        switch (roleCode){
-            case "0":
-                return this.state.topManager;
-            case "1":
-                return this.state.branchManager;
-            case "sales":
-                return this.state.roleSale;
-            case "customer":
-                return this.state.roleCustomer;
-            case "4":
-                return this.state.roleAccountant;
-            case "5":
-                return this.state.roleOperation;
+        if(JSON.parse(sessionStorage.getItem('user'))){
+            let roleCode = JSON.parse(sessionStorage.getItem('user')).roleCode;
+            switch (roleCode){
+                case "0":
+                    return this.state.topManager;
+                case "1":
+                    return this.state.branchManager;
+                case "sales":
+                    return this.state.roleSale;
+                case "customer":
+                    return this.state.roleCustomer;
+                case "4":
+                    return this.state.roleAccountant;
+                case "5":
+                    return this.state.roleOperation;
+            }
+
+        }else{
+            return false
         }
 
     };
@@ -273,7 +278,13 @@ class Container extends Component {
                         )
                     }
                 </Switch>
-                <NavLinkBar data={this.roleMenu()}/>
+                {
+                    this.roleMenu()?
+                        <NavLinkBar data={this.roleMenu()}/>
+                        :
+                        ""
+                }
+
             </div>
         )
     }

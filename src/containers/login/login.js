@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import { Button, InputItem } from 'antd-mobile';
+import { Button, InputItem,Toast } from 'antd-mobile';
 import axios from 'axios';
-import { API,HOST } from '../../const/host'
+import { API,HOST } from '../../const/host';
 import './login.less';
+
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -21,7 +22,7 @@ class Login extends Component {
     login(){
         if(this.state.userName!==""&&this.state.password!==""){
 
-            axios.post(`/login`,{
+            axios.post(`${API}/login`,{
                 userName:this.state.userName,
                 password:this.state.password
             }).then(response=>{
@@ -40,7 +41,6 @@ class Login extends Component {
                                     this.props.history.push(`${HOST}/index/customerOrderForm`);
                                     break;
                                 case "sales":
-                                    console.log("销售")
                                     this.props.history.push(`${HOST}/index/customerOrderForm`);
                                     break;
                                 case "customer":
@@ -52,6 +52,7 @@ class Login extends Component {
                                 case 5:
                                     this.props.history.push(`${HOST}/index/materialCheck`);
 
+
                             }
                             //sessionStorage.setItem('currentPath','/index');
 
@@ -59,6 +60,8 @@ class Login extends Component {
                             return
                         }
                     }
+                }else{
+                    Toast.fail(response.data.msg, 1);
                 }
             })
         }

@@ -73,10 +73,7 @@
         .unit{
           color: @brandColor;
           margin-left: 20px;
-
-
         }
-
       }
       .select{
         width: 15px;
@@ -84,31 +81,7 @@
         border-radius: 50%;
         border:1px solid @borderColor;
         background: #fff;
-        position: relative;
-        &:before{
-          content: "";
-          display: block;
-          border-radius: 2px;
-          width: 6px;
-          height: 2px;
-          background: #fff;
-          position: absolute;
-          top: 8px;
-          left:1px;
-          transform: rotate(45deg);
-        }
-        &:after{
-          content: "";
-          display: block;
-          border-radius: 2px;
-          width: 9px;
-          height: 2px;
-          background: #fff;
-          position: absolute;
-          top:7px;
-          right:2px;
-          transform: rotate(140deg);
-        }
+        .checked
       }
       .select-active{
         background: @brandColor;

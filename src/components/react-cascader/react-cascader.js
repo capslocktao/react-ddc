@@ -8,34 +8,35 @@ class ReactCascader extends Component {
             headerData:[
                 {
                     name:"省",
-                    type:"province",
+                    areaType:"PROVINCE",
                     pid:"0"
                 },
                 {
                     name:"市",
-                    type:"city",
+                    areaType:"CITY",
                     pid:null
                 },
                 {
                     name:"县",
-                    type:"district",
+                    areaType:"DISTRICT",
                     pid:null
                 }
             ],
             area:[],
-            province:{},
-            city:{},
-            district:{},
-            areaType:"province",
-            currentHeader:"province"
+            PROVINCE:{},
+            CITY:{},
+            DISTRICT:{},
+            areaType:"PROVINCE",
+            currentHeader:"PROVINCE"
 
         };
     }
     toggleHeader(v,i){
 
         if(this.state.headerData[i].pid){
+
             this.setState({
-                currentHeader:v.type
+                currentHeader:v.areaType
             });
             this.props.getData(this.state.headerData[i].pid)
             for(let k=i+1;k<this.state.headerData.length;k++){
@@ -47,21 +48,21 @@ class ReactCascader extends Component {
     }
     loadData(id,name,areaType){
         let current = "";
-        if(areaType === "province"){
-            current =  "city"
-        }else if(areaType === "city" || areaType === "district" ){
-            current = "district"
+        if(areaType === "PROVINCE"){
+            current =  "CITY"
+        }else if(areaType === "CITY" || areaType === "DISTRICT" ){
+            current = "DISTRICT"
         }
         this.setState({
             [areaType]:{id,name},
             currentHeader:current
         },()=>{
-            if(areaType === 'district'){
-                this.props.onOk([this.state.province,this.state.city,this.state.district])
+            if(areaType === 'DISTRICT'){
+                this.props.onOk([this.state.PROVINCE,this.state.CITY,this.state.DISTRICT])
             }else{
                 this.props.getData(id);
                 this.state.headerData.forEach(v=>{
-                    if(v.type === this.state.currentHeader){
+                    if(v.areaType === this.state.currentHeader){
                         v.pid = id
                     }
                 })
@@ -71,7 +72,7 @@ class ReactCascader extends Component {
     }
     render() {
         const currentHeader={
-            background:'#2ea7dc',
+            background:'#f68b0e',
             color:'#fff'
         }
 
@@ -93,22 +94,21 @@ class ReactCascader extends Component {
                     transitionName="cascader-show"
                     transitionEnterTimeout={500}
                     transitionLeaveTimeout={300}>
-
                     {
                         this.props.cascaderShow ?
                             <div className="cascader-wrapper">
                                 <div className="cascader-header">
                                     {
                                         this.state.headerData.map((v,i)=>(
-                                            <div className="cascader-title" key={v.name} style={v.type === this.state.currentHeader?currentHeader:null} onClick={this.toggleHeader.bind(this,v,i)}>{v.name}</div>
+                                            <div className="cascader-title" key={i} style={v.areaType === this.state.currentHeader?currentHeader:null} onClick={this.toggleHeader.bind(this,v,i)}>{v.name}</div>
                                         ))
                                     }
 
                                 </div>
                                 <div className="cascader-body" >
                                     {
-                                        this.props.data.map(v=>(
-                                            <div className="cascader-item" key={v.id} onClick={this.loadData.bind(this,v.id,v.name,v.areaType)} >{v.name}</div>
+                                        this.props.data.map((v,i)=>(
+                                            <div className="cascader-item" key={i} onClick={this.loadData.bind(this,v.id,v.areaName,v.areaType)} >{v.areaName}</div>
                                         ))
                                     }
 
