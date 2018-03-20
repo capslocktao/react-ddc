@@ -16,6 +16,7 @@ class GoodsList extends Component {
         this.add = this.add.bind(this)
         this.sub = this.sub.bind(this)
     };
+
     componentWillMount(){
         this.props.data.forEach(v=>{
             this.state.nums.push(1)
@@ -50,6 +51,7 @@ class GoodsList extends Component {
         this.setState({},()=>{
             this.props.onNumChange(this.state.nums)
         })
+
 
     }
     sub(i){
@@ -89,6 +91,7 @@ class GoodsList extends Component {
                                 </div>
 
                             </WingBlank>
+
                         </div>
                     )
                 }
