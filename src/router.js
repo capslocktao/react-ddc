@@ -11,6 +11,12 @@ import Pay from "./containers/roleCustomer/pay/pay"
 
 import AddVisitPlan from "./containers/roleSale/visitPlan/addVisitPlan/addVisitPlan";
 
+import add from "./containers/roleSale/orderManagement/add/add"//销售订单添加
+
+import details from "./containers/roleSale/orderManagement/details/details"//销售订单详情
+
+import search from "./containers/roleSale/orderManagement/search/search"//销售订单搜索
+
 @connect(
     state=>state.count
 )
@@ -39,8 +45,19 @@ class Router extends Component {
                 {
                     path:`${HOST}/addVisitPlan`,
                     component:AddVisitPlan
+                },
+                {
+                    path:`${HOST}/orderManagement/add`,
+                    component:add
+                },
+                {
+                    path:`${HOST}/orderManagement/details/:id`,
+                    component:details
+                },
+                {
+                    path:`${HOST}/orderManagement/search`,
+                    component:search
                 }
-
             ]
         }
     }
