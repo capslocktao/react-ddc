@@ -32,7 +32,6 @@ class Login extends Component {
                             //this.$store.dispatch('saveUserInfo',response.data.data);//请求回来后，把用户信息存储到VUEX里
                             sessionStorage.setItem('user',JSON.stringify(response.data.data));//为了防止刷新后用户数据丢失，存到sessionStorege里一份
                             localStorage.setItem('xAuthToken',response.headers[k]);//将token长期存储，便于下次进入系统验证
-                            console.log(response.data.data.roleCode);
                             switch (response.data.data.roleCode){
                                 case 0:
                                     this.props.history.push(`${HOST}/index/team`);
@@ -63,9 +62,6 @@ class Login extends Component {
                 }
             })
         }
-
-        let id = 2;
-        sessionStorage.setItem("roleSymbol",id);
 
 
     }

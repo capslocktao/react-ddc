@@ -6,7 +6,6 @@ import { add,sub } from './container.redux';
 import { Switch,Route } from 'react-router-dom';
 import NavLinkBar from '../../components/nav-link-bar/nav-link-bar'
 //公共页面
-import UserCenter from '../publicView/userCenter/userCenter';//我的
 import TeamManagement from '../publicView/teamManagement/teamManagement'//团队管理
 import CustomerManagement from '../publicView/customerManagement/customerManagement'//客户管理
 import CustomerOrderForm from '../publicView/customerOrderForm/customerOrderForm'//客户管理
@@ -24,6 +23,7 @@ import VisitPlan from '../roleSale/visitPlan/visitPlan';//拜访计划
 import Purchase from '../roleCustomer/purchase/purchase';//商品采购
 import MaterialApply from '../roleCustomer/materialApply/material';//物料申请
 import PresentApply from '../roleCustomer/presentApply/presentApply';//赠品申请
+import UserCenter from '../roleCustomer/userCenter/userCenter'//用户中心
 
 //财务
 import PaymentCheck from '../roleAccountant/paymentCheck/paymentCheck';//付款审核
@@ -244,8 +244,7 @@ class Container extends Component {
 
     }
     roleMenu(){
-        let roleCode = JSON.parse(sessionStorage.getItem('user')).roleCode
-        console.log(roleCode);
+        let roleCode = JSON.parse(sessionStorage.getItem('user')).roleCode;
         switch (roleCode){
             case "0":
                 return this.state.topManager;

@@ -1,21 +1,16 @@
 import React, {Component} from 'react';
 import './userCenter.less';
-import { Button,Input } from "antd-mobile";
-
+import { Button,Input,NavBar,List } from "antd-mobile";
+const Item = List.Item;
 class UserCenter extends Component {
     constructor(props) {
         super(props);
         this.state = {
             num:0
         };
-        this.click = this.click.bind(this)
+
     };
-    click(pa){
-        console.log(23242);
-        this.setState({
-            num:pa
-        })
-    };
+
     componentWillMount(){
         console.log('挂载前')
     }
@@ -27,8 +22,14 @@ class UserCenter extends Component {
 
         return (
             <div className="user-center">
-                <Button type="primary" onClick={this.click}>{this.state.num}</Button>
-
+                <NavBar
+                    mode="dark"
+                >用户中心</NavBar>
+                <div className="user-center-body">
+                    <List>
+                        <Item arrow="horizontal" onClick={() => {}}>Title</Item>
+                    </List>
+                </div>
             </div>
         )
     }
