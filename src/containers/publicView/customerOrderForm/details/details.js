@@ -1,4 +1,8 @@
 import React, {Component} from 'react';
+import { NavBar, Icon ,WingBlank,List,InputItem,} from 'antd-mobile';
+import { Link } from 'react-router-dom';
+import "./dateils.less"
+import {HOST} from "../../../../const/host";
 
 class details extends Component {
     constructor(props) {
@@ -6,11 +10,22 @@ class details extends Component {
         this.state = {};
         console.log(this.props.match.params.id)
     };
-
     render() {
         return (
             <div>
-                details
+                <div>
+                    <NavBar
+                        mode="light"
+                        leftContent={
+                            <Link to={`${HOST}/index/customerOrderForm`}>
+                                <Icon type="left" style={{ marginRight: '16px' }} />
+                            </Link>
+                        }
+                    >订单详情</NavBar>
+                </div>
+                <WingBlank size={'sm'}>
+
+                </WingBlank>
             </div>
         )
     }
