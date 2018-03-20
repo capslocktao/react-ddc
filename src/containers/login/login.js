@@ -47,7 +47,7 @@ class Login extends Component {
             })
         }
 
-        let id = 3;
+        let id = 2;
         sessionStorage.setItem("roleSymbol",id);
         switch (id){
             case 0:

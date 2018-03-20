@@ -9,22 +9,34 @@ class VisitPlan extends Component {
         this.state = {
             data:[
                 {
-                    name:"我的第一个访客"
+                    name:"我的第一个访客",
+                    num:"2222",
+                    state:"2018-1-2"
                 },
                 {
-                    name:"我的第二个访客"
+                    name:"我的第二个访客",
+                    num:"12312312",
+                    state:"2018-1-2"
                 },
                 {
-                    name:"我的第三个访客"
+                    name:"我的第三个访客",
+                    num:"134567498",
+                    state:"2018-1-2"
                 },
                 {
-                    name:"我的第四个访客"
+                    name:"我的第四个访客",
+                    num:"1313456",
+                    state:"2018-1-2"
                 },
                 {
-                    name:"我的第5个访客"
+                    name:"我的第5个访客",
+                    num:"4678945",
+                    state:"2018-1-2"
                 },
                 {
-                    name:"我的第6个访客"
+                    name:"我的第6个访客",
+                    num:"15646879",
+                    state:"2018-1-2"
                 }
 
             ]
@@ -56,10 +68,10 @@ class VisitPlan extends Component {
                                       <div className="big-title">
                                               <div className="title" >
                                                   <p>{v.name}</p>
-                                                  <p >123456789</p>
+                                                  <p>[客户]{v.num}</p>
                                               </div>
                                               <div className="next-text">
-                                                  <p>首次拜访</p>
+                                                  <p>{v.state}</p>
                                               </div>
                                       </div>
                                 </div>
