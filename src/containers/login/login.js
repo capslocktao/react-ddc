@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Button, InputItem } from 'antd-mobile';
-
+import axios from 'axios';
 import { API,HOST } from '../../const/host'
 import './login.less';
 class Login extends Component {
@@ -19,7 +19,7 @@ class Login extends Component {
         })
     }
     login(){
-        /*if(this.state.userName!==""&&this.state.password!==""){
+        if(this.state.userName!==""&&this.state.password!==""){
             axios.post(`${API}/login`,{
                 userName:this.state.userName,
                 password:this.state.password
@@ -37,15 +37,16 @@ class Login extends Component {
                                     return menu.uri
                                 }
                             }
-                            sessionStorage.setItem('currentPath','/index');
+                            //sessionStorage.setItem('currentPath','/index');
 
-                            window.location.pathname="/index";//登陆成功后跳转到首页
+                            //window.location.pathname="/index";//登陆成功后跳转到首页
                             return
                         }
                     }
                 }
             })
-        }*/
+        }
+
         let id = 3;
         sessionStorage.setItem("roleSymbol",id);
         switch (id){

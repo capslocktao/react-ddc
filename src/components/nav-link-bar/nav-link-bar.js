@@ -20,7 +20,7 @@ class NavLinkBar extends Component {
     }
     render() {
         const navList = this.props.data;
-        console.log(navList);
+        //console.log(navList);
         const {pathname} = this.props.location;
         const itemWidth = navList?`${100/this.props.data.length}%`:0;
         return (
