@@ -100,9 +100,9 @@ class Purchase extends Component {
                 this.props.history.push()
             }
         });*/
-        console.log(this.state.nums);
+
         this.props.history.push(`${HOST}/pay`);
-        console.log(this.state.selectedGoods)
+
         sessionStorage.setItem("goodsData",JSON.stringify(this.state.selectedGoods))
     }
     render() {

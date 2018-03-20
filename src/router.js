@@ -53,7 +53,7 @@ class Router extends Component {
                 <BrowserRouter>
 
                     <div>
-                        <AuthRoute/>
+                        
 
                         {
                             this.state.routes.map(v=>(

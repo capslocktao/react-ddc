@@ -116,5 +116,6 @@
     "color-text-base": "#666666",
     "brand-primary-tap": "#f7a03a"
   },
+  "proxy":"http://192.168.31.13:8080",
   "homepage": "."
 }

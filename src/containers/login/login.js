@@ -20,22 +20,39 @@ class Login extends Component {
     }
     login(){
         if(this.state.userName!==""&&this.state.password!==""){
-            axios.post(`${API}/login`,{
+
+            axios.post(`/login`,{
                 userName:this.state.userName,
                 password:this.state.password
             }).then(response=>{
+
                 if(response.data.result){
                     for (let k in response.headers){
                         if(k === "x-auth-token"){
                             //this.$store.dispatch('saveUserInfo',response.data.data);//请求回来后，把用户信息存储到VUEX里
                             sessionStorage.setItem('user',JSON.stringify(response.data.data));//为了防止刷新后用户数据丢失，存到sessionStorege里一份
                             localStorage.setItem('xAuthToken',response.headers[k]);//将token长期存储，便于下次进入系统验证
-                            function defaultUri(menu){
-                                if(menu.children){
-                                    defaultUri(menu)
-                                }else{
-                                    return menu.uri
-                                }
+                            console.log(response.data.data.roleCode);
+                            switch (response.data.data.roleCode){
+                                case 0:
+                                    this.props.history.push(`${HOST}/index/team`);
+                                    break;
+                                case 1:
+                                    this.props.history.push(`${HOST}/index/customerOrderForm`);
+                                    break;
+                                case "sales":
+                                    console.log("销售")
+                                    this.props.history.push(`${HOST}/index/customerOrderForm`);
+                                    break;
+                                case "customer":
+                                    this.props.history.push(`${HOST}/index/purchase`);
+                                    break;
+                                case 4:
+                                    this.props.history.push(`${HOST}/index/paymentCheck`);
+                                    break;
+                                case 5:
+                                    this.props.history.push(`${HOST}/index/materialCheck`);
+
                             }
                             //sessionStorage.setItem('currentPath','/index');
 
@@ -49,26 +66,7 @@ class Login extends Component {
 
         let id = 3;
         sessionStorage.setItem("roleSymbol",id);
-        switch (id){
-            case 0:
-                this.props.history.push(`${HOST}/index/team`);
-                break;
-            case 1:
-                this.props.history.push(`${HOST}/index/customerOrderForm`);
-                break;
-            case 2:
-                this.props.history.push(`${HOST}/index/customerOrderForm`);
-                break;
-            case 3:
-                this.props.history.push(`${HOST}/index/purchase`);
-                break;
-            case 4:
-                this.props.history.push(`${HOST}/index/paymentCheck`);
-                break;
-            case 5:
-                this.props.history.push(`${HOST}/index/materialCheck`);
 
-        }
 
     }
 

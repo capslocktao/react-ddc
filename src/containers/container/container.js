@@ -241,23 +241,19 @@ class Container extends Component {
         };
     };
     componentDidMount(){
-        //console.log(this.roleMenu());
-        if(this.roleMenu()){
-            //sessionStorage.setItem("homePage",this.roleMenu()[0].path);
-            //console.log(this.roleMenu()[0].path);
-        }
-        //this.props.history.push(this.roleMenu()[0].path)
+
     }
     roleMenu(){
-        let roleSymbol = sessionStorage.getItem('roleSymbol');
-        switch (roleSymbol){
+        let roleCode = JSON.parse(sessionStorage.getItem('user')).roleCode
+        console.log(roleCode);
+        switch (roleCode){
             case "0":
                 return this.state.topManager;
             case "1":
                 return this.state.branchManager;
-            case "2":
+            case "sales":
                 return this.state.roleSale;
-            case "3":
+            case "customer":
                 return this.state.roleCustomer;
             case "4":
                 return this.state.roleAccountant;

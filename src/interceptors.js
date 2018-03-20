@@ -15,14 +15,12 @@ axios.interceptors.request.use((config)=>{
     return config
 });
 axios.interceptors.response.use((config)=>{
-
+    Toast.hide();
     if(config.data.flag === 'SESSION_INVALID'){
         console.log('失效');
         window.location.pathname="/login";
         return
     }
-
-    // console.log(config.headers)
 
     //获取token,验证，跳转
     return config
