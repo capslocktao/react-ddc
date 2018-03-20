@@ -51,8 +51,8 @@ class VisitPlan extends Component {
                 </div>
                 {
                     this.state.data.map(v=>
-                        <Link to={`${HOST}/addVisitPlan`} key={v.name} >
-                                <div className="goods-item side">
+                        <Link to={`${HOST}/addVisitPlan`} key={v.name}>
+                                <div className="goods-item ">
                                       <div className="big-title">
                                               <div className="title" >
                                                   <p>{v.name}</p>
