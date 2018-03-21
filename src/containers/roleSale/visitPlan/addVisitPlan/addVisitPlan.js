@@ -1,15 +1,27 @@
 import React, {Component} from 'react';
-import { NavBar, Icon, List, DatePicker, InputItem,TextareaItem   } from 'antd-mobile';
+import { NavBar, Icon, List, DatePicker ,Picker,Toast} from 'antd-mobile';
+// import { Link} from "react-router-dom"
 import './addVisitPlan.less';
+import {HOST} from "../../../../const/host";
+
+const nowTimeStamp = Date.now();
+const now = new Date(nowTimeStamp);
 class AddVisitPlan extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            date:now,
         };
+        this.success = this.success.bind(this)
     };
 
-    render() {
+    success(){
+        Toast.success('保存成功 !!!', 1);
+        this.props.history.push(`${HOST}/index/visitPlan`)
 
+    }
+
+    render() {
         return (
             <div>
                 <div className="add-visit">
@@ -18,35 +30,33 @@ class AddVisitPlan extends Component {
                             mode="dark"
                             icon={<Icon type="left" />}
                             onLeftClick={() => {this.props.history.push(`../index/visitPlan`)}}
-                            rightContent="保存"
+                            rightContent={
+                                <div  onClick={this.success}  style={{color:"white"}}>
+                                    <Icon key="0" type="" />保存
+                                </div>
+                            }
+
                         >新增拜访计划</NavBar>
                     </div>
                     <div className="start-name">
-                        <div className="state-side">
-                            <p>新增拜访计划</p>
+                        <div className="state-sides">
                             <div className="text-size">
-                                <List>
-                                    <InputItem
-                                        placeholder="请输入名称"
-                                    >客户名称：</InputItem>
-                                </List>
                                 <List  className="date-picker-list" >
+                                    <Picker>
+                                        <List.Item arrow="horizontal">选择客户：</List.Item>
+                                    </Picker>
                                     <DatePicker
                                         value={this.state.date}
                                         onChange={date => this.setState({ date })}
                                     >
                                         <List.Item arrow="horizontal">计划时间:</List.Item>
                                     </DatePicker>
+                                    <Picker className="forss" >
+                                        <List.Item arrow="horizontal">拜访状态：</List.Item>
+                                    </Picker>
+
                                 </List>
-                                <List>
-                                    <TextareaItem
-                                        title="标题"
-                                        placeholder="请输入沟通内容"
-                                        data-seed="logId"
-                                        autoHeight
-                                        ref={el => this.customFocusInst = el}
-                                    />
-                                </List>
+
                             </div>
                         </div>
                     </div>

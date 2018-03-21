@@ -250,7 +250,7 @@ class Container extends Component {
                 {
                     path:`${HOST}/index/orderManagement`,
                     component:orderManagement
-                }
+                },
             ]
         };
     };
