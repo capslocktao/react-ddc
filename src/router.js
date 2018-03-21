@@ -5,6 +5,7 @@ import Container from './containers/container/container'
 import {HOST,API} from './const/host'//全局服务器路径
 import { connect } from 'react-redux'
 
+
 import axios from "axios";
 import Pay from "./containers/roleCustomer/pay/pay"
 import AddressManage from "./containers/publicView/addressManage/addressManage"
@@ -14,8 +15,9 @@ import NewAddress from "./containers/publicView/addressManage/newAddress/newAddr
 import Add from "./containers/roleSale/orderManagement/add/add"//销售订单添加
 
 import Details from "./containers/roleSale/orderManagement/details/details"//销售订单详情
-
 import Search from "./containers/roleSale/orderManagement/search/search"//销售订单搜索
+import ellipsis from "./containers/roleSale/ellipsis/ellipsis";
+import VisitDetail from "./containers/roleSale/visitPlan/visitDetail/visitDetail";
 @withRouter
 
 @connect(
@@ -41,8 +43,18 @@ class Router extends Component {
                     component:Pay
                 },
                 {
+
                     path:`${HOST}/addVisitPlan`,
                     component:AddVisitPlan
+                },
+                {
+
+                    path:`${HOST}/visitDetail/:id`,
+                    component:VisitDetail
+                },
+                {
+                    path:`${HOST}/ellipsis`,
+                    component:ellipsis
                 },
                 {
 
@@ -101,7 +113,7 @@ class Router extends Component {
                                 this.props.history.push(`${HOST}/index/customerOrderForm`);
                                 break;
                             case "sales":
-                                this.props.history.push(`${HOST}/index/customerOrderForm`);
+                                this.props.history.push(`${HOST}/index/myCustomer`);
                                 break;
                             case "customer":
                                 this.props.history.push(`${HOST}/index/purchase`);

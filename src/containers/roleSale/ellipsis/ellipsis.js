@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { NavBar, Icon, List, DatePicker, InputItem,TextareaItem   } from 'antd-mobile';
-import './addVisitPlan.less';
-class AddVisitPlan extends Component {
+import './ellipsis.less';
+class ellipsis extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -26,17 +26,17 @@ class AddVisitPlan extends Component {
                             <p>新增拜访计划</p>
                             <div className="text-size">
                                 <List>
-                                    <InputItem
+                                        <InputItem
                                         placeholder="请输入名称"
                                     >客户名称：</InputItem>
                                 </List>
                                 <List  className="date-picker-list" >
-                                    <DatePicker
+                                        <DatePicker
                                         value={this.state.date}
                                         onChange={date => this.setState({ date })}
-                                    >
+                                        >
                                         <List.Item arrow="horizontal">计划时间:</List.Item>
-                                    </DatePicker>
+                                       </DatePicker>
                                 </List>
                                 <List>
                                     <TextareaItem
@@ -57,4 +57,4 @@ class AddVisitPlan extends Component {
     }
 }
 
-export default AddVisitPlan
+export default ellipsis
