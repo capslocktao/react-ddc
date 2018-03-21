@@ -12,26 +12,29 @@ import CustomerOrderForm from '../publicView/customerOrderForm/customerOrderForm
 
 //总管理员
 import StockCheck from '../topManager/stockCheck/stockCheck';//库存查询
+import TopUserCenter from '../topManager/topUserCenter/topUserCenter';//库存查询
 
 //分公司（暂无单独页面）
-
+import BranchUserCenter from '../branchManager/branchUserCenter/branchUserCenter'
 //销售
 import VisitPlan from '../roleSale/visitPlan/visitPlan';//拜访计划
 import MyCustomer from '../roleSale/myCustomer/myCustomer'//客户管理
 import orderManagement from '../roleSale/orderManagement/orderManagement'//订单管理
-
+import SalesUserCenter from '../roleSale/salesUserCenter/salesUserCenter'//用户中心
 //客户
 import Purchase from '../roleCustomer/purchase/purchase';//商品采购
 import MaterialApply from '../roleCustomer/materialApply/material';//物料申请
 import PresentApply from '../roleCustomer/presentApply/presentApply';//赠品申请
-import UserCenter from '../roleCustomer/userCenter/userCenter'//用户中心
+import CustomerUserCenter from '../roleCustomer/customerUserCenter/customerUserCenter'//用户中心
 
 //财务
 import PaymentCheck from '../roleAccountant/paymentCheck/paymentCheck';//付款审核
+import AccountantUserCenter from '../roleAccountant/accountantUserCenter/accountantUserCenter';//付款审核
 
 //运营
 import MaterialCheck from '../roleOperation/materialCheck/materialCheck'//物料审核
 import PresentCheck from '../roleOperation/presentCheck/presentCheck'//赠品审核
+import WarehouseUserCenter from '../roleOperation/warehouseUserCenter/warehouseUserCenter'//赠品审核
 import './container.less';
 
 
@@ -60,10 +63,10 @@ class Container extends Component {
                     component:StockCheck
                 },
                 {
-                    path:`${HOST}/index/userCenter`,
+                    path:`${HOST}/index/topUserCenter`,
                     name:`我的`,
                     icon:"icon-user",
-                    component:UserCenter
+                    component:TopUserCenter
                 },
 
             ],
@@ -88,10 +91,10 @@ class Container extends Component {
                     component:TeamManagement
                 },
                 {
-                    path:`${HOST}/index/userCenter`,
+                    path:`${HOST}/index/branchUserCenter`,
                     name:`我的`,
                     icon:"icon-user",
-                    component:UserCenter
+                    component:BranchUserCenter
                 },
 
             ],
@@ -116,10 +119,10 @@ class Container extends Component {
                     component:VisitPlan
                 },
                 {
-                    path:`${HOST}/index/userCenter`,
+                    path:`${HOST}/index/salesUserCenter`,
                     name:`我的`,
                     icon:"icon-user",
-                    component:UserCenter
+                    component:SalesUserCenter
                 },
 
             ],
@@ -144,10 +147,10 @@ class Container extends Component {
                     component:PresentApply
                 },*/
                 {
-                    path:`${HOST}/index/userCenter`,
+                    path:`${HOST}/index/customerUserCenter`,
                     name:`我的`,
                     icon:"icon-user",
-                    component:UserCenter
+                    component:CustomerUserCenter
                 },
 
             ],
@@ -160,10 +163,10 @@ class Container extends Component {
                     component:PaymentCheck
                 },
                 {
-                    path:`${HOST}/index/userCenter`,
+                    path:`${HOST}/index/accountantUserCenter`,
                     name:`我的`,
                     icon:"icon-user",
-                    component:UserCenter
+                    component:AccountantUserCenter
                 },
 
             ],
@@ -182,10 +185,10 @@ class Container extends Component {
                     component:PresentCheck
                 },
                 {
-                    path:`${HOST}/index/userCenter`,
+                    path:`${HOST}/index/wareHouseUserCenter`,
                     name:`我的`,
                     icon:"icon-user",
-                    component:UserCenter
+                    component:WarehouseUserCenter
                 },
 
             ],
@@ -204,9 +207,31 @@ class Container extends Component {
                    component:StockCheck
                 },
                 {
-                   path:`${HOST}/index/userCenter`,
-                   component:UserCenter
+                   path:`${HOST}/index/salesUserCenter`,
+                   component:SalesUserCenter
                 },
+                {
+                   path:`${HOST}/index/wareHouseUserCenter`,
+                   component:WarehouseUserCenter
+                },
+                {
+                   path:`${HOST}/index/customerUserCenter`,
+                   component:CustomerUserCenter
+                },
+                {
+                   path:`${HOST}/index/topUserCenter`,
+                   component:BranchUserCenter
+                },
+                {
+                   path:`${HOST}/index/branchUserCenter`,
+                   component:TopUserCenter
+                },
+                {
+                   path:`${HOST}/index/accountantUserCenter`,
+                   component:AccountantUserCenter
+                },
+
+
                 {
                    path:`${HOST}/index/customerOrderForm`,
                    component:CustomerOrderForm
@@ -260,6 +285,7 @@ class Container extends Component {
     roleMenu(){
         if(JSON.parse(sessionStorage.getItem('user'))){
             let roleCode = JSON.parse(sessionStorage.getItem('user')).roleCode;
+            console.log(roleCode);
             switch (roleCode){
                 case "0":
                     return this.state.topManager;
@@ -269,9 +295,9 @@ class Container extends Component {
                     return this.state.roleSale;
                 case "customer":
                     return this.state.roleCustomer;
-                case "4":
+                case "finance":
                     return this.state.roleAccountant;
-                case "5":
+                case "wareHouse":
                     return this.state.roleOperation;
             }
 

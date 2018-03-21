@@ -5,7 +5,7 @@ import {NavBar,Icon,InputItem,Button,TextareaItem,WingBlank,Toast,Checkbox  } fr
 import axios from "axios";
 import "./newAddress.less";
 import {HOST} from "../../../../const/host";
-const API = "http://192.168.31.222:8080";
+const API = "http://192.168.31.168:8080";
 const CheckboxItem = Checkbox.CheckboxItem;
 class ComponentName extends Component {
     constructor(props) {
@@ -13,6 +13,7 @@ class ComponentName extends Component {
         this.state = {
             cascaderShow:false,
             areaData:[],
+            selectedData:[],
             area:"",
             isDefault:0,
             customerName:"",
@@ -62,7 +63,7 @@ class ComponentName extends Component {
     onOk(result){
         this.setState({
             cascaderShow:false,
-            areaData:result
+            selectedData:result
         });
 
         let resultData = "";
@@ -103,17 +104,18 @@ class ComponentName extends Component {
         })
     }
     done(){
-
+        let user = JSON.parse(sessionStorage.getItem("user"));
         let submitData = {
             customerName:this.state.customerName,
             mobilePhone:this.state.mobilePhone,
             address:this.state.address,
+            id:user.id,
             isDefault:this.state.isDefault,
             provinceId:`${this.state.areaData[0].id}`,
             cityId:`${this.state.areaData[1].id}`,
             areaId:`${this.state.areaData[0].id}`,
         }
-        console.log(submitData)
+
         axios.post(`${API}/base/area/saveArea`,{...submitData}
         ).then(response=>{
             let res = response.data;

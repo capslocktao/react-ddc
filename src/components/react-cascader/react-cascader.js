@@ -31,10 +31,12 @@ class ReactCascader extends Component {
 
         };
     }
+    componentWillMount(){
+
+
+    }
     toggleHeader(v,i){
-
         if(this.state.headerData[i].pid){
-
             this.setState({
                 currentHeader:v.areaType
             });
@@ -59,6 +61,7 @@ class ReactCascader extends Component {
         },()=>{
             if(areaType === 'DISTRICT'){
                 this.props.onOk([this.state.PROVINCE,this.state.CITY,this.state.DISTRICT])
+
             }else{
                 this.props.getData(id);
                 this.state.headerData.forEach(v=>{
@@ -106,7 +109,9 @@ class ReactCascader extends Component {
 
                                 </div>
                                 <div className="cascader-body" >
+
                                     {
+
                                         this.props.data.map((v,i)=>(
                                             <div className="cascader-item" key={i} onClick={this.loadData.bind(this,v.id,v.areaName,v.areaType)} >{v.areaName}</div>
                                         ))

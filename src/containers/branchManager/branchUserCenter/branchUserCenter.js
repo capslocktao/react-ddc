@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import './userCenter.less';
+import './branchUserCenter.less';
 import axios from "axios";
 import { Button,Modal,NavBar,List,WingBlank,Toast } from "antd-mobile";
 import { HOST,API } from "../../../const/host"
 const Item = List.Item;
 const Brief = Item.Brief;
 const alert = Modal.alert;
-class UserCenter extends Component {
+class BranchUserCenter extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,7 +23,7 @@ class UserCenter extends Component {
                 axios.get(`${API}/logout`).then(res=>{
                     if(res.data.result){
                         sessionStorage.clear();
-                        localStorage.removeItem('xAuthToken');
+                        localStorage.clear();
                         Toast.success("退出成功",1);
                         this.props.history.push('/login')
                     }
@@ -65,4 +65,4 @@ class UserCenter extends Component {
     }
 }
 
-export default UserCenter
+export default BranchUserCenter

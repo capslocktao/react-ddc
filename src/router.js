@@ -18,6 +18,7 @@ import Details from "./containers/roleSale/orderManagement/details/details"//销
 import Search from "./containers/roleSale/orderManagement/search/search"//销售订单搜索
 import ellipsis from "./containers/roleSale/ellipsis/ellipsis";
 import VisitDetail from "./containers/roleSale/visitPlan/visitDetail/visitDetail";
+import CustomerDetail from "./containers/roleSale/myCustomer/customerDetail/customerDetail";
 @withRouter
 
 @connect(
@@ -76,7 +77,14 @@ class Router extends Component {
                 {
                     path:`${HOST}/orderManagement/search`,
                     component:Search
-
+                },
+                {
+                    path:`${HOST}/myCustomer/customerDetail/:id`,
+                    component:CustomerDetail
+                },
+                {
+                    path:`${HOST}/myCustomer/newCustomer`,
+                    component:CustomerDetail
                 }
             ]
         }
@@ -118,10 +126,10 @@ class Router extends Component {
                             case "customer":
                                 this.props.history.push(`${HOST}/index/purchase`);
                                 break;
-                            case 4:
+                            case "finance":
                                 this.props.history.push(`${HOST}/index/paymentCheck`);
                                 break;
-                            case 5:
+                            case "wareHouse":
                                 this.props.history.push(`${HOST}/index/materialCheck`);
                         }
                     }

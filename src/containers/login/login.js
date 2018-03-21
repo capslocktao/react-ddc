@@ -46,10 +46,10 @@ class Login extends Component {
                                 case "customer":
                                     this.props.history.push(`${HOST}/index/purchase`);
                                     break;
-                                case 4:
+                                case "finance":
                                     this.props.history.push(`${HOST}/index/paymentCheck`);
                                     break;
-                                case 5:
+                                case "wareHouse":
                                     this.props.history.push(`${HOST}/index/materialCheck`);
 
 
