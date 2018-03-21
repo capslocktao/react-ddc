@@ -4,13 +4,20 @@ import {withRouter, Route,Switch,Redirect } from 'react-router-dom';
 import Container from './containers/container/container'
 import {HOST,API} from './const/host'//全局服务器路径
 import { connect } from 'react-redux'
-import Search from "./containers/publicView/search/search";
+
 import axios from "axios";
 import Pay from "./containers/roleCustomer/pay/pay"
 import AddressManage from "./containers/publicView/addressManage/addressManage"
 import AddVisitPlan from "./containers/roleSale/visitPlan/addVisitPlan/addVisitPlan";
-import NewAddress from "./containers/publicView/addressManage/newAddress/newAddress"
+
+import NewAddress from "./containers/publicView/addressManage/newAddress/newAddress";
+import Add from "./containers/roleSale/orderManagement/add/add"//销售订单添加
+
+import Details from "./containers/roleSale/orderManagement/details/details"//销售订单详情
+
+import Search from "./containers/roleSale/orderManagement/search/search"//销售订单搜索
 @withRouter
+
 @connect(
     state=>state.count
 )
@@ -38,14 +45,27 @@ class Router extends Component {
                     component:AddVisitPlan
                 },
                 {
+
                     path:`${HOST}/addressManage`,
                     component:AddressManage
                 },
                 {
                     path:`${HOST}/newAddress`,
                     component:NewAddress
-                }
+                },
+                {
+                    path:`${HOST}/orderManagement/add`,
+                    component:Add
+                },
+                {
+                    path:`${HOST}/orderManagement/details/:id`,
+                    component:Details
+                },
+                {
+                    path:`${HOST}/orderManagement/search`,
+                    component:Search
 
+                }
             ]
         }
     }
