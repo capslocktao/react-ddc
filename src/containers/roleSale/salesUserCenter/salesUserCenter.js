@@ -38,7 +38,11 @@ class SalesUserCenter extends Component {
     componentDidMount(){
         console.log('挂载后')
     }
-
+    componentWillUnmount = () => {
+        this.setState = (state,callback)=>{
+            return;
+        };
+    }
     render() {
 
         return (

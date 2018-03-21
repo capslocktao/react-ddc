@@ -35,6 +35,7 @@ import AccountantUserCenter from '../roleAccountant/accountantUserCenter/account
 import MaterialCheck from '../roleOperation/materialCheck/materialCheck'//物料审核
 import PresentCheck from '../roleOperation/presentCheck/presentCheck'//赠品审核
 import WarehouseUserCenter from '../roleOperation/warehouseUserCenter/warehouseUserCenter'//赠品审核
+import SendManagement from '../roleOperation/sendManagement/sendManagement'//赠品审核
 import './container.less';
 
 
@@ -172,9 +173,10 @@ class Container extends Component {
             ],
             //运营
             roleOperation:[
+/*
                 {
                     path:`${HOST}/index/materialCheck`,
-                    name:`物料审核`,
+                    name:`发货管理`,
                     icon:"icon-stockCheck",
                     component:MaterialCheck
                 },
@@ -183,6 +185,13 @@ class Container extends Component {
                     name:`赠品审核`,
                     icon:"icon-gift",
                     component:PresentCheck
+                },
+*/
+                {
+                    path:`${HOST}/index/sendManagement`,
+                    name:`发货管理`,
+                    icon:"icon-stockCheck",
+                    component:SendManagement
                 },
                 {
                     path:`${HOST}/index/wareHouseUserCenter`,
@@ -237,11 +246,11 @@ class Container extends Component {
                    component:CustomerOrderForm
                 },
                 {
-                   path:`${HOST}/index/visitPlan`,
+                   path:`${HOST}/index/visitPlan`,//拜访计划
                    component:VisitPlan
                 },
                 {
-                   path:`${HOST}/index/purchase`,
+                   path:`${HOST}/index/purchase`,//商品采购
                    component:Purchase
                 },
                 {
@@ -275,7 +284,12 @@ class Container extends Component {
                 {
                     path:`${HOST}/index/orderManagement`,
                     component:orderManagement
-                }
+                },
+                //发货管理
+                {
+                    path:`${HOST}/index/sendManagement`,
+                    component:SendManagement
+                },
             ]
         };
     };
@@ -285,7 +299,6 @@ class Container extends Component {
     roleMenu(){
         if(JSON.parse(sessionStorage.getItem('user'))){
             let roleCode = JSON.parse(sessionStorage.getItem('user')).roleCode;
-            console.log(roleCode);
             switch (roleCode){
                 case "0":
                     return this.state.topManager;

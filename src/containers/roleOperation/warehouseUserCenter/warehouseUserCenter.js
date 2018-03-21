@@ -16,6 +16,12 @@ class WarehouseUserCenter extends Component {
         this.logout = this.logout.bind(this)
 
     };
+    componentWillUnmount(){
+        //重写组件的setState方法，直接返回空
+        this.setState = (state,callback)=>{
+            return;
+        };
+    }
     logout(){
         alert('确认退出吗？？',"是否确认真的退出？", [
             { text: '取消', onPress: () => console.log('cancel') },

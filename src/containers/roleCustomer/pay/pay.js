@@ -1,30 +1,85 @@
 import React, {Component} from 'react';
-import { NavBar,Icon,Radio } from 'antd-mobile';
-import {WingBlank} from "antd-mobile";
+import { NavBar,Icon,Radio,Button,WingBlank,ImagePicker,Toast } from 'antd-mobile';
+import axios from "axios"
 import { Link } from "react-router-dom";
 import {HOST} from "../../../const/host";
 import './pay.less';
+const API = "http://192.168.31.34:8080"
 const RadioItem = Radio.RadioItem;
 class Pay extends Component {
     constructor(props) {
         super(props);
         this.state = {
             goodsData:JSON.parse(sessionStorage.getItem("goodsData")),
+            address:{
+              customerName:"周海涛",
+              mobilePhone:"18840846671",
+              detailAddress:"北京市朝阳区定福庄西里2号院北京爸爸的选择有限公司"
+            },
             payMethod:[
-                { value:"1",label:"转账支付" },
-                { value:"2",label:"未付款先发货" }
+                { value:"TRANSFER",label:"转账支付" },
+                { value:"ALIPAY",label:"支付宝支付" }
             ],
-            payType:"1"
+            payType:"TRANSFER",
+            files:[],
+            imgUrl:[]
         };
-        this.changePayType = this.changePayType.bind(this)
+        this.changePayType = this.changePayType.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.submit = this.submit.bind(this)
     };
     componentDidMount(){
-        console.log(JSON.parse(sessionStorage.getItem("goodsData")));
+
     }
     changePayType(val){
+        console.log(val);
         this.setState({
             payType:val
         })
+    }
+    onChange = (files) => {
+        let formData = new FormData();
+        formData.append("file",files[files.length-1].file,files[files.length-1].name);
+        let config={
+            headers: {'Content-Type': 'multipart/form-data'}
+        };
+        axios.post(`http://192.168.31.34:8080/base/attachment/upload/signal/uploadImg`,formData,config).then(response=>{
+            let res = response.data;
+            if(res.result){
+                this.state.imgUrl.push(res.data)
+                this.setState({files});
+            }else{
+                Toast.fail(res.msg,1)
+            }
+        });
+
+
+    };
+    submit(){
+        let goodsData = [];
+        let totalGoodsPrice = 0
+        this.state.goodsData.forEach(v=>{
+            goodsData.push({
+                goodsId : v.goodsId,
+                modelSize : v.modelSize,
+                price : v.price,
+                unitsId : v.unitsId,
+                num : v.num
+            })
+            totalGoodsPrice +=v.price;
+        })
+        let submitData={
+            paymentVoucher :this.state.imgUrl.join(","),
+            goodsData,
+            address:this.state.address.detailAddress,
+            payType:this.state.payType,
+            totalGoodsPrice
+        };
+        axios.post(`${API}/base/order/addOrder`,submitData).then(response=>{
+            let res = response.data;
+            console.log(res);
+        })
+        console.log(submitData);
     }
     render() {
         return (
@@ -42,11 +97,11 @@ class Pay extends Component {
                     <div className="address-box">
                         <WingBlank>
                             <div className="consignee">
-                                <div className="name">代用名</div>
-                                <div className="phone">18840846671</div>
+                                <div className="name">{this.state.address.customerName}</div>
+                                <div className="phone">{this.state.address.mobilePhone}</div>
                             </div>
                             <div className="address">
-                                北京市朝阳区定福庄西里2号院北京爸爸的选择有限公司
+                                {this.state.address.detailAddress}
                             </div>
                         </WingBlank>
                     </div>
@@ -71,14 +126,31 @@ class Pay extends Component {
                             }
 
                     </div>
-                    <div className="pay-method">
-                        {this.state.payMethod.map(i => (
-                            <RadioItem key={i.value} checked={this.state.payType === i.value} onChange={() => this.changePayType(i.value)}>
-                                {i.label}
-                            </RadioItem>
-                        ))}
+                    <div className="upload">
+                        <WingBlank>
+                            <div className="upload-title">上传转账凭证(最多3张)</div>
+                            <ImagePicker
+                                files={this.state.files}
+                                onChange={this.onChange}
+                                onImageClick={(index, fs) => console.log(index, fs)}
+                                selectable={this.state.files.length < 3}
+                                multiple={true}
+                            />
+                        </WingBlank>
                     </div>
+
+
                 </div>
+                <div className="pay-method">
+                    {this.state.payMethod.map(i => (
+                        <RadioItem key={i.value} checked={this.state.payType === i.value} onChange={() => this.changePayType(i.value)}>
+                            {i.label}
+                        </RadioItem>
+                    ))}
+                </div>
+                <WingBlank style={{marginTop:20}}>
+                    <Button type="primary" onClick={this.submit}>提交订单</Button>
+                </WingBlank>
             </div>
         )
     }

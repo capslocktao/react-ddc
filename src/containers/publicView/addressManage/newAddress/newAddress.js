@@ -5,7 +5,7 @@ import {NavBar,Icon,InputItem,Button,TextareaItem,WingBlank,Toast,Checkbox  } fr
 import axios from "axios";
 import "./newAddress.less";
 import {HOST} from "../../../../const/host";
-const API = "http://192.168.31.168:8080";
+const API = "http://192.168.31.222:8080";
 const CheckboxItem = Checkbox.CheckboxItem;
 class ComponentName extends Component {
     constructor(props) {
@@ -121,6 +121,10 @@ class ComponentName extends Component {
             let res = response.data;
             if(res.result){
                 Toast.success("成功",1)
+                window.setTimeout(()=>{
+                    this.props.history.push("/addressManage")
+                },1000)
+
             }else{
                 Toast.fail(res.msg,1)
             }

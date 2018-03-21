@@ -53,6 +53,16 @@ class AddressManage extends Component {
         };
         this.setDefault = this.setDefault.bind(this)
     };
+    componentDidMount(){
+        let user = JSON.parse(sessionStorage.getItem("user"));
+
+        axios.get(`${API}/base/area/findAll`,{
+            params:{id:user.id}
+        }).then(response=>{
+            let res = response.data;
+            console.log(res);
+        })
+    }
     setDefault(id){
         console.log(id);
     }

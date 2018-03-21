@@ -107,10 +107,11 @@ class Router extends Component {
                     console.log('失效');
                     this.props.history.push('/login');
                 }else{
-                    localStorage.setItem('user',JSON.stringify(response.data.data));
+                    sessionStorage.setItem('user',JSON.stringify(response.data.data));
                     this.user = JSON.parse(localStorage.getItem('user'));
                     let refrashPath = sessionStorage.getItem("currentPath");
                     if(refrashPath){
+                        console.log(888);
                         this.props.history.push(refrashPath)
                     }else{
                         switch (response.data.data.roleCode){
@@ -130,7 +131,7 @@ class Router extends Component {
                                 this.props.history.push(`${HOST}/index/paymentCheck`);
                                 break;
                             case "wareHouse":
-                                this.props.history.push(`${HOST}/index/materialCheck`);
+                                this.props.history.push(`${HOST}/index/sendManagement`);
                         }
                     }
 

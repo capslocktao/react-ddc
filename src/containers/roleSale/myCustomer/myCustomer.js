@@ -1,8 +1,10 @@
 import React,{Component} from "react";
 import {NavBar,List ,Tabs } from "antd-mobile";
 import { StickyContainer, Sticky } from 'react-sticky';
-import {HOST} from "../../../const/host"
+import {HOST} from "../../../const/host";
+import axios from "axios"
 import "./myCustomer.less";
+const API = "http://192.168.31.13:8080"
 const Item = List.Item;
 const Brief = Item.Brief;
 function renderTabBar(props) {
@@ -18,86 +20,41 @@ class MyCustomer extends Component{
                 { title: '意向客户' },
                 { title: '成交客户' },
             ],
-            data1:[
-                {
-                    customerName:"张三",
-                    customerType:"门店",
-                    mobilePhone:"18888854657",
-                    status:"二次拜访",
-                    id:"12"
-                },
-                {
-                    customerName:"张三",
-                    customerType:"门店",
-                    mobilePhone:"18888854657",
-                    status:"二次拜访",
-                    id:"10"
-                },
-                {
-                    customerName:"张三",
-                    customerType:"门店",
-                    mobilePhone:"18888854657",
-                    status:"二次拜访",
-                    id:"1"
-                },
-                {
-                    customerName:"张三",
-                    customerType:"门店",
-                    mobilePhone:"18888854657",
-                    status:"二次拜访",
-                    id:"2"
-                },
-                {
-                    customerName:"张三",
-                    customerType:"门店",
-                    mobilePhone:"18888854657",
-                    status:"二次拜访",
-                    id:"3"
-                },
-                {
-                    customerName:"张三",
-                    customerType:"门店",
-                    mobilePhone:"18888854657",
-                    status:"二次拜访",
-                    id:"4"
-                },
-                {
-                    customerName:"张三",
-                    customerType:"门店",
-                    mobilePhone:"18888854657",
-                    status:"二次拜访",
-                    id:"5"
-                },
-                {
-                    customerName:"张三",
-                    customerType:"门店",
-                    mobilePhone:"18888854657",
-                    status:"二次拜访",
-                    id:"6"
-                },
-                {
-                    customerName:"张三",
-                    customerType:"门店",
-                    mobilePhone:"18888854657",
-                    status:"二次拜访",
-                    id:"7"
-                },
-                {
-                    customerName:"张三",
-                    customerType:"门店",
-                    mobilePhone:"18888854657",
-                    status:"二次拜访",
-                    id:"8"
-                },
-                {
-                    customerName:"张三",
-                    customerType:"门店",
-                    mobilePhone:"18888854657",
-                    status:"二次拜访",
-                    id:"9"
-                },
-            ]
+            data:"",
+
+        };
+        this.changeType = this.changeType.bind(this)
+
+    }
+    componentDidMount(){
+        axios.post(`${API}/base/customer/appFindAll`,{customerName:"",status:"随便"}).then(response=>{
+            let res = response.data;
+            this.setState({
+                data:res
+            })
+        })
+    }
+    changeType(val){
+        let status="";
+        switch(val.title){
+            case "意向客户":
+                status="suibian";
+                break;
+            case "成交客户":
+                status="SUCCESS";
+                break;
         }
+        axios.post(`${API}/base/customer/appFindAll`,{customerName:"",status}).then(response=>{
+            let res = response.data;
+            console.log(res);
+            this.setState({
+                data:res
+            },()=>{
+                //console.log(this.state.data);
+            })
+        });
+
+
     }
     render(){
         return(
@@ -111,16 +68,16 @@ class MyCustomer extends Component{
                 <div className="my-customer-body">
                     <StickyContainer>
                         <Tabs tabs={this.state.tabs}
-
+                              onChange={this.changeType}
                               renderTabBar={renderTabBar}
                         >
                             <div className="customer-wrapper">
                                 <List>
 
                                     {
-                                        this.state.data1.map(v=>
+                                        this.state.data?
+                                        this.state.data.map(v=>
                                             <Item arrow="horizontal"key={v.id} multipleLine onClick={() => {this.props.history.push(`${HOST}/myCustomer/customerDetail/${v.id}`)}} extra={v.customerType}>
-
                                                 <div className="name">
                                                     <span>{v.customerName}</span>
                                                     <span>({v.status})</span>
@@ -129,6 +86,8 @@ class MyCustomer extends Component{
                                                 <Brief>{v.mobilePhone}</Brief>
                                             </Item>
                                         )
+                                            :
+                                            ""
                                     }
 
                                 </List>
@@ -137,13 +96,18 @@ class MyCustomer extends Component{
                                 <List>
 
                                     {
-                                        this.state.data1.map(v=>
-                                            <Item arrow="horizontal"key={v.id} multipleLine onClick={() => {}} extra={v.customerType}>
-                                                {v.customerName} <Brief>{v.mobilePhone}</Brief>
-                                            </Item>
-                                        )
+                                        this.state.data?
+                                            this.state.data.map(v=>
+                                                <Item arrow="horizontal"key={v.id} multipleLine onClick={() => {this.props.history.push(`${HOST}/myCustomer/customerDetail/${v.id}`)}} extra={v.customerType}>
+                                                    <div className="name">
+                                                        <span>{v.customerName}</span>
+                                                    </div>
+                                                    <Brief>{v.mobilePhone}</Brief>
+                                                </Item>
+                                            )
+                                            :
+                                            ""
                                     }
-
                                 </List>
                             </div>
 

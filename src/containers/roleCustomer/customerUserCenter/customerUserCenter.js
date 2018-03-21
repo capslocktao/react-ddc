@@ -32,8 +32,10 @@ class CustomerUserCenter extends Component {
         ])
 
     }
-    componentWillMount(){
-        console.log(JSON.parse(sessionStorage.getItem('user')))
+    componentWillUnmount = () => {
+        this.setState = (state,callback)=>{
+            return;
+        };
     }
     componentDidMount(){
         console.log('挂载后')

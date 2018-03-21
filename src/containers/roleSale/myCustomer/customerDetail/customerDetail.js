@@ -4,6 +4,7 @@ import ReactCascader from "../../../../components/react-cascader/react-cascader"
 import { HOST } from '../../../../const/host'
 import axios from 'axios'
 const API = "http://192.168.31.222:8080";
+const API2 = "http://192.168.31.13:8080";
 class CustomerDetail extends Component {
     constructor(props) {
         super(props);
@@ -51,14 +52,17 @@ class CustomerDetail extends Component {
                 }
             ],
             status:"",
-            statusName:""
-
-
+            statusName:"",
+            customerName:"",
+            mobilePhone:"",
+            address:""
         };
         this.showCascader = this.showCascader.bind(this);
         this.onCancel = this.onCancel.bind(this);
         this.onOk = this.onOk.bind(this);
         this.typeOk = this.typeOk.bind(this);
+        this.submit = this.submit.bind(this);
+        this.setValue = this.setValue.bind(this);
 
     };
     componentDidMount(){
@@ -68,7 +72,6 @@ class CustomerDetail extends Component {
             })
         })
     }
-
     showCascader(){
         this.setState({
             cascaderShow:true
@@ -138,7 +141,26 @@ class CustomerDetail extends Component {
         })
 
     }
-
+    setValue(name,v){
+        this.setState({
+            [name]:v
+        })
+    }
+    submit(){
+        let submitData = {
+            customerName:this.state.customerName,
+            mobilePhone:this.state.mobilePhone,
+            detailAddress:this.state.address,
+            cuntomerType:this.state.type,
+            status:this.state.status,
+            addressIds:[this.state.selectedData[0].id,this.state.selectedData[1].id,this.state.selectedData[2].id,]
+        };
+        axios.post(`${API2}/base/customer/addApp`,{...submitData}).then(response=>{
+            let res = response.data;
+            console.log(res);
+        })
+        console.log(submitData)
+    }
     render() {
 
         const ReanderNavBar=()=>{
@@ -154,7 +176,7 @@ class CustomerDetail extends Component {
                     mode="dark"
                     icon={<Icon type="left" />}
                     onLeftClick={()=>{this.props.history.push(`${HOST}/index/myCustomer`)}}
-                    rightContent={<div>完成</div>}
+                    rightContent={<div onClick={()=>{this.submit()}}>完成</div>}
                 >新增客户</NavBar>
         };
         return (
@@ -170,6 +192,7 @@ class CustomerDetail extends Component {
                             type="text"
                             placeholder="请填写客户姓名"
                             clear
+                            onChange={value=>this.setValue("customerName",value)}
                         >
                             客户姓名
                         </InputItem>
@@ -178,6 +201,7 @@ class CustomerDetail extends Component {
                             type="text"
                             placeholder="请填写电话"
                             clear
+                            onChange={value=>this.setValue("mobilePhone",value)}
                         >
                             电话
                         </InputItem>
@@ -200,7 +224,7 @@ class CustomerDetail extends Component {
                             autoHeight
                             name="address"
                             rows={3}
-
+                            onChange={value=>this.setValue("address",value)}
                         />
                     </List>
                 </div>
