@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { NavBar, Icon ,WingBlank,List,InputItem,} from 'antd-mobile';
+import { NavBar, Icon ,WingBlank,List,InputItem,Flex} from 'antd-mobile';
 import { Link } from 'react-router-dom';
 import {HOST} from "../../../../const/host";
 import "./search.less"
@@ -18,6 +18,7 @@ class Search extends Component {
         };
     };
     componentDidMount(){
+        /*列表数据*/
         this.setState({list:[
                 {title:'样品','status':'123',url:'qwe',syl:'1'},
                 {title:'样品','status':'123',url:'qwe',syl:'2'},
@@ -26,6 +27,7 @@ class Search extends Component {
             ]})
     }
     handleChange(v){
+        /*表单搜索*/
         console.log("999",v)
     }
 
@@ -54,23 +56,35 @@ class Search extends Component {
                         </div>
                         {
                             this.state.list.map(v=>(
-                                <Link key={v.syl} to={ `${HOST}/customerOrderForm/details/${v.syl}`}>
-                                    <List
+                                <List
 
-                                        onClick={()=>{
+                                    onClick={()=>{
 
-                                        }}
-                                        className="my-list">
-                                        <Item
-                                            arrow="horizontal"
-                                            multipleLine
-                                            onClick={() => {}}
-                                            platform="android"
-                                        >
-                                            {v.title}<Brief>There may have water ripple effect of</Brief>
-                                        </Item>
-                                    </List>
-                                </Link>
+                                    }}
+                                    className="my-list">
+                                    <Item
+                                        multipleLine
+                                        onClick={() => {}}
+                                        platform="android"
+                                        className="order-list"
+                                    >
+                                        {v.title} 订单号 收货人
+                                        <Brief>货物地址状态</Brief>
+                                        <Flex justify="end">
+                                            <Link key={v.syl} to={ `${HOST}/logistics/${v.syl}`}>
+                                                <Flex.Item className="button">
+                                                    查看物流
+                                                </Flex.Item>
+                                            </Link>
+                                            <Link key={v.syl} to={ `${HOST}/orderManagement/details/${v.syl}`}>
+                                                <Flex.Item className="button">
+                                                    查看详情
+                                                </Flex.Item>
+                                            </Link>
+                                        </Flex>
+
+                                    </Item>
+                                </List>
                             ))
                         }
                     </WingBlank>

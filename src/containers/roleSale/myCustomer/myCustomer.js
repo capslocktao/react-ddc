@@ -3,7 +3,6 @@ class MyCustomer extends Component{
     render(){
         return(
             <div>
-                
             </div>
 
         )

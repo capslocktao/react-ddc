@@ -18,7 +18,7 @@ import StockCheck from '../topManager/stockCheck/stockCheck';//库存查询
 //销售
 import VisitPlan from '../roleSale/visitPlan/visitPlan';//拜访计划
 import MyCustomer from '../roleSale/myCustomer/myCustomer'//客户管理
-import orderManagement from '../roleSale/orderManagement/orderManagement'//订单管理
+import OrderManagement from '../roleSale/orderManagement/orderManagement'//订单管理
 
 //客户
 import Purchase from '../roleCustomer/purchase/purchase';//商品采购
@@ -100,14 +100,14 @@ class Container extends Component {
                 {
                     path:`${HOST}/index/myCustomer`,
                     name:`我的客户`,
-                    icon:"icon-orderForm",
+                    icon:"icon-customer",
                     component:MyCustomer
                 },
                 {
                     path:`${HOST}/index/orderManagement`,
                     name:`订单管理`,
                     icon:"icon-orderForm",
-                    component:orderManagement
+                    component:OrderManagement
                 },
                 {
                     path:`${HOST}/index/visitPlan`,
@@ -249,7 +249,7 @@ class Container extends Component {
                 },
                 {
                     path:`${HOST}/index/orderManagement`,
-                    component:orderManagement
+                    component:OrderManagement
                 }
             ]
         };
