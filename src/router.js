@@ -20,6 +20,8 @@ import Search from "./containers/roleSale/orderManagement/search/search"//销售
 import Logistics from "./components/logistics/logistics"//物流查询
 
 import ellipsis from "./containers/roleSale/ellipsis/ellipsis";
+
+import Searchs from "./containers/roleSale/visitPlan/searchs/searchs"//拜访计划搜索
 import VisitDetail from "./containers/roleSale/visitPlan/visitDetail/visitDetail";
 import CustomerDetail from "./containers/roleSale/myCustomer/customerDetail/customerDetail";
 @withRouter
@@ -57,10 +59,6 @@ class Router extends Component {
                     component:VisitDetail
                 },
                 {
-                    path:`${HOST}/ellipsis`,
-                    component:ellipsis
-                },
-                {
 
                     path:`${HOST}/addressManage`,
                     component:AddressManage
@@ -83,6 +81,7 @@ class Router extends Component {
 
                 },
                 {
+
                     path:`${HOST}/myCustomer/customerDetail/:id`,
                     component:CustomerDetail
                 },
@@ -91,8 +90,13 @@ class Router extends Component {
                     component:CustomerDetail
                 },
                 {
-                   path:`${HOST}/logistics/:id`,
-                   component:Logistics
+                    path: `${HOST}/logistics/:id`,
+                    component: Logistics
+                },
+                {
+                    path:`${HOST}/searchs`,
+                    component:Searchs
+
                 }
             ]
         }

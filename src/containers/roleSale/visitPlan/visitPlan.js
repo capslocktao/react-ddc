@@ -15,7 +15,7 @@ class VisitPlan extends Component {
     };
     componentDidMount(){
         console.log(API)
-        axios.post(`${API}/base/visitPlan/findAll`,).then((response)=>{
+        axios.post(`${API}/base/visitPlan/findAll`,{customerName:""}).then((response)=>{
             console.log(response.data)
             let res = response.data;
             this.setState({
@@ -31,12 +31,12 @@ class VisitPlan extends Component {
                 <NavBar
                     mode="dark"
                     leftContent={
-                        <Link to={`${HOST}/search`}>
+                        <Link to={`${HOST}/searchs`}>
                             <Icon key="0" type="search" style={{ marginRight: '16px',color:"white" }} />
                         </Link>
                     }
                     rightContent={
-                        <Link to={`${HOST}/ellipsis`} style={{color:"white"}}>
+                        <Link to={`${HOST}/addVisitPlan`} style={{color:"white"}}>
                         <Icon key="1" type="" />添加
                         </Link>
                     }
@@ -45,7 +45,7 @@ class VisitPlan extends Component {
                 {
                     this.state.content?
                     this.state.content.map((v=>
-                        <Link to={`${HOST}/visitDetail/${v.id}`} key={v.name}>
+                        <Link to={`${HOST}/visitDetail/${v.id}`} key={v.id}>
                                 <div className="goods-item ">
                                       <WingBlank className="big-title">
                                               <div className ="title" >

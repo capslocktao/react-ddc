@@ -290,6 +290,7 @@ class Container extends Component {
 
                     component:orderManagement
                 },
+
                 //发货管理
                 {
                     path:`${HOST}/index/sendManagement`,
