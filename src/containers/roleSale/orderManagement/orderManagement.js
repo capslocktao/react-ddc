@@ -3,6 +3,7 @@ import { NavBar,Icon, WingBlank,List,Tabs, WhiteSpace ,Flex } from 'antd-mobile'
 import { StickyContainer, Sticky } from 'react-sticky';
 import { Link } from 'react-router-dom';
 import { HOST } from '../../../const/host';
+import axios from "axios"
 import "./orderManagement.less"
 const Item = List.Item;
 const Brief = Item.Brief;
