@@ -234,7 +234,9 @@ class CustomerDetail extends Component {
                     getData={this.getData.bind(this)}
                     data={this.state.areaData}
                     onOk={this.onOk.bind(this)}
-                ></ReactCascader>
+                >
+
+                </ReactCascader>
 
             </div>
         )

@@ -70,6 +70,9 @@ class GoodsList extends Component {
 
     }
     render() {
+        /*
+
+        * */
         return (
             <QueueAnim delay={300} type="top" className="goods-list">
                 {
