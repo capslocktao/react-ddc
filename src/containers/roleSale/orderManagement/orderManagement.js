@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import { NavBar,Icon, WingBlank,List,Tabs, WhiteSpace  } from 'antd-mobile';
+import { NavBar,Icon, WingBlank,List,Tabs, WhiteSpace ,Flex } from 'antd-mobile';
 import { StickyContainer, Sticky } from 'react-sticky';
 import { Link } from 'react-router-dom';
 import { HOST } from '../../../const/host';
+import "./orderManagement.less"
 const Item = List.Item;
 const Brief = Item.Brief;
 //tab内容
@@ -13,11 +14,10 @@ function renderTabBar(props) {
 }
 //销售tabs
 const saleTabs = [
-    { title: '未付款',status:'UNPAY' },
     { title: '待确认',status:"UNCONFIRMED" },
     { title: '财务确认',status:"UNFINANCECONFIRMED" },
-    { title: '未发货',status:"UNSEND" },
-    { title: '已发货',status:"ALLSEND" },
+    { title: '待发货',status:"UNSEND" },
+    { title: '待收货',status:"ALLSEND" },
     { title: '完成',status:"COMPLETE" },
 ];
 //分公司管理员tabs
@@ -41,6 +41,9 @@ class OrderManagement extends Component {
         };
     };
     componentDidMount(){
+        /*
+        list列表数据
+        * */
         this.setState({list:[
                 {title:'样品','status':'123',url:'qwe',syl:'1'},
                 {title:'样品','status':'123',url:'qwe',syl:'2'},
@@ -54,17 +57,14 @@ class OrderManagement extends Component {
                 <div className="header">
                     <NavBar
                         mode="dark"
-                        leftContent={
-                            <Link to={`${HOST}/orderManagement/add`}>
-                                 <Icon type="up" style={{ marginRight: '16px' }} />
-                            </Link>
-                        }
                         rightContent={
                             [
                                 <Link key="0" to={`${HOST}/orderManagement/search`}>
                                     <Icon  type="search" style={{ marginRight: '16px' }} />
                                 </Link>,
-                                <Icon key="1" type="ellipsis" />,
+                                <Link to={`${HOST}/orderManagement/add`}>
+                                    <Icon type="up" style={{ marginRight: '16px' }} />
+                                </Link>
                             ]
                         }
                     >客户订单</NavBar>
@@ -96,9 +96,9 @@ class OrderManagement extends Component {
                         </Tabs>
                     </StickyContainer>
                     <WingBlank size={'sm'}>
+                        {/*列表循环*/}
                         {
                             this.state.list.map(v=>(
-                                <Link key={v.syl} to={ `${HOST}/orderManagement/details/${v.syl}`}>
                                     <List
 
                                         onClick={()=>{
@@ -106,16 +106,28 @@ class OrderManagement extends Component {
                                         }}
                                         className="my-list">
                                         <Item
-                                            arrow="horizontal"
                                             multipleLine
                                             onClick={() => {}}
                                             platform="android"
+                                            className="order-list"
                                         >
                                             {v.title} 订单号 收货人
                                             <Brief>货物地址状态</Brief>
+                                            <Flex justify="end">
+                                                <Link key={v.syl} to={ `${HOST}/logistics/${v.syl}`}>
+                                                    <Flex.Item className="button">
+                                                        查看物流
+                                                    </Flex.Item>
+                                                </Link>
+                                                <Link key={v.syl} to={ `${HOST}/orderManagement/details/${v.syl}`}>
+                                                    <Flex.Item className="button">
+                                                            查看详情
+                                                    </Flex.Item>
+                                                </Link>
+                                            </Flex>
+
                                         </Item>
                                     </List>
-                                </Link>
                             ))
                         }
                     </WingBlank>

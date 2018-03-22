@@ -92,7 +92,7 @@ class details extends Component {
                             <List.Item>备注</List.Item>
                         </Accordion.Panel>
                     </Accordion>*/}
-                    <div>
+                    <div style={{width:'100%',overflow:'auto'}}>
                         <WingBlank mode={20} className="stepsExample">
                             <WhiteSpace />
                             <Steps current={2} direction="horizontal" size="small">{steps}</Steps>

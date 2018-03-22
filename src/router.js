@@ -16,6 +16,9 @@ import Add from "./containers/roleSale/orderManagement/add/add"//销售订单添
 
 import Details from "./containers/roleSale/orderManagement/details/details"//销售订单详情
 import Search from "./containers/roleSale/orderManagement/search/search"//销售订单搜索
+
+import Logistics from "./components/logistics/logistics"//物流查询
+
 import ellipsis from "./containers/roleSale/ellipsis/ellipsis";
 import VisitDetail from "./containers/roleSale/visitPlan/visitDetail/visitDetail";
 import CustomerDetail from "./containers/roleSale/myCustomer/customerDetail/customerDetail";
@@ -77,6 +80,7 @@ class Router extends Component {
                 {
                     path:`${HOST}/orderManagement/search`,
                     component:Search
+
                 },
                 {
                     path:`${HOST}/myCustomer/customerDetail/:id`,
@@ -85,6 +89,10 @@ class Router extends Component {
                 {
                     path:`${HOST}/myCustomer/newCustomer`,
                     component:CustomerDetail
+                },
+                {
+                   path:`${HOST}/logistics/:id`,
+                   component:Logistics
                 }
             ]
         }
