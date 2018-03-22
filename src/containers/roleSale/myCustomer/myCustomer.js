@@ -59,11 +59,15 @@ class MyCustomer extends Component{
     render(){
         return(
             <div className="my-customer">
+
                 <div className="my-customer-header">
-                    <NavBar
-                        mode="dark"
-                        rightContent={<div onClick={()=>{this.props.history.push(`${HOST}/myCustomer/newCustomer`)}}>新增</div>}
-                    >我的客户</NavBar>
+                    <div className="my-customer-header-inner">
+                        <NavBar
+                            mode="dark"
+                            rightContent={<div onClick={()=>{this.props.history.push(`${HOST}/myCustomer/newCustomer`)}}>新增</div>}
+                        >我的客户</NavBar>
+                    </div>
+
                 </div>
                 <div className="my-customer-body">
                     <StickyContainer>

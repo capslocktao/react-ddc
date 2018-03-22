@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { NavBar,Icon,Radio,Button,WingBlank,ImagePicker,Toast } from 'antd-mobile';
+import { NavBar,Icon,Radio,Button,WingBlank,ImagePicker,Toast,TextareaItem } from 'antd-mobile';
 import axios from "axios"
 import { Link } from "react-router-dom";
 import {HOST} from "../../../const/host";
@@ -22,13 +22,24 @@ class Pay extends Component {
             ],
             payType:"TRANSFER",
             files:[],
-            imgUrl:[]
+            imgUrl:[],
+            mark:"",
+            totalGoodsPrice:0
         };
         this.changePayType = this.changePayType.bind(this);
         this.onChange = this.onChange.bind(this);
         this.submit = this.submit.bind(this)
+        this.setMarkValue = this.setMarkValue.bind(this)
     };
     componentDidMount(){
+        let totalGoodsPrice = 0
+        this.state.goodsData.forEach(v=>{
+            totalGoodsPrice +=v.num * v.price
+
+        });
+        this.setState({
+            totalGoodsPrice
+        })
 
     }
     changePayType(val){
@@ -37,6 +48,7 @@ class Pay extends Component {
             payType:val
         })
     }
+    //上传图片
     onChange = (files) => {
         let formData = new FormData();
         formData.append("file",files[files.length-1].file,files[files.length-1].name);
@@ -55,31 +67,59 @@ class Pay extends Component {
 
 
     };
+    setMarkValue(val){
+        this.setState({
+            mark:val
+        })
+    }
     submit(){
         let goodsData = [];
-        let totalGoodsPrice = 0
+
         this.state.goodsData.forEach(v=>{
+/*            goodsData.push({
+                goodsId : 21,
+                modelSize : v.modelSize,
+                price : 32,
+                unitsId : 12,
+                units:v.units,
+                num : v.num,
+                total:v.num*v.price
+            });*/
             goodsData.push({
                 goodsId : v.goodsId,
                 modelSize : v.modelSize,
                 price : v.price,
                 unitsId : v.unitsId,
-                num : v.num
-            })
-            totalGoodsPrice +=v.price;
-        })
+                units:v.units,
+                num : v.num,
+                total:v.num*v.price
+            });
+
+        });
         let submitData={
             paymentVoucher :this.state.imgUrl.join(","),
-            goodsData,
-            address:this.state.address.detailAddress,
+            appOrderItemModels: goodsData,
+            address:`${this.state.address.customerName}@${this.state.address.mobilePhone}@${this.state.address.detailAddress}`,
             payType:this.state.payType,
-            totalGoodsPrice
+            totalGoodsPrice:this.state.totalGoodsPrice,
+            mark:this.state.mark
         };
         axios.post(`${API}/base/order/addOrder`,submitData).then(response=>{
             let res = response.data;
             console.log(res);
+            if(res.result){
+                Toast.success(res.msg,1);
+                setTimeout(()=>{
+                    this.props.history.push(`${HOST}/index/purchase`)
+                },1000)
+            }else{
+                Toast.fail(res.msg,1);
+            }
         })
         console.log(submitData);
+    }
+    componentWillUnmount(){
+        sessionStorage.removeItem("goodsData")
     }
     render() {
         return (
@@ -107,23 +147,32 @@ class Pay extends Component {
                     </div>
                     <div className="goods-box">
 
-                            {
-                                this.state.goodsData.map((v,i)=>
-                                    <div key={i} className="goods-item">
-                                        <WingBlank>
-                                            <div className="top">
-                                                <div className="name">{v.goodsName}</div>
-                                                <div className="price">¥{v.price}</div>
-                                            </div>
-                                            <div className="bottom">
-                                                <div className="size">型号：{v.modelSize}</div>
-                                                <div className="num">数量：{v.num}</div>
-                                            </div>
-                                        </WingBlank>
-
+                    {
+                        this.state.goodsData.map((v,i)=>
+                            <div key={i} className="goods-item">
+                                <WingBlank>
+                                    <div className="top">
+                                        <div className="name">{v.goodsName}</div>
+                                        <div className="price">¥{v.price}</div>
                                     </div>
-                                )
-                            }
+                                    <div className="bottom">
+                                        <div className="size">型号：{v.modelSize}</div>
+                                        <div className="num">数量：{v.num}</div>
+                                    </div>
+                                </WingBlank>
+
+                            </div>
+                        )
+                    }
+
+                </div>
+                    <div className="totalPrice-wrapper">
+                        <WingBlank>
+                            <div className="totalPrice">
+                                <div>总价</div>
+                                <div>¥{this.state.totalGoodsPrice}</div>
+                            </div>
+                        </WingBlank>
 
                     </div>
                     <div className="upload">
@@ -147,6 +196,16 @@ class Pay extends Component {
                             {i.label}
                         </RadioItem>
                     ))}
+                </div>
+                <div className="mark">
+                    <TextareaItem
+                        title="订单备注"
+                        placeholder="请输入备注"
+                        autoHeight
+                        rows={3}
+                        onChange={value=>this.setMarkValue(value)}
+                    />
+
                 </div>
                 <WingBlank style={{marginTop:20}}>
                     <Button type="primary" onClick={this.submit}>提交订单</Button>

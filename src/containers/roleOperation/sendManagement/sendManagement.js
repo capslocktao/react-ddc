@@ -4,7 +4,7 @@ import { StickyContainer, Sticky } from 'react-sticky';
 import './sendManagement.less'
 import {HOST} from "../../../const/host";
 import axios from "axios"
-const API = "huttp://192.168.31.34:8080"
+const API = "http://192.168.31.34:8080"
 const Item = List.Item;
 const Brief = Item.Brief;
 function renderTabBar(props) {
@@ -129,9 +129,8 @@ class SendManagement extends Component {
                                     {
                                         this.state.data1.map(v=>
                                             <Item arrow="horizontal"key={v.id} multipleLine onClick={() => {this.props.history.push(`${HOST}/myCustomer/customerDetail/${v.id}`)}} extra={v.customerType}>
-
                                                 <div className="name">
-                                                    <span>{v.orderNo}</span>
+                                                    <span>订单号：{v.orderNo}</span>
                                                     <span className="total-price">¥{v.totalGoodsPrice}</span>
 
                                                 </div>

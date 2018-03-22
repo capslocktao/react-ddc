@@ -22,6 +22,8 @@ class Purchase extends Component {
                 let res = response.data;
                 this.setState({
                     goods:res
+                },()=>{
+                    console.log(this.state.goods)
                 })
 
             }
@@ -50,14 +52,7 @@ class Purchase extends Component {
                 }
             })
         });*/
-        axios.post(`http://192.168.31.34:8080/base/order/addOrder`,{...this.state.selectedGoods}).then(response=>{
-            let res = response.data;
-            console.log(res);
-            if(res.result){
-                this.props.history.push()
-            }
-        });
-        console.log(this.state.selectedGoods);
+
         this.props.history.push(`${HOST}/pay`);
 
         sessionStorage.setItem("goodsData",JSON.stringify(this.state.selectedGoods))
