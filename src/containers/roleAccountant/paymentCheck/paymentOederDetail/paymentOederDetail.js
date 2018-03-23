@@ -16,7 +16,7 @@ class PaymentOrderDetail extends Component {
             checkPic:false,
             preview:""
         };
-        this.linkToPrevwew = this.linkToPrevwew.bind(this)
+        this.linkToPreview = this.linkToPreview.bind(this)
         this.checkPayment = this.checkPayment.bind(this)
     };
     componentDidMount(){
@@ -35,11 +35,10 @@ class PaymentOrderDetail extends Component {
 
         })
     }
-    linkToPrevwew(){
+    linkToPreview(){
         let imgs = this.state.data.paymentVoucher.split(",");
         sessionStorage.setItem("preview",JSON.stringify(imgs));
         sessionStorage.setItem("backTo",this.props.match.url);
-
         this.props.history.push(`${HOST}/previewImg`)
     }
     checkPayment(){
@@ -129,7 +128,7 @@ class PaymentOrderDetail extends Component {
                                 <div className="pay-method">
                                     <List>
                                         <Item extra={`${this.state.data.payType}`}>支付方式</Item>
-                                        <Item arrow="horizontal" onClick={this.linkToPrevwew}>查看转账凭证</Item>
+                                        <Item arrow="horizontal" onClick={this.linkToPreview}>查看转账凭证</Item>
                                     </List>
 
 

@@ -22,9 +22,10 @@ class SendManagement extends Component {
             ],
             data:[]
         };
+        this.changeType = this.changeType.bind(this)
     };
     componentDidMount(){
-        let status = "UNSEND"
+        let status = "UNSEND";
         axios.get(`${API}/base/order/findAllAppOrderModel`,{
             params:{
                 status
@@ -37,15 +38,20 @@ class SendManagement extends Component {
         })
     }
     changeType(tab,index){
-        axios.get(`${API}/base/order/findAllAppOrderModel`,{
-            params:{status:tab.value}
-        }).then(response=>{
-            let res = response.data;
-            console.log(this);
-            /*            this.setState({
-                            data:res
-                        });*/
-        });
+        this.setState({
+            data:[]
+        },()=>{
+            axios.get(`${API}/base/order/findAllAppOrderModel`,{
+                params:{status:tab.value}
+            }).then(response=>{
+                let res = response.data;
+                console.log(res);
+                this.setState({
+                    data:res
+                });
+            });
+
+        })
     }
 
 
@@ -71,7 +77,7 @@ class SendManagement extends Component {
                                             ""
                                             :
                                         this.state.data.map(v=>
-                                            <Item arrow="horizontal"key={v.orderId} multipleLine onClick={() => {this.props.history.push(`${HOST}/myCustomer/customerDetail/${v.id}`)}} extra={v.customerType}>
+                                            <Item arrow="horizontal"key={v.orderId} multipleLine onClick={() => {this.props.history.push(`${HOST}/sendManagement/operationOrderDetail/${v.orderId}`)}} extra={v.customerType}>
                                                 <div className="name">
                                                     <span>订单号：{v.orderNo}</span>
                                                     <span className="total-price">¥{v.totalGoodsPrice}</span>
@@ -97,8 +103,18 @@ class SendManagement extends Component {
                                             ""
                                             :
                                         this.state.data.map(v=>
-                                            <Item arrow="horizontal"key={v.orderId} multipleLine onClick={() => {}} extra={v.customerType}>
-                                                {v.customerName} <Brief>{v.mobilePhone}</Brief>
+                                            <Item arrow="horizontal"key={v.orderId} multipleLine onClick={() => {this.props.history.push(`${HOST}/myCustomer/customerDetail/${v.id}`)}} extra={v.customerType}>
+                                                <div className="name">
+                                                    <span>订单号：{v.orderNo}</span>
+                                                    <span className="total-price">¥{v.totalGoodsPrice}</span>
+
+                                                </div>
+                                                <Brief>
+                                                    <div className="brief">
+                                                        <span>{v.customerName}</span>
+                                                        <span>{v.createTime}</span>
+                                                    </div>
+                                                </Brief>
                                             </Item>
                                         )
                                     }

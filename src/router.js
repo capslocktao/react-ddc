@@ -31,8 +31,11 @@ import AddVisitRecord from "./containers/roleSale/visitPlan/addVisitPlan/addVisi
 //-------------------------------------------财务
 import PaymentOrderDetail from "./containers/roleAccountant/paymentCheck/paymentOederDetail/paymentOederDetail";
 
+//-------------------------------------------仓库
+import OperationOrderDetail from "./containers/roleOperation/sendManagement/operationOrderDetail/operationOrderDetail"
+
 //-------------------------------------------查看图片
-import Preview from "./containers/roleAccountant/previewImg/previewImg"
+import Preview from "./containers/publicView/previewImg/previewImg"
 @withRouter
 @connect(
     state=>state.count
@@ -73,10 +76,14 @@ class Router extends Component {
 
                 //---------------------------------------------------销售
                 {
-
                     path:`${HOST}/addVisitPlan`,
                     component:AddVisitPlan
                 },
+                {
+                    path:`${HOST}/addVisitRecord`,
+                    component:AddVisitRecord
+                },
+
                 {
                     path:`${HOST}/visitDetail/:id`,
                     component:VisitDetail
@@ -107,6 +114,7 @@ class Router extends Component {
                     component:Search
 
                 },
+
                 //---------------------------------------------------财务
                 {
                     path:`${HOST}/paymentOrderDetail/:id`,
@@ -120,13 +128,13 @@ class Router extends Component {
                 {
                     path:`${HOST}/searchs`,
                     component:Searchs
-
                 },
+                //-----------------------------------------------------仓库人员
                 {
-                    path:`${HOST}/addVisitRecord`,
-                    component:AddVisitRecord
+                    path:`${HOST}/sendManagement/operationOrderDetail/:id`,
+                    component:OperationOrderDetail
+                }
 
-                },
             ]
         }
     }

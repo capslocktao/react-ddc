@@ -7,6 +7,7 @@ import "./myOrderDetail.less";
 const RadioItem = Radio.RadioItem;
 const API = "http://192.168.31.34:8080";
 const alert = Modal.alert;
+const Item = List.Item;
 class MyOrderDetail extends Component {
     constructor(props) {
         super(props);
@@ -29,7 +30,7 @@ class MyOrderDetail extends Component {
         this.onChange = this.onChange.bind(this);
         this.submit = this.submit.bind(this);
         this.setMarkValue = this.setMarkValue.bind(this)
-
+        this.linkToPreview = this.linkToPreview.bind(this)
         this.confirm = this.confirm.bind(this)
     };
     componentDidMount(){
@@ -104,6 +105,13 @@ class MyOrderDetail extends Component {
             mark:val
         })
     }
+    linkToPreview(){
+        let imgs = this.state.data.thumbnail.split(",");
+        sessionStorage.setItem("preview",JSON.stringify(imgs));
+        sessionStorage.setItem("backTo",this.props.match.url);
+        this.props.history.push(`${HOST}/previewImg`)
+    }
+
     //确认销售发来的订单
     submit(){
         let submitData={
@@ -382,21 +390,24 @@ class MyOrderDetail extends Component {
 
                         </div>
                         <div className="pay-method">
-                            <InputItem editable={false} value={`${this.state.data.payType}`} style={{textAlign:"right"}}>支付方式</InputItem>
+                            <List>
+                                <Item extra={`${this.state.data.payType}`}>支付方式</Item>
+                            </List>
                         </div>
                         <div className="pay-method">
                             <InputItem editable={false} value={`${this.state.status}`} style={{textAlign:"right"}}>订单状态</InputItem>
                         </div>
-                        <List className="logistics">
-                            <List.Item extra={"申通物流"}>
+                        <List className="logistics" style={{marginTop:10}}>
+                            <Item arrow="horizontal" onClick={this.linkToPreview}>查看发货凭证</Item>
+                            <Item extra={"申通物流"}>
                                 物流公司
-                            </List.Item>
-                            <List.Item extra={"332200984893939"} multipleLine wrap={true}>
+                            </Item>
+                            <Item extra={"332200984893939"} multipleLine wrap={true}>
                                 运单号
-                            </List.Item>
-                            <List.Item arrow="horizontal" onClick={() => {this.props.history.push(`${HOST}/logistics/${23}`)}}>
+                            </Item>
+                            <Item arrow="horizontal" onClick={() => {this.props.history.push(`${HOST}/logistics/${23}`)}}>
                                 查看物流
-                            </List.Item>
+                            </Item>
                         </List>
                         <div className="mark">
                             <TextareaItem
@@ -465,15 +476,16 @@ class MyOrderDetail extends Component {
                             <InputItem editable={false} value={`${this.state.status}`} style={{textAlign:"right"}}>订单状态</InputItem>
                         </div>
                         <List className="logistics">
-                            <List.Item extra={"申通物流"}>
+                            <Item arrow="horizontal" onClick={this.linkToPreview}>查看发货凭证</Item>
+                            <Item extra={"申通物流"}>
                                 物流公司
-                            </List.Item>
-                            <List.Item extra={"332200984893939"} multipleLine wrap={true}>
+                            </Item>
+                            <Item extra={"332200984893939"} multipleLine wrap={true}>
                                 运单号
-                            </List.Item>
-                            <List.Item arrow="horizontal" onClick={() => {this.props.history.push(`${HOST}/logistics/${23}`)}}>
+                            </Item>
+                            <Item arrow="horizontal" onClick={() => {this.props.history.push(`${HOST}/logistics/${23}`)}}>
                                 查看物流
-                            </List.Item>
+                            </Item>
                         </List>
                         <div className="mark">
                             <TextareaItem
