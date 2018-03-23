@@ -68,6 +68,10 @@ class PaymentOrderDetail extends Component {
         ])
 
     }
+    componentWillUnmount(){
+        sessionStorage.setItem("backTo",this.props.match.url)
+    }
+
     render() {
         return (
             <div className="payment-order-detail">
@@ -126,7 +130,6 @@ class PaymentOrderDetail extends Component {
                                             <div>¥{this.state.data.totalGoodsPrice}</div>
                                         </div>
                                     </WingBlank>
-
                                 </div>
                                 <div className="pay-method">
                                     <List>
@@ -142,6 +145,15 @@ class PaymentOrderDetail extends Component {
                                                 :
                                                 ""
                                         }
+                                        {
+                                            this.state.status === "已发货" || this.state.status === "完成"?
+                                                <Item arrow="horizontal" onClick={() => {this.props.history.push(`${HOST}/logistics/${this.state.data.orderNo}`)}}>
+                                                    查看物流
+                                                </Item>
+                                                :
+                                                ""
+                                        }
+
                                     </List>
                                 </div>
 

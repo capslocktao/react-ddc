@@ -12,9 +12,9 @@ class Pay extends Component {
         this.state = {
             goodsData:JSON.parse(sessionStorage.getItem("goodsData")),
             address:{
-              customerName:"周海涛",
-              mobilePhone:"18840846671",
-              detailAddress:"北京市朝阳区定福庄西里2号院北京爸爸的选择有限公司"
+              customerName:"",
+              mobilePhone:"",
+              address:""
             },
             payMethod:[
                 { value:"TRANSFER",label:"转账支付" },
@@ -35,12 +35,25 @@ class Pay extends Component {
         let totalGoodsPrice = 0
         this.state.goodsData.forEach(v=>{
             totalGoodsPrice +=v.num * v.price
-
         });
         this.setState({
             totalGoodsPrice
-        })
+        });
+        let userId = JSON.parse(sessionStorage.getItem("user")).id;
 
+        axios.get(`http://192.168.31.222:8080/base/area/updatePre`,{
+                params:{
+                    id:userId
+                }
+            }
+        ).then(response=>{
+            let res = response.data;
+            this.setState({
+                address:res
+            });
+            console.log(8989);
+            console.log(res)
+        })
     }
     changePayType(val){
         console.log(val);
@@ -103,7 +116,7 @@ class Pay extends Component {
         let submitData={
             paymentVoucher :this.state.imgUrl.join(","),
             appOrderItemModels: goodsData,
-            address:`${this.state.address.customerName}@${this.state.address.mobilePhone}@${this.state.address.detailAddress}`,
+            /*address:`${this.state.address.customerName}@${this.state.address.mobilePhone}@${this.state.address.detailAddress}`,*/
             payType:this.state.payType,
             totalGoodsPrice:this.state.totalGoodsPrice,
             mark:this.state.mark
@@ -145,7 +158,7 @@ class Pay extends Component {
                                 <div className="phone">{this.state.address.mobilePhone}</div>
                             </div>
                             <div className="address">
-                                {this.state.address.detailAddress}
+                                {this.state.address.address}
                             </div>
                         </WingBlank>
                     </div>

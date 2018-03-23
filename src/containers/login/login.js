@@ -21,7 +21,6 @@ class Login extends Component {
     }
     login(){
         if(this.state.userName!==""&&this.state.password!==""){
-
             axios.post(`${API}/login`,{
                 userName:this.state.userName,
                 password:this.state.password

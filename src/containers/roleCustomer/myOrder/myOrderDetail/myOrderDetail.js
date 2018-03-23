@@ -41,7 +41,8 @@ class MyOrderDetail extends Component {
             let res = response.data;
             this.setState({
                 data:res,
-                status:res.status
+                status:res.status,
+                mark:res.mark
             },()=>{
                 console.log(this.state.data);
             });
@@ -52,7 +53,7 @@ class MyOrderDetail extends Component {
 
     //确认收货
     confirm(){
-        alert('确认收获吗？',"请务必确认收到货物", [
+        alert('确认收货吗？',"请务必确认收到货物", [
             { text: '取消', onPress: () => console.log('cancel') },
             { text: '确认', onPress: () => {
                 axios.get(`${API}/base/order/customerConfirm`,{
@@ -123,25 +124,31 @@ class MyOrderDetail extends Component {
             Toast.fail("请上传转账凭证",1);
             return
         }
-        let submitData={
-            paymentVoucher :this.state.imgUrl.join(","),
-            payType:this.state.payType,
-            mark:this.state.mark,
-            id:this.state.data.orderId
-        };
-        axios.post(`${API}/base/order/customerPay`, submitData).then(response => {
-            let res = response.data;
-            console.log(res);
-            if (res.result) {
-                Toast.success(res.msg, 1);
-                setTimeout(() => {
-                    this.props.history.push(`${HOST}/index/purchase`)
-                }, 1000)
-            } else {
-                Toast.fail(res.msg, 1);
-            }
-        });
-        console.log(submitData);
+        alert('确认订单吗？',"请务必确认订单信息准确", [
+            { text: '取消', onPress: () => console.log('cancel') },
+            { text: '确认', onPress: () => {
+                    let submitData={
+                        paymentVoucher :this.state.imgUrl.join(","),
+                        payType:this.state.payType,
+                        mark:this.state.mark,
+                        id:this.state.data.orderId
+                    };
+                    axios.post(`${API}/base/order/customerPay`, submitData).then(response => {
+                        let res = response.data;
+                        console.log(res);
+                        if (res.result) {
+                            Toast.success(res.msg, 1);
+                            setTimeout(() => {
+                                this.props.history.push(`${HOST}/index/purchase`)
+                            }, 1000)
+                        } else {
+                            Toast.fail(res.msg, 1);
+                        }
+                    });
+                }},
+        ])
+
+
     }
     componentWillUnmount(){
         sessionStorage.setItem("backTo",this.props.match.url)
@@ -218,6 +225,7 @@ class MyOrderDetail extends Component {
                                 placeholder="请输入备注"
                                 autoHeight
                                 rows={3}
+                                defaultValue={this.state.data.mark}
                                 onChange={value=>this.setMarkValue(value)}
                             />
 
@@ -423,10 +431,10 @@ class MyOrderDetail extends Component {
                             <Item extra={"申通物流"}>
                                 物流公司
                             </Item>
-                            <Item extra={"332200984893939"} multipleLine wrap={true}>
+                            <Item extra={this.state.data.logisticCode} multipleLine wrap={true}>
                                 运单号
                             </Item>
-                            <Item arrow="horizontal" onClick={() => {this.props.history.push(`${HOST}/logistics/${23}`)}}>
+                            <Item arrow="horizontal" onClick={() => {this.props.history.push(`${HOST}/logistics/${this.state.data.orderNo}`)}}>
                                 查看物流
                             </Item>
                         </List>
@@ -511,13 +519,17 @@ class MyOrderDetail extends Component {
                             <InputItem editable={false} value={`${this.state.status}`} style={{textAlign:"right"}}>订单状态</InputItem>
                         </div>
                         <List className="logistics">
-                            <Item arrow="horizontal" onClick={this.linkToPreview}>查看发货凭证</Item>
+
                             <Item extra={"申通物流"}>
                                 物流公司
                             </Item>
                             <Item extra={"332200984893939"} multipleLine wrap={true}>
                                 运单号
                             </Item>
+                            <Item arrow="horizontal" onClick={() => {this.props.history.push(`${HOST}/logistics/${this.state.data.orderNo}`)}}>
+                                查看物流
+                            </Item>
+
                         </List>
                         <Item arrow="horizontal"  multipleLine onClick={()=>{
                             this.linkToPreview("paymentVoucher")

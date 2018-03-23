@@ -35,9 +35,17 @@ class ComponentName extends Component {
                 data:res,
                 status:res.status
             },()=>{
-                console.log(this.state.data);
+                if(this.state.status === "完成"){
+                    this.setState({
+                        shipperName:this.state.data.shipperName,
+                        logisticCode:this.state.data.logisticCode
+                    })
+                }
+                console.log(res);
+
             });
         })
+        //请求物流公司
         axios.get(`http://192.168.31.13:8080/base/logisticsCompany/findAll`).then(response=>{
             let res = response.data;
             console.log(res);
@@ -129,6 +137,10 @@ class ComponentName extends Component {
         ])
 
     }
+    componentWillUnmount(){
+        sessionStorage.setItem("backTo",this.props.match.url)
+    }
+
     render() {
         return (
             <div className="operation-order-detail">
@@ -205,26 +217,6 @@ class ComponentName extends Component {
                                 />
                             </div>
                             <List style={{marginTop:10}}>
-                                {
-                                    this.state.shipper?
-                                        <Picker data={this.state.shipper}  extra={this.state.shipperName} onChange={(val)=>{this.selectShipper(val)}} cols={1}>
-                                            <List.Item arrow="horizontal">物流公司</List.Item>
-                                        </Picker>
-                                        :
-                                        ""
-                                }
-                            </List>
-
-                            <InputItem
-                                style={{textAlign:"right"}}
-                                onChange={(val)=>{this.setlogisticCode(val)}}
-                                value={this.state.logisticCode}
-                                editable={this.state.status === "未发货"}
-                                placeholder="请填写物流单号"
-                            >
-                                运单号
-                            </InputItem>
-                            <List style={{marginTop:10}}>
                                 <Item arrow="horizontal"  multipleLine onClick={()=>{
                                     this.linkToPreview("paymentVoucher")
                                 }}>
@@ -240,7 +232,36 @@ class ComponentName extends Component {
                                         :
                                         ""
                                 }
+                                {
+                                    this.state.status === "完成"?
+                                        <Item arrow="horizontal" onClick={() => {this.props.history.push(`${HOST}/logistics/${this.state.data.orderNo}`)}}>
+                                            查看物流
+                                        </Item>
+                                        :
+                                        ""
+                                }
                             </List>
+                            <List style={{marginTop:10}}>
+                                {
+                                    this.state.shipper?
+                                        <Picker data={this.state.shipper} disabled={this.state.status ==="完成"} extra={this.state.shipperName} onChange={(val)=>{this.selectShipper(val)}} cols={1}>
+                                            <List.Item arrow="horizontal">物流公司</List.Item>
+                                        </Picker>
+                                        :
+                                        ""
+                                }
+                            </List>
+
+                            <InputItem
+                                style={{textAlign:"right"}}
+                                onChange={(val)=>{this.setlogisticCode(val)}}
+                                value={this.state.logisticCode}
+                                editable={this.state.status !== "完成"}
+                                placeholder="请填写物流单号"
+                            >
+                                运单号
+                            </InputItem>
+
 
                             {
                                 this.state.status === "完成"?

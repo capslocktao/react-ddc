@@ -9,7 +9,7 @@ class MaterialCheck extends Component {
     render() {
         return (
             <div className="material-check">
-                MaterialCheck
+
             </div>
         )
     }
