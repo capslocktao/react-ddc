@@ -17,97 +17,37 @@ class SendManagement extends Component {
         super(props);
         this.state = {
             tabs:[
-                { title: '未发货' },
-                { title: '已完成' },
+                { title: '未发货',value:"UNSEND" },
+                { title: '已完成',value:"COMPLETE" },
             ],
-            data1:[
-                        {
-                            orderNo:"3321334443243289",
-                            customerName:"放大回",
-                            totalGoodsPrice:"40",
-                            createTime:"2018-03-05",
-                            id:"12"
-                        },
-                        {
-                            orderNo:"3321334443243289",
-                            customerName:"放大回",
-                            totalGoodsPrice:"40",
-                            createTime:"2018-03-05",
-                            id:"10"
-                        },
-                        {
-                            orderNo:"3321334443243289",
-                            customerName:"放大回",
-                            totalGoodsPrice:"40",
-                            createTime:"2018-03-05",
-                            id:"1"
-                        },
-                        {
-                            orderNo:"3321334443243289",
-                            customerName:"放大回",
-                            totalGoodsPrice:"40",
-                            createTime:"2018-03-05",
-                            id:"2"
-                        },
-                        {
-                            orderNo:"3321334443243289",
-                            customerName:"放大回",
-                            totalGoodsPrice:"40",
-                            createTime:"2018-03-05",
-                            id:"3"
-                        },
-                        {
-                            orderNo:"3321334443243289",
-                            customerName:"放大回",
-                            totalGoodsPrice:"40",
-                            createTime:"2018-03-05",
-                            id:"4"
-                        },
-                        {
-                            orderNo:"3321334443243289",
-                            customerName:"放大回",
-                            totalGoodsPrice:"40",
-                            createTime:"2018-03-05",
-                            id:"5"
-                        },
-                        {
-                            orderNo:"3321334443243289",
-                            customerName:"放大回",
-                            totalGoodsPrice:"40",
-                            createTime:"2018-03-05",
-                            id:"6"
-                        },
-                        {
-                            orderNo:"3321334443243289",
-                            customerName:"放大回",
-                            totalGoodsPrice:"40",
-                            createTime:"2018-03-05",
-                            id:"7"
-                        },
-                        {
-                            orderNo:"3321334443243289",
-                            customerName:"放大回",
-                            totalGoodsPrice:"40",
-                            createTime:"2018-03-05",
-                            id:"8"
-                        },
-                        {
-                            orderNo:"3321334443243289",
-                            customerName:"放大回",
-                            totalGoodsPrice:"40",
-                            createTime:"2018-03-05",
-                            id:"9"
-                        },
-                    ]
+            data:[]
         };
     };
     componentDidMount(){
         let status = "UNSEND"
-        axios.get(`${API}/findAllAppOrderModel`,{status}).then(response=>{
+        axios.get(`${API}/base/order/findAllAppOrderModel`,{
+            params:{
+                status
+            }
+        }).then(response=>{
             let res = response.data;
-            console.log(res);
+            this.setState({
+                data:res
+            });
         })
     }
+    changeType(tab,index){
+        axios.get(`${API}/base/order/findAllAppOrderModel`,{
+            params:{status:tab.value}
+        }).then(response=>{
+            let res = response.data;
+            console.log(this);
+            /*            this.setState({
+                            data:res
+                        });*/
+        });
+    }
+
 
     render() {
         return (
@@ -120,15 +60,18 @@ class SendManagement extends Component {
                 <div className="send-management-body">
                     <StickyContainer>
                         <Tabs tabs={this.state.tabs}
-
+                              onChange={this.changeType}
                               renderTabBar={renderTabBar}
                         >
                             <div className="customer-wrapper">
                                 <List>
 
                                     {
-                                        this.state.data1.map(v=>
-                                            <Item arrow="horizontal"key={v.id} multipleLine onClick={() => {this.props.history.push(`${HOST}/myCustomer/customerDetail/${v.id}`)}} extra={v.customerType}>
+                                        this.state.data.length===0?
+                                            ""
+                                            :
+                                        this.state.data.map(v=>
+                                            <Item arrow="horizontal"key={v.orderId} multipleLine onClick={() => {this.props.history.push(`${HOST}/myCustomer/customerDetail/${v.id}`)}} extra={v.customerType}>
                                                 <div className="name">
                                                     <span>订单号：{v.orderNo}</span>
                                                     <span className="total-price">¥{v.totalGoodsPrice}</span>
@@ -150,8 +93,11 @@ class SendManagement extends Component {
                                 <List>
 
                                     {
-                                        this.state.data1.map(v=>
-                                            <Item arrow="horizontal"key={v.id} multipleLine onClick={() => {}} extra={v.customerType}>
+                                        this.state.data.length===0?
+                                            ""
+                                            :
+                                        this.state.data.map(v=>
+                                            <Item arrow="horizontal"key={v.orderId} multipleLine onClick={() => {}} extra={v.customerType}>
                                                 {v.customerName} <Brief>{v.mobilePhone}</Brief>
                                             </Item>
                                         )

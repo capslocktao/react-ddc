@@ -24,7 +24,7 @@ class MyOrder extends Component {
                 { title: '已发货',value:"ALLSEND" },
                 { title: '完成',value:"COMPLETE" },
             ],
-            data:"",
+            data:[],
         };
         this.changeType = this.changeType.bind(this)
     };
@@ -68,6 +68,9 @@ class MyOrder extends Component {
                                     this.state.tabs.map(v=>
                                         <div key={v.value}>
                                             {
+                                                this.state.data.length===0?
+                                                    ""
+                                                    :
                                                 this.state.data?
                                                     this.state.data.map(v=>(
                                                         <Item arrow="horizontal"key={v.orderId} multipleLine onClick={() => {this.props.history.push(`${HOST}/myOrder/myOrderDetail/${v.orderId}`)}} extra={v.customerType}>

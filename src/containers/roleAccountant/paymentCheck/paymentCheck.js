@@ -10,7 +10,7 @@ class PaymentCheck extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data:""
+            data:[]
         };
     };
     componentDidMount(){
@@ -33,10 +33,13 @@ class PaymentCheck extends Component {
                     >待审核订单</NavBar>
                 </div>
                 {
-                    this.state.data?
+                    this.state.data.length===0?
+                        ""
+                        :
                         <div className="payment-check-body">
                             <List>
                                 {
+
                                     this.state.data.map(v=>
                                         <Item arrow="horizontal" key={v.orderId} multipleLine onClick={() => {this.props.history.push(`${HOST}/paymentOrderDetail/${v.orderId}`)}} extra={v.customerType}>
                                             <div className="name">
@@ -56,8 +59,7 @@ class PaymentCheck extends Component {
 
                             </List>
                         </div>
-                        :
-                        ""
+
                 }
 
             </div>
