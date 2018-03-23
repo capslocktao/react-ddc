@@ -7,6 +7,7 @@ import GoodsList from "../../../../components/goodsList/goodsList"
 /*import { createForm } from 'rc-form';
 import arrayTreeFilter from 'array-tree-filter';
 import { district, provinceLite } from 'antd-mobile-demo-data';*/
+import "./add.less"
 
 const API = "http://192.168.31.34:8080"
 const Item = List.Item;
@@ -116,6 +117,9 @@ class add extends Component {
             console.log(params);
             axios.post(`${API}/base/order/addOrder`,params).then(response=>{
                 console.log(response)
+                let res=response.data;
+                Toast.fail(res.msg, 1);
+                this.props.history.push(`${HOST}/index/orderManagement`)
             })
         }else{
             Toast.fail('请输入', 1);
@@ -134,12 +138,13 @@ class add extends Component {
     render() {
         return (
             <div style={{width:"100%"}}>
-                <div>
+                <div className={"nav-empty"}>.</div>
+                <div className={"nav"}>
                     <NavBar
                         mode="light"
                         leftContent={
                             <Link to={`${HOST}/index/orderManagement`}>
-                                <Icon type="left" style={{marginRight: '16px'}}/>
+                                <Icon type="left" style={{marginRight: '16px' ,color:"#fff"}}/>
                             </Link>
                         }
                         rightContent={

@@ -42,6 +42,7 @@ class details extends Component {
             data:""
         };
         console.log(this.props.match.params.id)
+        this.linkToPreview=this.linkToPreview.bind(this);
     };
     componentDidMount(){
         console.log(this.props.match.params.id)
@@ -54,80 +55,55 @@ class details extends Component {
            })
         })
     }
+    linkToPreview(v){
+        console.log(v)
+        if(this.state.data[v]){
+            let imgs = this.state.data[v].split(",");
+            sessionStorage.setItem("preview",JSON.stringify(imgs));
+            sessionStorage.setItem("backTo",this.props.match.url);
+            this.props.history.push(`${HOST}/previewImg`)
+        }else{
+
+        }
+    }
     render() {
         return (
             <div>
-                <div>
+                <div className={"nav-empty"}>.</div>
+                <div className={"nav"}>
                     <NavBar
                         mode="light"
                         leftContent={
                             <Link to={`${HOST}/index/orderManagement`}>
-                                <Icon type="left" style={{marginRight: '16px'}}/>
+                                <Icon type="left" style={{marginRight: '16px' ,color:"#fff"}}/>
                             </Link>
                         }
                     >订单详情</NavBar>
                 </div>
-                <WingBlank size={'sm'}>
-                    {/*<Accordion accordion openAnimation={{}} className="my-accordion" onChange={this.onChange}>
-                        <Accordion.Panel header="单据">
-                            <List className="my-list">
-                                <List.Item>单据详情</List.Item>
-                                <List.Item>客户标识</List.Item>
-                                <List.Item>销售人员标识</List.Item>
-                                <List.Item>所属销售人员标识</List.Item>
-                            </List>
-                        </Accordion.Panel>
-                        <Accordion.Panel header="订单状态" className="pad">
-                            <List.Item>订单状态</List.Item>
-                            <List.Item>支付时间｜｜支付方式</List.Item>
-                            <List.Item>客户确认时间</List.Item>
-                            <List.Item>发货时间</List.Item>
-                            <List.Item>确认收获时间</List.Item>
-                        </Accordion.Panel>
-                        <Accordion.Panel header="快递信息" className="pad">
-                            <List.Item>运费</List.Item>
-                            <List.Item>快递公司编码</List.Item>
-                            <List.Item>快递单号</List.Item>
-                        </Accordion.Panel>
-                        <Accordion.Panel header="收获人信息" className="pad">
-                            <List.Item>收货人姓名</List.Item>
-                            <List.Item>收货人电话</List.Item>
-                            <List.Item>收获地址</List.Item>
-                        </Accordion.Panel>
-                        <Accordion.Panel header="商品信息" className="pad">
-                            <List.Item>商品名称</List.Item>
-                            <List.Item>商品数量</List.Item>
-                            <List.Item>商品单价</List.Item>
-                            <List.Item>实付金额</List.Item>
-                        </Accordion.Panel>
-                        <Accordion.Panel header="凭证" className="pad">
-                            <List.Item>支付凭证</List.Item>
-                            <List.Item>发货凭证</List.Item>
-                            <List.Item>备注</List.Item>
-                        </Accordion.Panel>
-                    </Accordion>*/}
-                    <div style={{width:'100%',overflow:'auto'}}>
+                <div>
+                    {/*<div style={{width:'100%',overflow:'auto'}}>
                         <WingBlank mode={20} className="stepsExample">
                             <WhiteSpace />
                             <Steps current={2} direction="horizontal" size="small">{steps}</Steps>
                         </WingBlank>
-                    </div>
+                    </div>*/}
                     {
                         this.state.data?
                             <div>
                                 <List renderHeader={() => '| 商品'}  className="my-list">
                                     {
-                                        this.state.data.appOrderItemModels.map((item)=>(
-                                             <div>
+                                        this.state.data.appOrderItemModels.map((item,index)=>(
+                                             <div key={index}>
                                                  <Item align="middle">
-                                                     <Flex>
+                                                     <Flex  justify="between">
+                                                         <Flex.Item>商品名称</Flex.Item>
                                                          <Flex.Item>{item.productName}</Flex.Item>
                                                      </Flex>
                                                  </Item>
                                                  <Item align="middle">
                                                      <Flex justify="between">
-                                                         <Flex.Item>{item.price}</Flex.Item>
-                                                         <Flex.Item>${item.num}</Flex.Item>
+                                                         <Flex.Item>价格：{item.price}</Flex.Item>
+                                                         <Flex.Item>数量：${item.num}</Flex.Item>
                                                      </Flex>
                                                  </Item>
                                              </div>
@@ -136,31 +112,11 @@ class details extends Component {
 
                                     <Item align="middle">
                                         <Flex justify="between">
-                                            <Flex.Item>{this.state.data.totalGoodsPrice}</Flex.Item>
+                                            <Flex.Item>总计：{this.state.data.totalGoodsPrice}</Flex.Item>
                                             <Flex.Item>{this.state.data.status}</Flex.Item>
                                         </Flex>
                                     </Item>
                                 </List>
-                                {/*<List renderHeader={() => '| 用户信息'}  className="my-list">
-                                    <Item align="middle">
-                                        <Flex justify="between">
-                                            <Flex.Item>用户ID</Flex.Item>
-                                            <Flex.Item>ID</Flex.Item>
-                                        </Flex>
-                                    </Item>
-                                    <Item align="middle">
-                                        <Flex justify="between">
-                                            <Flex.Item>用户名</Flex.Item>
-                                            <Flex.Item>ID</Flex.Item>
-                                        </Flex>
-                                    </Item>
-                                    <Item align="middle">
-                                        <Flex justify="between">
-                                            <Flex.Item>手机号</Flex.Item>
-                                            <Flex.Item>ID</Flex.Item>
-                                        </Flex>
-                                    </Item>
-                                </List>*/}
                                 <List renderHeader={() => '| 配送信息'}  className="my-list">
                                     <Item align="middle">
                                         <Flex justify="between">
@@ -174,17 +130,17 @@ class details extends Component {
                                         </Flex>
                                     </Item>
                                 </List>
-                                <List>
-                                    <Link to={`${HOST}/previewImg`}>
-                                        <Item arrow="horizontal" multipleLine >
-                                            查看付款凭证
-                                        </Item>
-                                   </Link>
-                                    <Link to={`${HOST}/previewImg`}>
-                                        <Item arrow="horizontal" multipleLine >
-                                            查看发货凭证
-                                        </Item>
-                                    </Link>
+                                <List >
+                                    <Item arrow="horizontal"  multipleLine onClick={()=>{
+                                        this.linkToPreview("paymentVoucher")
+                                    }}>
+                                        查看付款凭证
+                                    </Item>
+                                    <Item arrow="horizontal"  multipleLine onClick={()=>{
+                                        this.linkToPreview("thumbnail")
+                                    }}>
+                                        查看发货凭证
+                                    </Item>
                                 </List>
                                 <List renderHeader={() => '| 时间'}  className="my-list">
                                     <Item align="middle">
@@ -225,7 +181,37 @@ class details extends Component {
                                         </Flex>
                                     </Item>
                                 </List>
-                                {/*<List renderHeader={() => '| 付款'}  className="my-list">
+                                <List renderHeader={() => '| 买家留言'}  className="my-list">
+                                    <Item align="middle">
+                                        <Flex justify="between">
+                                            <Flex.Item style={{fontSize: '12px'}}>留言:{this.state.data.mark}</Flex.Item>
+                                        </Flex>
+                                    </Item>
+                                </List>
+                            </div>
+                            :""
+                    }
+                    {/*<List renderHeader={() => '| 用户信息'}  className="my-list">
+                                    <Item align="middle">
+                                        <Flex justify="between">
+                                            <Flex.Item>用户ID</Flex.Item>
+                                            <Flex.Item>ID</Flex.Item>
+                                        </Flex>
+                                    </Item>
+                                    <Item align="middle">
+                                        <Flex justify="between">
+                                            <Flex.Item>用户名</Flex.Item>
+                                            <Flex.Item>ID</Flex.Item>
+                                        </Flex>
+                                    </Item>
+                                    <Item align="middle">
+                                        <Flex justify="between">
+                                            <Flex.Item>手机号</Flex.Item>
+                                            <Flex.Item>ID</Flex.Item>
+                                        </Flex>
+                                    </Item>
+                                </List>*/}
+                    {/*<List renderHeader={() => '| 付款'}  className="my-list">
                                     <Item align="middle">
                                         <Flex justify="between">
                                             <Flex.Item>在线支付</Flex.Item>
@@ -245,22 +231,46 @@ class details extends Component {
                                         </Flex>
                                     </Item>
                                 </List>*/}
-                                <List renderHeader={() => '| 买家留言'}  className="my-list">
-                                    <Item align="middle">
-                                        <Flex justify="between">
-                                            <Flex.Item style={{fontSize: '12px'}}>留言:{this.state.data.mark}</Flex.Item>
-                                        </Flex>
-                                    </Item>
-                                </List>
-                            </div>
-                            :""
+                </div>
+                <List
 
-                    }
+                    onClick={()=>{
 
-                </WingBlank>
+                    }}
+                    className="my-list">
+                    <Item
+                        multipleLine
+                        onClick={() => {}}
+                        platform="android"
+                        className="order-list"
+                    >
+
+                    </Item>
+                </List>
             </div>
         );
     }
 }
 
 export default details
+
+
+/*
+     orderId":"30",
+　　"userId":null,
+　　"createTime":null,//创建时间
+　　"orderNo":null, // 订单编号
+　　"customerId":null,
+　　"customerName":null,//收获人
+　　"salesId":null,
+　　"status":"待确认",状态
+　　"address":"北京朝阳定福庄",//地址
+　　"totalGoodsPrice":"44.0",//总价
+　　"shipperCode":null,//快递公司
+　　"logisticCode":null,//物流单号
+　　"payType":null,//支付方式
+　　"mark":"995", //注释
+　　"roleCode":null,
+　　"paymentVoucher":null,//付款凭证
+    "thumbnail"://发货凭证
+* */

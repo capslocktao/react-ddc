@@ -35,19 +35,18 @@ class Search extends Component {
     render() {
         return (
             <div>
-                <div>
+                <div className={"nav-empty"}>.</div>
+                <div className={"nav"}>
                     <NavBar
                         mode="light"
                         leftContent={
                             <Link to={`${HOST}/index/orderManagement`}>
-                                <Icon type="left" style={{ marginRight: '16px' }} />
+                                <Icon type="left" style={{ marginRight: '16px' ,color:"#fff"}} />
                             </Link>
                         }
                     >搜索</NavBar>
                 </div>
                 <div className="icon-orderForm-body">
-
-                    <WingBlank size={'sm'}>
                         <div className="my-list">
                             <InputItem
                                 placeholder="请输入搜索字段"
@@ -88,7 +87,6 @@ class Search extends Component {
                                 </List>
                             ))
                         }
-                    </WingBlank>
                 </div>
             </div>
         )

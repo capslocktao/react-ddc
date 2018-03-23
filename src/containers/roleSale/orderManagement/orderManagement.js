@@ -57,27 +57,33 @@ class OrderManagement extends Component {
     orderTab(tab){
         axios.get(`${API}/base/order/findAllAppOrderModel`,{params:{status:tab['status']}}).then(response=>{
             console.log(response)
+            let res=response.data;
+            this.setState({list:res})
         })
+    }
+    componentWillUnmount(){
+        sessionStorage.setItem("backTo",this.props.match.url)
     }
     render() {
         return (
             <div className="customer-order-form">
-                <div className="header">
+                <div className="header nav">
                     <NavBar
                         mode="dark"
                         rightContent={
                             [
                                 <Link key="0" to={`${HOST}/orderManagement/search`}>
-                                    <Icon  type="search" style={{ marginRight: '16px' }} />
+                                    <Icon  type="search" style={{ marginRight: '16px' ,color:"#fff"}} />
                                 </Link>,
                                 <Link key="1" to={`${HOST}/orderManagement/add`}>
-                                    <Icon type="up" style={{ marginRight: '16px' }} />
+                                    <Icon type="up" style={{ marginRight: '16px' ,color:"#fff"}} />
                                 </Link>
                             ]
                         }
                     >客户订单</NavBar>
                 </div>
                 <div className="icon-orderForm-body">
+                    <div className={"nav-empty"}>.</div>
                     {/*tab导航*/}
                     <StickyContainer>
                         <Tabs tabs={tab}
@@ -97,7 +103,7 @@ class OrderManagement extends Component {
                             }
                         </Tabs>
                     </StickyContainer>
-                    <WingBlank size={'sm'}>
+                    <div>
                         {/*列表循环*/}
                         {
                             this.state.list?
@@ -133,8 +139,10 @@ class OrderManagement extends Component {
                                     </List>
                             )):""
                         }
-                    </WingBlank>
+                </div>
+                <div style={{width:"100%",height:"80px"}}>
 
+                </div>
                 </div>
             </div>
         )
