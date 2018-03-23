@@ -141,7 +141,7 @@ class details extends Component {
                                         </Flex>
                                     </Item>
                                 </List>
-                                <List renderHeader={() => '| 用户信息'}  className="my-list">
+                                {/*<List renderHeader={() => '| 用户信息'}  className="my-list">
                                     <Item align="middle">
                                         <Flex justify="between">
                                             <Flex.Item>用户ID</Flex.Item>
@@ -160,7 +160,7 @@ class details extends Component {
                                             <Flex.Item>ID</Flex.Item>
                                         </Flex>
                                     </Item>
-                                </List>
+                                </List>*/}
                                 <List renderHeader={() => '| 配送信息'}  className="my-list">
                                     <Item align="middle">
                                         <Flex justify="between">
@@ -174,21 +174,44 @@ class details extends Component {
                                         </Flex>
                                     </Item>
                                 </List>
-                                <List renderHeader={() => '| 快递信息'}  className="my-list">
+                                <List>
+                                    <Link to={`${HOST}/previewImg`}>
+                                        <Item arrow="horizontal" multipleLine >
+                                            查看付款凭证
+                                        </Item>
+                                   </Link>
+                                    <Link to={`${HOST}/previewImg`}>
+                                        <Item arrow="horizontal" multipleLine >
+                                            查看发货凭证
+                                        </Item>
+                                    </Link>
+                                </List>
+                                <List renderHeader={() => '| 时间'}  className="my-list">
+                                    <Item align="middle">
+                                        客户确认时间
+                                    </Item>
+                                    <Item align="middle">
+                                        财务确认时间
+                                    </Item>
+                                    <Item align="middle">
+                                       发货时间
+                                    </Item>
+                                    <Item align="middle">
+                                        确认收货时间
+                                    </Item>
+                                </List>
+                                <List renderHeader={() => '| 物流信息'}  className="my-list">
                                     <Item align="middle">
                                         <Flex justify="between">
-                                            <Flex.Item>什么快递</Flex.Item>
-                                            <Flex.Item>快递单号</Flex.Item>
+                                            <Flex.Item>快递公司编码</Flex.Item>
+                                            <Flex.Item>物流单号</Flex.Item>
                                         </Flex>
+                                    </Item>
+                                    <Item>
+                                        运费
                                     </Item>
                                 </List>
                                 <List renderHeader={() => '| 订单信息'}  className="my-list">
-                                    <Item align="middle">
-                                        <Flex justify="between">
-                                            <Flex.Item>订单类型</Flex.Item>
-                                            <Flex.Item>类</Flex.Item>
-                                        </Flex>
-                                    </Item>
                                     <Item align="middle">
                                         <Flex justify="between">
                                             <Flex.Item>订单号</Flex.Item>
@@ -201,14 +224,8 @@ class details extends Component {
                                             <Flex.Item>类</Flex.Item>
                                         </Flex>
                                     </Item>
-                                    <Item align="middle">
-                                        <Flex justify="between">
-                                            <Flex.Item>付款时间</Flex.Item>
-                                            <Flex.Item>类</Flex.Item>
-                                        </Flex>
-                                    </Item>
                                 </List>
-                                <List renderHeader={() => '| 付款方式'}  className="my-list">
+                                {/*<List renderHeader={() => '| 付款'}  className="my-list">
                                     <Item align="middle">
                                         <Flex justify="between">
                                             <Flex.Item>在线支付</Flex.Item>
@@ -221,7 +238,13 @@ class details extends Component {
                                             <Flex.Item>类</Flex.Item>
                                         </Flex>
                                     </Item>
-                                </List>
+                                    <Item align="middle">
+                                        <Flex justify="between">
+                                            <Flex.Item>付款时间</Flex.Item>
+                                            <Flex.Item>类</Flex.Item>
+                                        </Flex>
+                                    </Item>
+                                </List>*/}
                                 <List renderHeader={() => '| 买家留言'}  className="my-list">
                                     <Item align="middle">
                                         <Flex justify="between">

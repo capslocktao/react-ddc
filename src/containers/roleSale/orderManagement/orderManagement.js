@@ -38,7 +38,7 @@ class OrderManagement extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           list:[],
+           list:"",
            status:"UNCONFIRMED"
         };
         this.orderTab=this.orderTab.bind(this);
@@ -100,7 +100,8 @@ class OrderManagement extends Component {
                     <WingBlank size={'sm'}>
                         {/*列表循环*/}
                         {
-                            this.state.list.map(v=>(
+                            this.state.list?
+                               this.state.list.map(v=>(
                                     <List
                                         key={v.orderId}
                                         onClick={()=>{
@@ -130,7 +131,7 @@ class OrderManagement extends Component {
 
                                         </Item>
                                     </List>
-                            ))
+                            )):""
                         }
                     </WingBlank>
 
