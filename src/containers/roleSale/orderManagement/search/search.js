@@ -7,10 +7,9 @@ import "./search.less"
 
 const Item = List.Item;
 const Brief = Item.Brief;
-
+const API="http://192.168.31.34:8080"
 
 class Search extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -20,18 +19,23 @@ class Search extends Component {
     };
     componentDidMount(){
         /*列表数据*/
-        this.setState({list:[
-                {title:'样品','status':'123',url:'qwe',syl:'1'},
-                {title:'样品','status':'123',url:'qwe',syl:'2'},
-                {title:'样品','status':'123',url:'qwe',syl:'3'},
-                {title:'样品','status':'123',url:'qwe',syl:'4'}
-            ]})
+        axios.get(`${API}/base/order/findAllAppOrderModel`,{params:{status:this.state.status}}).then(response=>{
+            console.log(response)
+            let res=response.data;
+            this.setState({list:res})
+        })
     }
     handleChange(v){
         /*表单搜索*/
-        console.log("999",v)
+        /*axios.get(`${API}/base/order/findAllAppOrderModel`,{params:{status:this.state.status}}).then(response=>{
+            console.log(response)
+            let res=response.data;
+            this.setState({list:res})
+        })*/
     }
-
+    componentWillUnmount(){
+        sessionStorage.setItem("backTo",this.props.match.url)
+    }
     render() {
         return (
             <div>
@@ -55,37 +59,38 @@ class Search extends Component {
                             </InputItem>
                         </div>
                         {
-                            this.state.list.map(v=>(
-                                <List
+                            this.state.list?
+                                this.state.list.map(v=>(
+                                    <List
+                                        key={v.orderId}
+                                        onClick={()=>{
 
-                                    onClick={()=>{
+                                        }}
+                                        className="my-list">
+                                        <Item
+                                            multipleLine
+                                            onClick={() => {}}
+                                            platform="android"
+                                            className="order-list"
+                                        >
+                                            {v.orderNo} {v.customerName}
+                                            <Brief>{v.address} {v.status}</Brief>
+                                            <Flex justify="end">
+                                                <Link to={ `${HOST}/logistics/${v.orderId}`}>
+                                                    <Flex.Item className="button">
+                                                        查看物流
+                                                    </Flex.Item>
+                                                </Link>
+                                                <Link  to={ `${HOST}/orderManagement/details/${v.orderId}`}>
+                                                    <Flex.Item className="button">
+                                                        查看详情
+                                                    </Flex.Item>
+                                                </Link>
+                                            </Flex>
 
-                                    }}
-                                    className="my-list">
-                                    <Item
-                                        multipleLine
-                                        onClick={() => {}}
-                                        platform="android"
-                                        className="order-list"
-                                    >
-                                        {v.title} 订单号 收货人
-                                        <Brief>货物地址状态</Brief>
-                                        <Flex justify="end">
-                                            <Link key={v.syl} to={ `${HOST}/logistics/${v.syl}`}>
-                                                <Flex.Item className="button">
-                                                    查看物流
-                                                </Flex.Item>
-                                            </Link>
-                                            <Link key={v.syl} to={ `${HOST}/orderManagement/details/${v.syl}`}>
-                                                <Flex.Item className="button">
-                                                    查看详情
-                                                </Flex.Item>
-                                            </Link>
-                                        </Flex>
-
-                                    </Item>
-                                </List>
-                            ))
+                                        </Item>
+                                    </List>
+                                )):""
                         }
                 </div>
             </div>
