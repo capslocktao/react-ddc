@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { NavBar, Icon ,WingBlank,List,InputItem, Accordion,Flex , WhiteSpace ,Picker,Toast} from 'antd-mobile';
+import { NavBar, Icon ,WingBlank,List,InputItem, Accordion,Flex , WhiteSpace ,Picker,Toast,TextareaItem } from 'antd-mobile';
 import { Link } from 'react-router-dom';
 import axios from "axios"
 import {HOST} from "../../../../const/host";
@@ -94,6 +94,7 @@ class add extends Component {
             customerName:name,
             customerId:v
         })
+
     }
     submit(){
         // console.log("111",this.state)
@@ -101,7 +102,6 @@ class add extends Component {
         this.state.goods.map(item=>{
             item['productName']=item['goodsName']
         })
-
         if( this.state.customerId!==""&&this.state.goods.length!==0){
             let totalGoodsPrice=0;
             this.state.goods.map(item=>{
@@ -150,11 +150,22 @@ class add extends Component {
                 <div style={{ marginBottom: 5 }}>
                     <List style={{ backgroundColor: 'white'}} className="picker-list">
                         <Picker
-                            data={this.state.customer} extra={this.state.customerName} cols={1} onOk={(v)=>{ console.log(v);this.customerWay(v)}}
+                            data={this.state.customer} extra={this.state.customerName} cols={1} onOk={(v)=>{ this.customerWay(v)}}
                         >
                             <List.Item arrow="horizontal">用户</List.Item>
                         </Picker>
                     </List>
+                </div>
+                <div>
+                    <TextareaItem
+                        title="备注"
+                        placeholder="请填写备注"
+                        rows={2}
+                        onChange={(v)=>{
+                            console.log(v);
+                            this.mark(v);
+                        }}
+                    />
                 </div>
                 <div>
                     {
@@ -171,13 +182,6 @@ class add extends Component {
                     }
 
 
-                </div>
-                <div>
-                    <InputItem
-                        onChange={(v)=>{
-                            this.mark(v);
-                        }}
-                    >备注</InputItem>
                 </div>
 
 
