@@ -30,6 +30,7 @@ import Purchase from '../roleCustomer/purchase/purchase';//商品采购
 import MaterialApply from '../roleCustomer/materialApply/material';//物料申请
 import PresentApply from '../roleCustomer/presentApply/presentApply';//赠品申请
 import CustomerUserCenter from '../roleCustomer/customerUserCenter/customerUserCenter'//用户中心
+import MyOrder from '../roleCustomer/myOrder/myOrder'//用户中心
 
 //财务
 import PaymentCheck from '../roleAccountant/paymentCheck/paymentCheck';//付款审核
@@ -138,6 +139,12 @@ class Container extends Component {
                     name:`商品采购`,
                     icon:"icon-purchase",
                     component:Purchase
+                },
+                {
+                    path:`${HOST}/index/myOrder`,
+                    name:`我的订单`,
+                    icon:"icon-material",
+                    component:MyOrder
                 },
 /*                {
                     path:`${HOST}/index/materialApply`,
@@ -256,6 +263,10 @@ class Container extends Component {
                 {
                    path:`${HOST}/index/purchase`,//商品采购
                    component:Purchase
+                },
+                {
+                    path:`${HOST}/index/myOrder`,//我的订单
+                    component:MyOrder
                 },
                 {
                    path:`${HOST}/index/materialApply`,

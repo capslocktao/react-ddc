@@ -1,19 +1,11 @@
-@import '../../../style/common';
-.pay{
-  padding-bottom: 20px;
-  a{
-    color: #fff;
+@import "../../../../style/common";
+.my-order-detail{
+  .order-detail-header{
+    .fixedHeader
   }
-  .pay-header{
-    width: 100%;
-    position: fixed;
-    top:0;
-    left:0;
-    z-index: 3000;
-  }
-  .pay-body{
-    margin-top:45px;
-    padding-bottom: 10px;
+  .order-detail-body{
+    margin-top: 45px;
+    margin-bottom: 20px;
     .address-box{
       background: #fff;
       padding:15px 0 10px 0;
@@ -48,6 +40,11 @@
           justify-content:space-between;
           margin-top: 10px;
         }
+        .unit{
+          margin-top: 5px;
+          color: @fontGray;
+        }
+
       }
     }
     .totalPrice-wrapper{
@@ -68,10 +65,15 @@
         }
       }
     }
-
     .pay-method{
       margin-top: 10px;
     }
+    .logistics{
+      .am-list-item .am-list-line .am-list-extra{
+        text-overflow: unset!important;
+      }
+    }
+
     .upload{
       padding:10px 0;
       margin-top: 10px;
@@ -82,8 +84,9 @@
         margin-bottom: 5px;
       }
     }
-  }
-  .mark{
-    margin-top: 10px;
+    .mark{
+      margin-top: 10px;
+    }
+
   }
 }

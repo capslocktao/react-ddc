@@ -4,28 +4,36 @@ import {withRouter, Route,Switch,Redirect } from 'react-router-dom';
 import Container from './containers/container/container'
 import {HOST,API} from './const/host'//全局服务器路径
 import { connect } from 'react-redux'
-
-
 import axios from "axios";
-import Pay from "./containers/roleCustomer/pay/pay"
+
+//-----------------------------------------公共
 import AddressManage from "./containers/publicView/addressManage/addressManage"
-import AddVisitPlan from "./containers/roleSale/visitPlan/addVisitPlan/addVisitPlan";
-
 import NewAddress from "./containers/publicView/addressManage/newAddress/newAddress";
-import Add from "./containers/roleSale/orderManagement/add/add"//销售订单添加
 
+//------------------------------------------客户
+
+import Pay from "./containers/roleCustomer/pay/pay"
+import MyOrderDetail from "./containers/roleCustomer/myOrder/myOrderDetail/myOrderDetail"
+import Logistics from "./containers/publicView/logistics/logistics"//物流查询
+
+//------------------------------------------销售
+import ellipsis from "./containers/roleSale/ellipsis/ellipsis";
+import Add from "./containers/roleSale/orderManagement/add/add"//销售订单添加
 import Details from "./containers/roleSale/orderManagement/details/details"//销售订单详情
 import Search from "./containers/roleSale/orderManagement/search/search"//销售订单搜索
-
-import Logistics from "./components/logistics/logistics"//物流查询
-
-import ellipsis from "./containers/roleSale/ellipsis/ellipsis";
-
+import AddVisitPlan from "./containers/roleSale/visitPlan/addVisitPlan/addVisitPlan";
 import Searchs from "./containers/roleSale/visitPlan/searchs/searchs"//拜访计划搜索
 import VisitDetail from "./containers/roleSale/visitPlan/visitDetail/visitDetail";
 import CustomerDetail from "./containers/roleSale/myCustomer/customerDetail/customerDetail";
-@withRouter
 
+import AddVisitRecord from "./containers/roleSale/visitPlan/addVisitPlan/addVisitRecord/addVisitRecord";
+
+//-------------------------------------------财务
+import PaymentOrderDetail from "./containers/roleAccountant/paymentCheck/paymentOederDetail/paymentOederDetail";
+
+//-------------------------------------------查看图片
+import Preview from "./containers/roleAccountant/previewImg/previewImg"
+@withRouter
 @connect(
     state=>state.count
 )
@@ -34,32 +42,8 @@ class Router extends Component {
         super(props);
         this.state = {
             routes:[
+                //--------------------------------------------------公共
                 {
-                    path:`${HOST}/index`,
-                    component:Container
-                },
-
-                {
-                    path:`${HOST}/search`,
-                    component:Search
-                },
-                {
-
-                    path:`${HOST}/pay`,
-                    component:Pay
-                },
-                {
-
-                    path:`${HOST}/addVisitPlan`,
-                    component:AddVisitPlan
-                },
-                {
-
-                    path:`${HOST}/visitDetail/:id`,
-                    component:VisitDetail
-                },
-                {
-
                     path:`${HOST}/addressManage`,
                     component:AddressManage
                 },
@@ -67,6 +51,49 @@ class Router extends Component {
                     path:`${HOST}/newAddress`,
                     component:NewAddress
                 },
+                //--------------------------------------------------主页面
+                {
+                    path:`${HOST}/index`,
+                    component:Container
+                },
+                {
+                    path:`${HOST}/search`,
+                    component:Search
+                },
+                //--------------------------------------------------客户
+                {
+                    path:`${HOST}/pay`,
+                    component:Pay
+                },
+                {
+                    path:`${HOST}/myOrder/myOrderDetail/:id`,
+                    component:MyOrderDetail
+                },
+
+
+                //---------------------------------------------------销售
+                {
+
+                    path:`${HOST}/addVisitPlan`,
+                    component:AddVisitPlan
+                },
+                {
+                    path:`${HOST}/visitDetail/:id`,
+                    component:VisitDetail
+                },
+                {
+                    path:`${HOST}/myCustomer/customerDetail/:id`,
+                    component:CustomerDetail
+                },
+                {
+                    path:`${HOST}/myCustomer/newCustomer`,
+                    component:CustomerDetail
+                },
+                {
+                    path: `${HOST}/logistics/:id`,
+                    component: Logistics
+                },
+
                 {
                     path:`${HOST}/orderManagement/add`,
                     component:Add
@@ -80,24 +107,26 @@ class Router extends Component {
                     component:Search
 
                 },
+                //---------------------------------------------------财务
                 {
+                    path:`${HOST}/paymentOrderDetail/:id`,
+                    component:PaymentOrderDetail
+                },
+                {
+                    path:`${HOST}/previewImg`,
+                    component:Preview
+                },
 
-                    path:`${HOST}/myCustomer/customerDetail/:id`,
-                    component:CustomerDetail
-                },
-                {
-                    path:`${HOST}/myCustomer/newCustomer`,
-                    component:CustomerDetail
-                },
-                {
-                    path: `${HOST}/logistics/:id`,
-                    component: Logistics
-                },
                 {
                     path:`${HOST}/searchs`,
                     component:Searchs
 
-                }
+                },
+                {
+                    path:`${HOST}/addVisitRecord`,
+                    component:AddVisitRecord
+
+                },
             ]
         }
     }

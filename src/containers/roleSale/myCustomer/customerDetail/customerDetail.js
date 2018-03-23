@@ -159,7 +159,7 @@ class CustomerDetail extends Component {
             let res = response.data;
             console.log(res);
         })
-        console.log(submitData)
+
     }
     render() {
 
