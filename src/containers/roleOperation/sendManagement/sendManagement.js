@@ -103,7 +103,7 @@ class SendManagement extends Component {
                                             ""
                                             :
                                         this.state.data.map(v=>
-                                            <Item arrow="horizontal"key={v.orderId} multipleLine onClick={() => {this.props.history.push(`${HOST}/myCustomer/customerDetail/${v.id}`)}} extra={v.customerType}>
+                                            <Item arrow="horizontal"key={v.orderId} multipleLine onClick={() => {this.props.history.push(`${HOST}/sendManagement/operationOrderDetail/${v.orderId}`)}} extra={v.customerType}>
                                                 <div className="name">
                                                     <span>订单号：{v.orderNo}</span>
                                                     <span className="total-price">¥{v.totalGoodsPrice}</span>

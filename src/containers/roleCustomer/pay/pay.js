@@ -73,6 +73,10 @@ class Pay extends Component {
         })
     }
     submit(){
+        if(this.state.files.length === 0){
+            Toast.fail("请上传转账凭证",1)
+            return
+        }
         let goodsData = [];
 
         this.state.goodsData.forEach(v=>{

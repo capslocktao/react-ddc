@@ -27,7 +27,6 @@ class PaymentOrderDetail extends Component {
             let res = response.data;
             this.setState({
                 data:res,
-                address:res.address.split("@"),
                 status:res.status
             },()=>{
                 console.log(this.state.data);
@@ -35,8 +34,12 @@ class PaymentOrderDetail extends Component {
 
         })
     }
-    linkToPreview(){
-        let imgs = this.state.data.paymentVoucher.split(",");
+    linkToPreview(v){
+        if(!this.state.data[v]){
+            Toast.info("未上传凭证",1);
+            return
+        }
+        let imgs = this.state.data[v].split(",");
         sessionStorage.setItem("preview",JSON.stringify(imgs));
         sessionStorage.setItem("backTo",this.props.match.url);
         this.props.history.push(`${HOST}/previewImg`)
@@ -84,13 +87,13 @@ class PaymentOrderDetail extends Component {
                         <div className="payment-order-detail-body">
                                 <div className="address-box">
                                     <WingBlank>
-                                        <div className="consignee">
-                                            <div className="name">{this.state.address[0]}</div>
-                                            <div className="phone">{this.state.address[1]}</div>
-                                        </div>
-                                        <div className="address">
-                                            {this.state.address[2]}
-                                        </div>
+                                    <div className="consignee">
+                                        <div className="name">{this.state.data.customerName}</div>
+                                        <div className="phone">{this.state.data.mobilePhone}</div>
+                                    </div>
+                                    <div className="address">
+                                        {this.state.data.address}
+                                    </div>
 
                                     </WingBlank>
                                 </div>
@@ -128,11 +131,20 @@ class PaymentOrderDetail extends Component {
                                 <div className="pay-method">
                                     <List>
                                         <Item extra={`${this.state.data.payType}`}>支付方式</Item>
-                                        <Item arrow="horizontal" onClick={this.linkToPreview}>查看转账凭证</Item>
+                                        <Item arrow="horizontal" onClick={()=>{this.linkToPreview("paymentVoucher")}}>查看转账凭证</Item>
+                                        {
+                                            this.state.status !== "待财务确认" && this.state.status !== "未发货"?
+                                                <Item arrow="horizontal"  multipleLine onClick={()=>{
+                                                    this.linkToPreview("thumbnail")
+                                                }}>
+                                                    查看发货凭证
+                                                </Item>
+                                                :
+                                                ""
+                                        }
                                     </List>
-
-
                                 </div>
+
                                 <div className="pay-method">
                                     <InputItem editable={false} value={`${this.state.status}`} style={{textAlign:"right"}}>订单状态</InputItem>
                                 </div>
@@ -145,11 +157,17 @@ class PaymentOrderDetail extends Component {
                                         editable={false}
                                     />
                                 </div>
-                                <div className="submit-btn">
-                                    <WingBlank>
-                                        <Button type="primary" onClick={this.checkPayment}>审核通过</Button>
-                                    </WingBlank>
-                                </div>
+                            {
+                                this.state.status !=="待财务确认"?
+                                    ""
+                                    :
+                                    <div className="submit-btn">
+                                        <WingBlank>
+                                            <Button type="primary" onClick={this.checkPayment}>审核通过</Button>
+                                        </WingBlank>
+                                    </div>
+
+                            }
 
                         </div>
                         :

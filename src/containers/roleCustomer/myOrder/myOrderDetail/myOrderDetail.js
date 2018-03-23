@@ -41,7 +41,6 @@ class MyOrderDetail extends Component {
             let res = response.data;
             this.setState({
                 data:res,
-                address:res.address.split("@"),
                 status:res.status
             },()=>{
                 console.log(this.state.data);
@@ -49,6 +48,8 @@ class MyOrderDetail extends Component {
 
         })
     }
+
+
     //确认收货
     confirm(){
         alert('确认收获吗？',"请务必确认收到货物", [
@@ -105,8 +106,12 @@ class MyOrderDetail extends Component {
             mark:val
         })
     }
-    linkToPreview(){
-        let imgs = this.state.data.thumbnail.split(",");
+    linkToPreview(v){
+        if(!this.state.data[v]){
+            Toast.info("未上传凭证",1)
+            return
+        }
+        let imgs = this.state.data[v].split(",");
         sessionStorage.setItem("preview",JSON.stringify(imgs));
         sessionStorage.setItem("backTo",this.props.match.url);
         this.props.history.push(`${HOST}/previewImg`)
@@ -114,6 +119,10 @@ class MyOrderDetail extends Component {
 
     //确认销售发来的订单
     submit(){
+        if(this.state.files.length === 0){
+            Toast.fail("请上传转账凭证",1);
+            return
+        }
         let submitData={
             paymentVoucher :this.state.imgUrl.join(","),
             payType:this.state.payType,
@@ -145,12 +154,13 @@ class MyOrderDetail extends Component {
                             <div className="address-box">
                                 <WingBlank>
                                     <div className="consignee">
-                                        <div className="name">{this.state.address[0]}</div>
-                                        <div className="phone">{this.state.address[1]}</div>
+                                        <div className="name">{this.state.data.customerName}</div>
+                                        <div className="phone">{this.state.data.mobilePhone}</div>
                                     </div>
                                     <div className="address">
-                                        {this.state.address[2]}
+                                        {this.state.data.address}
                                     </div>
+
                                 </WingBlank>
                             </div>
                             <div className="goods-box">
@@ -195,9 +205,6 @@ class MyOrderDetail extends Component {
                                     />
                                 </WingBlank>
                             </div>
-
-
-
                         <div className="pay-method">
                             {this.state.payMethod.map(i => (
                                 <RadioItem key={i.value} checked={this.state.payType === i.value} onChange={() => this.changePayType(i.value)}>
@@ -224,13 +231,13 @@ class MyOrderDetail extends Component {
                     return <div className="order-detail-body">
                         <div className="address-box">
                             <WingBlank>
-                                <div className="consignee">
-                                    <div className="name">{this.state.address[0]}</div>
-                                    <div className="phone">{this.state.address[1]}</div>
-                                </div>
-                                <div className="address">
-                                    {this.state.address[2]}
-                                </div>
+                                    <div className="consignee">
+                                        <div className="name">{this.state.data.customerName}</div>
+                                        <div className="phone">{this.state.data.mobilePhone}</div>
+                                    </div>
+                                    <div className="address">
+                                        {this.state.data.address}
+                                    </div>
 
                             </WingBlank>
                         </div>
@@ -271,6 +278,13 @@ class MyOrderDetail extends Component {
                         <div className="pay-method">
                             <InputItem editable={false} value={`${this.state.status}`} style={{textAlign:"right"}}>订单状态</InputItem>
                         </div>
+                        <List style={{marginTop:10}}>
+                            <Item arrow="horizontal"  multipleLine onClick={()=>{
+                                this.linkToPreview("paymentVoucher")
+                            }}>
+                                查看付款凭证
+                            </Item>
+                        </List>
                         <div className="mark">
                             <TextareaItem
                                 title="订单备注"
@@ -287,13 +301,13 @@ class MyOrderDetail extends Component {
                     return <div className="order-detail-body">
                         <div className="address-box">
                             <WingBlank>
-                                <div className="consignee">
-                                    <div className="name">{this.state.address[0]}</div>
-                                    <div className="phone">{this.state.address[1]}</div>
-                                </div>
-                                <div className="address">
-                                    {this.state.address[2]}
-                                </div>
+                                    <div className="consignee">
+                                        <div className="name">{this.state.data.customerName}</div>
+                                        <div className="phone">{this.state.data.mobilePhone}</div>
+                                    </div>
+                                    <div className="address">
+                                        {this.state.data.address}
+                                    </div>
                             </WingBlank>
                         </div>
                         <div className="goods-box">
@@ -333,6 +347,14 @@ class MyOrderDetail extends Component {
                         <div className="pay-method">
                             <InputItem editable={false} value={`${this.state.status}`} style={{textAlign:"right"}}>订单状态</InputItem>
                         </div>
+                        <List style={{marginTop:10}}>
+                            <Item arrow="horizontal"  multipleLine onClick={()=>{
+                                this.linkToPreview("paymentVoucher")
+                            }}>
+                                查看付款凭证
+                            </Item>
+                        </List>
+
                         <div className="mark">
                             <TextareaItem
                                 title="订单备注"
@@ -349,13 +371,13 @@ class MyOrderDetail extends Component {
                     return <div className="order-detail-body">
                         <div className="address-box">
                             <WingBlank>
-                                <div className="consignee">
-                                    <div className="name">{this.state.address[0]}</div>
-                                    <div className="phone">{this.state.address[1]}</div>
-                                </div>
-                                <div className="address">
-                                    {this.state.address[2]}
-                                </div>
+                                    <div className="consignee">
+                                        <div className="name">{this.state.data.customerName}</div>
+                                        <div className="phone">{this.state.data.mobilePhone}</div>
+                                    </div>
+                                    <div className="address">
+                                        {this.state.data.address}
+                                    </div>
                             </WingBlank>
                         </div>
                         <div className="goods-box">
@@ -397,8 +419,7 @@ class MyOrderDetail extends Component {
                         <div className="pay-method">
                             <InputItem editable={false} value={`${this.state.status}`} style={{textAlign:"right"}}>订单状态</InputItem>
                         </div>
-                        <List className="logistics" style={{marginTop:10}}>
-                            <Item arrow="horizontal" onClick={this.linkToPreview}>查看发货凭证</Item>
+                        <List className="logistics">
                             <Item extra={"申通物流"}>
                                 物流公司
                             </Item>
@@ -409,6 +430,20 @@ class MyOrderDetail extends Component {
                                 查看物流
                             </Item>
                         </List>
+                        <List style={{marginTop:10}}>
+                            <Item arrow="horizontal"  multipleLine onClick={()=>{
+                                this.linkToPreview("paymentVoucher")
+                            }}>
+                                查看付款凭证
+                            </Item>
+                            <Item arrow="horizontal"  multipleLine onClick={()=>{
+                                this.linkToPreview("thumbnail")
+                            }}>
+                                查看发货凭证
+                            </Item>
+
+                        </List>
+
                         <div className="mark">
                             <TextareaItem
                                 title="订单备注"
@@ -429,13 +464,13 @@ class MyOrderDetail extends Component {
                     return <div className="order-detail-body">
                         <div className="address-box">
                             <WingBlank>
-                                <div className="consignee">
-                                    <div className="name">{this.state.address[0]}</div>
-                                    <div className="phone">{this.state.address[1]}</div>
-                                </div>
-                                <div className="address">
-                                    {this.state.address[2]}
-                                </div>
+                                    <div className="consignee">
+                                        <div className="name">{this.state.data.customerName}</div>
+                                        <div className="phone">{this.state.data.mobilePhone}</div>
+                                    </div>
+                                    <div className="address">
+                                        {this.state.data.address}
+                                    </div>
                             </WingBlank>
                         </div>
                         <div className="goods-box">
@@ -483,10 +518,17 @@ class MyOrderDetail extends Component {
                             <Item extra={"332200984893939"} multipleLine wrap={true}>
                                 运单号
                             </Item>
-                            <Item arrow="horizontal" onClick={() => {this.props.history.push(`${HOST}/logistics/${23}`)}}>
-                                查看物流
-                            </Item>
                         </List>
+                        <Item arrow="horizontal"  multipleLine onClick={()=>{
+                            this.linkToPreview("paymentVoucher")
+                        }}>
+                            查看付款凭证
+                        </Item>
+                        <Item arrow="horizontal"  multipleLine onClick={()=>{
+                            this.linkToPreview("thumbnail")
+                        }}>
+                            查看发货凭证
+                        </Item>
                         <div className="mark">
                             <TextareaItem
                                 title="订单备注"

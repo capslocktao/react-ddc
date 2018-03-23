@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import { NavBar,Icon,WingBlank,InputItem,TextareaItem,Button,List,ImagePicker,Toast,Modal,Picker } from "antd-mobile"
 import "./operationOrderDetail.less";
-import {HOST,API} from "../../../../const/host";
+import {HOST} from "../../../../const/host";
 import axios from "axios";
 const Item = List.Item;
 const alert = Modal.alert;
+const API = "http://192.168.31.168:8080"
 class ComponentName extends Component {
     constructor(props) {
         super(props);
@@ -14,32 +15,7 @@ class ComponentName extends Component {
             status:"",
             files:[],
             imgUrl:[],
-            shipper:[
-                {
-                    label:"中通",
-                    value:"ZTO"
-                },
-                {
-                    label:"圆通",
-                    value:"YTO"
-                },
-                {
-                    label:"申通",
-                    value:"STO"
-                },
-                {
-                    label:"顺丰",
-                    value:"SF"
-                },
-                {
-                    label:"韵达",
-                    value:"YUNDA"
-                },
-                {
-                    label:"百世汇通",
-                    value:"HTKY"
-                },
-            ],
+            shipper:"",
             shipperName:"",
             shipperCode:"",
             logisticCode:""
@@ -48,6 +24,7 @@ class ComponentName extends Component {
         this.selectShipper = this.selectShipper.bind(this);
         this.setlogisticCode = this.setlogisticCode.bind(this);
         this.send = this.send.bind(this)
+        this.linkToPreview = this.linkToPreview.bind(this)
     };
     componentDidMount(){
         axios.get(`${API}/base/orderItem/findAllAppOrderItem`,{
@@ -56,15 +33,36 @@ class ComponentName extends Component {
             let res = response.data;
             this.setState({
                 data:res,
-                address:res.address.split("@"),
                 status:res.status
             },()=>{
                 console.log(this.state.data);
             });
-
+        })
+        axios.get(`http://192.168.31.13:8080/base/logisticsCompany/findAll`).then(response=>{
+            let res = response.data;
+            console.log(res);
+            res.forEach(v=>{
+                v.label = v.shipperName
+                v.value = v.shipperCode
+            })
+            this.setState({
+                shipper:res
+            })
         })
 
     }
+    linkToPreview(v){
+
+        if(!this.state.data[v]){
+            Toast.info("未上传凭证",1)
+            return
+        }
+        let imgs = this.state.data[v].split(",");
+        sessionStorage.setItem("preview",JSON.stringify(imgs));
+        sessionStorage.setItem("backTo",this.props.match.url);
+        this.props.history.push(`${HOST}/previewImg`)
+    }
+
     //上传图片
     onChange = (files) => {
         let formData = new FormData();
@@ -99,14 +97,14 @@ class ComponentName extends Component {
     }
     send(){
         if(this.state.shipperCode === ""){
-            Toast.fail("请选择物流公司",1)
+            Toast.fail("请选择物流公司或填写单号",1)
             return
         }
         let submitData = {
             paymentVoucher :this.state.imgUrl.join(","),
             shipperCode:this.state.shipperCode,
             logisticCode:this.state.logisticCode,
-            id:this.state.data.orderId
+            orderId:this.state.data.orderId
         };
 
         console.log(submitData);
@@ -114,13 +112,10 @@ class ComponentName extends Component {
             { text: '取消', onPress: () => {} },
             { text: '确认', onPress: () => {
 
-    /*          axios.get(`${API}/base/order/financeConfirm`,{
-                    params:{
-                        id:this.state.data.orderId
-                    }
-                }).then(response=>{
+              axios.post(`${API}/base/outboundOrder/addOutboundOrder`,submitData).then(response=>{
                     let res = response.data;
-                    if(res.result){
+                  console.log(res);
+                  if(res.result){
                         Toast.success(res.msg,1);
                         setTimeout(()=>{
                             this.props.history.push(`${HOST}/index/sendManagement`)
@@ -129,7 +124,7 @@ class ComponentName extends Component {
                         Toast.success(res.msg,1);
                     }
 
-                })*/
+                })
                 }},
         ])
 
@@ -152,11 +147,11 @@ class ComponentName extends Component {
                             <div className="address-box">
                                 <WingBlank>
                                     <div className="consignee">
-                                        <div className="name">{this.state.address[0]}</div>
-                                        <div className="phone">{this.state.address[1]}</div>
+                                        <div className="name">{this.state.data.customerName}</div>
+                                        <div className="phone">{this.state.data.mobilePhone}</div>
                                     </div>
                                     <div className="address">
-                                        {this.state.address[2]}
+                                        {this.state.data.address}
                                     </div>
 
                                 </WingBlank>
@@ -210,37 +205,71 @@ class ComponentName extends Component {
                                 />
                             </div>
                             <List style={{marginTop:10}}>
-                                <Picker data={this.state.shipper}  extra={this.state.shipperName} onChange={(val)=>{this.selectShipper(val)}} cols={1}>
-                                    <List.Item arrow="horizontal">物流公司</List.Item>
-                                </Picker>
+                                {
+                                    this.state.shipper?
+                                        <Picker data={this.state.shipper}  extra={this.state.shipperName} onChange={(val)=>{this.selectShipper(val)}} cols={1}>
+                                            <List.Item arrow="horizontal">物流公司</List.Item>
+                                        </Picker>
+                                        :
+                                        ""
+                                }
                             </List>
 
                             <InputItem
                                 style={{textAlign:"right"}}
                                 onChange={(val)=>{this.setlogisticCode(val)}}
+                                value={this.state.logisticCode}
+                                editable={this.state.status === "未发货"}
                                 placeholder="请填写物流单号"
                             >
                                 运单号
                             </InputItem>
-                            <div className="upload">
-                                <WingBlank>
-                                    <div className="upload-title">上传发货凭证(最多3张)</div>
-                                    <ImagePicker
-                                        files={this.state.files}
-                                        onChange={this.onChange}
-                                        onImageClick={(index, fs) => console.log(index, fs)}
-                                        selectable={this.state.files.length < 3}
-                                        multiple={true}
-                                    />
-                                </WingBlank>
-                            </div>
+                            <List style={{marginTop:10}}>
+                                <Item arrow="horizontal"  multipleLine onClick={()=>{
+                                    this.linkToPreview("paymentVoucher")
+                                }}>
+                                    查看付款凭证
+                                </Item>
+                                {
+                                    this.state.status === "完成"?
+                                        <Item arrow="horizontal"  multipleLine onClick={()=>{
+                                            this.linkToPreview("thumbnail")
+                                        }}>
+                                            查看发货凭证
+                                        </Item>
+                                        :
+                                        ""
+                                }
+                            </List>
 
+                            {
+                                this.state.status === "完成"?
+                                    ""
+                                    :
+                                    <div className="upload">
+                                        <WingBlank>
+                                            <div className="upload-title">上传发货凭证(最多3张)</div>
+                                            <ImagePicker
+                                                files={this.state.files}
+                                                onChange={this.onChange}
+                                                onImageClick={(index, fs) => console.log(index, fs)}
+                                                selectable={this.state.files.length < 3}
+                                                multiple={true}
+                                            />
+                                        </WingBlank>
+                                    </div>
+                            }
+                            {
+                                this.state.status === "完成"?
+                                    ""
+                                    :
+                                    <div className="submit-btn">
+                                        <WingBlank>
+                                            <Button type="primary" onClick={this.send}>发货</Button>
+                                        </WingBlank>
+                                    </div>
 
-                            <div className="submit-btn">
-                                <WingBlank>
-                                    <Button type="primary" onClick={this.send}>发货</Button>
-                                </WingBlank>
-                            </div>
+                            }
 
                         </div>
                         :
