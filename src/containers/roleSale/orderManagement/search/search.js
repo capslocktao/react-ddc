@@ -16,6 +16,7 @@ class Search extends Component {
             list:[],
             value:"请输入"
         };
+        this.handleChange=this.handleChange.bind(this);
     };
     componentDidMount(){
         /*列表数据*/
@@ -26,12 +27,15 @@ class Search extends Component {
         })
     }
     handleChange(v){
-        /*表单搜索*/
-        /*axios.get(`${API}/base/order/findAllAppOrderModel`,{params:{status:this.state.status}}).then(response=>{
-            console.log(response)
-            let res=response.data;
-            this.setState({list:res})
-        })*/
+        axios.get(`${API}/base/order/findAllCondition`,{params:{search:v}}).then(response=>{
+            // console.log(response)
+            if(response.data.length!==0){
+                let res=response.data;
+                console.log(res)
+                 this.setState({list:res})
+            }
+        })
+
     }
     componentWillUnmount(){
         sessionStorage.setItem("backTo",this.props.match.url)
@@ -48,15 +52,18 @@ class Search extends Component {
                                 <Icon type="left" style={{ marginRight: '16px' ,color:"#fff"}} />
                             </Link>
                         }
+                        rightContent={
+                            <Icon  type="search" style={{ marginRight: '16px' ,color:"#fff"}} />
+                        }
                     >搜索</NavBar>
                 </div>
                 <div className="icon-orderForm-body">
                         <div className="my-list">
-                            <InputItem
-                                placeholder="请输入搜索字段"
-                                onChange={this.handleChange}
-                            >
-                            </InputItem>
+                                <InputItem
+                                    placeholder="请输入搜索字段"
+                                    onBlur={this.handleChange}
+                                >
+                                </InputItem>
                         </div>
                         {
                             this.state.list?
