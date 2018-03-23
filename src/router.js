@@ -123,7 +123,7 @@ class Router extends Component {
 
                 },
                 {
-                    path:`${HOST}/addVisitRecord`,
+                    path:`${HOST}/addVisitRecord/:id`,
                     component:AddVisitRecord
 
                 },

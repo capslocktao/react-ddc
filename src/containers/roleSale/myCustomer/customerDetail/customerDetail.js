@@ -1,19 +1,21 @@
 import React, {Component} from 'react';
-import {NavBar,Icon,List, Picker,InputItem,TextareaItem } from "antd-mobile";
+import {NavBar,Icon,List, Picker,InputItem,TextareaItem,Toast } from "antd-mobile";
 import ReactCascader from "../../../../components/react-cascader/react-cascader";
 import { HOST } from '../../../../const/host'
 import axios from 'axios'
 const API = "http://192.168.31.222:8080";
 const API2 = "http://192.168.31.13:8080";
+
 class CustomerDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
             cascaderShow:false,
             areaData:[],
+            findApp:[],
             selectedData:[],
             area:"",
-            cuntomerType: [
+            customerType: [
                 {
                     label:"门店",
                     value:"STORE"
@@ -31,7 +33,7 @@ class CustomerDetail extends Component {
             typeName:"",
             statusType:[
                 {
-                    label:"初次拜访",
+                    label:"一次拜访",
                     value:"ONE"
                 },
                 {
@@ -55,8 +57,12 @@ class CustomerDetail extends Component {
             statusName:"",
             customerName:"",
             mobilePhone:"",
-            address:""
+            address:"",
+            salesId:"",
+            addressIds:""
+
         };
+
         this.showCascader = this.showCascader.bind(this);
         this.onCancel = this.onCancel.bind(this);
         this.onOk = this.onOk.bind(this);
@@ -71,6 +77,43 @@ class CustomerDetail extends Component {
                 areaData:res.data
             })
         })
+        let id = this.props.match.params.id;
+        if(id){
+            axios.get(`${API2}/base/customer/findAppInfo`,{params:{id}}).then(response=>{
+                console.log(response);
+                let res = response.data;
+                this.state.statusType.forEach(v=>{
+                    if(res.status === v.label){
+                        this.setState({
+                            statusName:v.label,
+                            status:v.value,
+
+                        })
+                    }
+                })
+                this.state.customerType.forEach(v=>{
+                    if(res.customerType === v.label){
+                        this.setState({
+                            typeName:v.label,
+                            type:v.value
+                        })
+                    }
+                })
+                if(this.props.match.params.id){
+                    this.setState({
+                        area:`${res.address[0]}/${res.address[1]}/${res.address[2]}`,
+                        addressIds:res.addressIds
+                    })
+                }
+                this.setState({
+                    customerName:res.customerName,
+                    mobilePhone:res.mobilePhone,
+                    detailAddress:res.detailAddress,
+                    selectedData:res.addressIds
+                })
+            })
+        }
+
     }
     showCascader(){
         this.setState({
@@ -95,10 +138,13 @@ class CustomerDetail extends Component {
         })
     }
     onOk(result){
-
+        let areaIds = [];
+        result.forEach(v=>{
+            areaIds.push(v.id)
+        });
         this.setState({
             cascaderShow:false,
-            selectedData:result
+            selectedData:areaIds
         });
 
         let resultData = "";
@@ -115,7 +161,7 @@ class CustomerDetail extends Component {
         this.setState({
             type:v[0]
         },()=>{
-            this.state.cuntomerType.find((v,i)=>{
+            this.state.customerType.find((v,i)=>{
                 if(this.state.type === v.value){
                     this.setState({
                         typeName:v.label
@@ -147,23 +193,43 @@ class CustomerDetail extends Component {
         })
     }
     submit(){
+        if(this.state.type==="" || this.state.status===""){
+            Toast.fail("客户类型或客户状态不能为空",1)
+
+        }
         let submitData = {
             customerName:this.state.customerName,
             mobilePhone:this.state.mobilePhone,
-            detailAddress:this.state.address,
-            cuntomerType:this.state.type,
+            detailAddress:this.state.detailAddress,
+            customerType:this.state.type,
             status:this.state.status,
-            addressIds:[this.state.selectedData[0].id,this.state.selectedData[1].id,this.state.selectedData[2].id,]
+            addressIds:this.state.selectedData
+
         };
-        axios.post(`${API2}/base/customer/addApp`,{...submitData}).then(response=>{
+        console.log(submitData);
+        let url = `${API2}/base/customer/addApp`
+        if(this.props.match.params.id){
+            url=`${API2}/base/customer/updateApp`;
+            submitData.id = this.props.match.params.id;
+        }
+        axios.post(url,{...submitData}).then(response=>{
             let res = response.data;
+            if(res.result){
+                Toast.success(res.msg,1);
+                this.props.history.push(`${HOST}/index/myCustomer`)
+                setTimeout(()=>{
+
+                },1000)
+            }else{
+                Toast.fail(res.msg,1);
+            }
             console.log(res);
         })
 
     }
     render() {
-
-        const ReanderNavBar=()=>{
+        //base/customer/update
+       /* const ReanderNavBar=()=>{
             return this.props.match.params.id?
                 <NavBar
                     mode="dark"
@@ -178,11 +244,17 @@ class CustomerDetail extends Component {
                     onLeftClick={()=>{this.props.history.push(`${HOST}/index/myCustomer`)}}
                     rightContent={<div onClick={()=>{this.submit()}}>完成</div>}
                 >新增客户</NavBar>
-        };
+        };*/
         return (
             <div className="custoomer-detail">
                 <div className="custoomer-detail-header">
-                    <ReanderNavBar></ReanderNavBar>
+                    <NavBar
+                        mode="dark"
+                        icon={<Icon type="left" />}
+                        onLeftClick={()=>{this.props.history.push(`${HOST}/index/myCustomer`)}}
+                        rightContent={<div onClick={()=>{this.submit()}}>完成</div>}
+                    >{this.props.match.params.id?"客户详情":"新增客户"}</NavBar>
+
                 </div>
                 <div className="custoomer-detail-body">
 
@@ -192,6 +264,7 @@ class CustomerDetail extends Component {
                             type="text"
                             placeholder="请填写客户姓名"
                             clear
+                            value={this.state.customerName}
                             onChange={value=>this.setValue("customerName",value)}
                         >
                             客户姓名
@@ -201,11 +274,12 @@ class CustomerDetail extends Component {
                             type="text"
                             placeholder="请填写电话"
                             clear
+                            value={this.state.mobilePhone}
                             onChange={value=>this.setValue("mobilePhone",value)}
                         >
                             电话
                         </InputItem>
-                        <Picker data={this.state.cuntomerType} extra={this.state.typeName} cols={1} onOk={(v)=>{this.typeOk(v)}}>
+                        <Picker data={this.state.customerType} extra={this.state.typeName} cols={1} onOk={(v)=>{this.typeOk(v)}}>
                             <List.Item arrow="horizontal">客户类型</List.Item>
                         </Picker>
                         <Picker data={this.state.statusType} extra={this.state.statusName} cols={1} onOk={(v)=>{this.statusOk(v)}}>
@@ -224,7 +298,8 @@ class CustomerDetail extends Component {
                             autoHeight
                             name="address"
                             rows={3}
-                            onChange={value=>this.setValue("address",value)}
+                            value={this.state.detailAddress}
+                            onChange={value=>this.setValue("detailAddress",value)}
                         />
                     </List>
                 </div>
