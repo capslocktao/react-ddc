@@ -114,7 +114,7 @@ class OrderManagement extends Component {
                                             className="order-list"
                                         >
                                             {v.orderNo} {v.customerName}
-                                            <Brief>地址 状态</Brief>
+                                            <Brief>{v.address} {v.status}</Brief>
                                             <Flex justify="end">
                                                 <Link to={ `${HOST}/logistics/${v.orderId}`}>
                                                     <Flex.Item className="button">
