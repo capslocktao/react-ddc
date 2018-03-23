@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { NavBar, Icon ,WingBlank,List,InputItem, Accordion,Flex ,Steps, WhiteSpace} from 'antd-mobile';
 import { Link } from 'react-router-dom';
+import axios from "axios"
 import "./dateils.less"
 import {HOST} from "../../../../const/host";
 
@@ -32,7 +33,7 @@ const customIcon = () => (
     </svg>
 );
 
-
+const API="http://192.168.31.34:8080"
 
 class details extends Component {
     constructor(props) {
@@ -40,6 +41,13 @@ class details extends Component {
         this.state = {};
         console.log(this.props.match.params.id)
     };
+    componentDidMount(){
+        console.log(this.props.match.params.id)
+
+        axios.get(`${API}/base/orderItem/findAllAppOrderItem`,{params:{id:17}}).then(response=>{
+            console.log(response)
+        })
+    }
     render() {
         return (
             <div>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { NavBar, Icon ,WingBlank,List,InputItem,Flex} from 'antd-mobile';
 import { Link } from 'react-router-dom';
+import axios from "axios"
 import {HOST} from "../../../../const/host";
 import "./search.less"
 

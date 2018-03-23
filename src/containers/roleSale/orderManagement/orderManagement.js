@@ -3,6 +3,7 @@ import { NavBar,Icon, WingBlank,List,Tabs, WhiteSpace ,Flex } from 'antd-mobile'
 import { StickyContainer, Sticky } from 'react-sticky';
 import { Link } from 'react-router-dom';
 import { HOST } from '../../../const/host';
+import axios from "axios"
 import "./orderManagement.less"
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -31,25 +32,32 @@ const branchTabs = [
 
 const tab = sessionStorage.getItem("roleSymbol") === "sales"?branchTabs:saleTabs;
 console.log(tab)
-
+const API="http://192.168.31.34:8080"
 class OrderManagement extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-           list:[]
+           list:[],
+           status:"UNCONFIRMED"
         };
+        this.orderTab=this.orderTab.bind(this);
     };
     componentDidMount(){
         /*
         list列表数据
         * */
-        this.setState({list:[
-                {title:'样品','status':'123',url:'qwe',syl:'1'},
-                {title:'样品','status':'123',url:'qwe',syl:'2'},
-                {title:'样品','status':'123',url:'qwe',syl:'3'},
-                {title:'样品','status':'123',url:'qwe',syl:'4'}
-         ]})
+        axios.get(`${API}/base/order/findAllAppOrderModel`,{params:{status:this.state.status}}).then(response=>{
+            console.log(response)
+            let res=response.data;
+            this.setState({list:res})
+        })
+
+    }
+    orderTab(tab){
+        axios.get(`${API}/base/order/findAllAppOrderModel`,{params:{status:tab['status']}}).then(response=>{
+            console.log(response)
+        })
     }
     render() {
         return (
@@ -62,7 +70,7 @@ class OrderManagement extends Component {
                                 <Link key="0" to={`${HOST}/orderManagement/search`}>
                                     <Icon  type="search" style={{ marginRight: '16px' }} />
                                 </Link>,
-                                <Link to={`${HOST}/orderManagement/add`}>
+                                <Link key="1" to={`${HOST}/orderManagement/add`}>
                                     <Icon type="up" style={{ marginRight: '16px' }} />
                                 </Link>
                             ]
@@ -75,14 +83,8 @@ class OrderManagement extends Component {
                         <Tabs tabs={tab}
                               initalPage={'t2'}
                               renderTabBar={renderTabBar}
-                              onChange={(tab,status)=>{
-                                  console.log(tab,status)
-                                  this.setState({list:[
-                                          {title:'样品1','status':'123',url:'qwe',syl:'1'},
-                                          {title:'样品2','status':'123',url:'qwe',syl:'2'},
-                                          {title:'样品3','status':'123',url:'qwe',syl:'3'},
-                                          {title:'样品4','status':'123',url:'qwe',syl:'4'}
-                                      ]})
+                              onChange={(tab)=>{
+                                  this.orderTab(tab)
                               }}
                         >
                             {
@@ -100,7 +102,7 @@ class OrderManagement extends Component {
                         {
                             this.state.list.map(v=>(
                                     <List
-
+                                        key={v.orderId}
                                         onClick={()=>{
 
                                         }}
@@ -111,15 +113,15 @@ class OrderManagement extends Component {
                                             platform="android"
                                             className="order-list"
                                         >
-                                            {v.title} 订单号 收货人
-                                            <Brief>货物地址状态</Brief>
+                                            {v.orderNo} {v.customerName}
+                                            <Brief>地址 状态</Brief>
                                             <Flex justify="end">
-                                                <Link key={v.syl} to={ `${HOST}/logistics/${v.syl}`}>
+                                                <Link to={ `${HOST}/logistics/${v.orderId}`}>
                                                     <Flex.Item className="button">
                                                         查看物流
                                                     </Flex.Item>
                                                 </Link>
-                                                <Link key={v.syl} to={ `${HOST}/orderManagement/details/${v.syl}`}>
+                                                <Link  to={ `${HOST}/orderManagement/details/${v.orderId}`}>
                                                     <Flex.Item className="button">
                                                             查看详情
                                                     </Flex.Item>
