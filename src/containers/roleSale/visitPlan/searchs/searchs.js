@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import { SearchBar, WhiteSpace,NavBar ,Icon,WingBlank,} from 'antd-mobile';
 import {HOST} from "../../../../const/host";
 import { Link } from 'react-router-dom';
-import axios from "axios/index";
 import './searchs.less';
+import axios from "axios/index";
 const API = "http://192.168.31.13:8080";
 
 class Searchs extends Component {
@@ -15,11 +15,9 @@ class Searchs extends Component {
         this.submit = this.submit.bind(this)
     };
 
-
+//搜索
     submit(value){
-
         let customerName = value;
-
         axios.post(`${API}/base/visitPlan/findAll`,{customerName}).then((response)=>{
             console.log(response.data)
             let res = response.data;
@@ -56,7 +54,7 @@ class Searchs extends Component {
                 {
                     this.state.content?
                         this.state.content.map((v=>
-                                    <Link to={`${HOST}/visitDetail/${v.customerName}`} key={v.customerName}>
+                                    <Link to={`${HOST}/visitDetail/${v.id}`} key={v.id}>
                                         <div className="goods-item ">
                                             <WingBlank className="big-title">
                                                 <div className ="title" >

@@ -16,7 +16,6 @@ class VisitPlan extends Component {
     componentDidMount(){
         console.log(API)
         axios.post(`${API}/base/visitPlan/findAll`,{customerName:""}).then((response)=>{
-            console.log(response.data)
             let res = response.data;
             this.setState({
                 content:res
@@ -53,7 +52,7 @@ class VisitPlan extends Component {
                                                   <p>[客户]：{v.status}</p>
                                               </div>
                                               <div className="next-text">
-                                                  <p>{v.visitTime}</p>
+                                                  <p>{v.date}</p>
                                               </div>
                                       </WingBlank>
                                 </div>

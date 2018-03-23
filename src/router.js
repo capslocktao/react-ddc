@@ -24,6 +24,7 @@ import ellipsis from "./containers/roleSale/ellipsis/ellipsis";
 import Searchs from "./containers/roleSale/visitPlan/searchs/searchs"//拜访计划搜索
 import VisitDetail from "./containers/roleSale/visitPlan/visitDetail/visitDetail";
 import CustomerDetail from "./containers/roleSale/myCustomer/customerDetail/customerDetail";
+import AddVisitRecord from "./containers/roleSale/visitPlan/addVisitPlan/addVisitRecord/addVisitRecord";
 @withRouter
 
 @connect(
@@ -97,7 +98,13 @@ class Router extends Component {
                     path:`${HOST}/searchs`,
                     component:Searchs
 
-                }
+                },
+                {
+                    path:`${HOST}/addVisitRecord`,
+                    component:AddVisitRecord
+
+                },
+
             ]
         }
     }
