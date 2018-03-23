@@ -26,6 +26,8 @@ import Searchs from "./containers/roleSale/visitPlan/searchs/searchs"//拜访计
 import VisitDetail from "./containers/roleSale/visitPlan/visitDetail/visitDetail";
 import CustomerDetail from "./containers/roleSale/myCustomer/customerDetail/customerDetail";
 
+import AddVisitRecord from "./containers/roleSale/visitPlan/addVisitPlan/addVisitRecord/addVisitRecord";
+
 //-------------------------------------------财务
 import PaymentOrderDetail from "./containers/roleAccountant/paymentCheck/paymentOederDetail/paymentOederDetail";
 
@@ -91,11 +93,7 @@ class Router extends Component {
                     path: `${HOST}/logistics/:id`,
                     component: Logistics
                 },
-                {
-                    path:`${HOST}/searchs`,
-                    component:Searchs
 
-                },
                 {
                     path:`${HOST}/orderManagement/add`,
                     component:Add
@@ -117,6 +115,17 @@ class Router extends Component {
                 {
                     path:`${HOST}/previewImg`,
                     component:Preview
+                },
+
+                {
+                    path:`${HOST}/searchs`,
+                    component:Searchs
+
+                },
+                {
+                    path:`${HOST}/addVisitRecord`,
+                    component:AddVisitRecord
+
                 },
             ]
         }
