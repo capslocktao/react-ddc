@@ -14,7 +14,7 @@ class VisitPlan extends Component {
 
     };
     componentDidMount(){
-        console.log(API)
+
         axios.post(`${API}/base/visitPlan/findAll`,{customerName:""}).then((response)=>{
             let res = response.data;
             this.setState({
@@ -22,7 +22,18 @@ class VisitPlan extends Component {
             })
         })
     }
+    customerType(type){
+        switch (type){
+            case "UNEXECUTED":
+                return "意向客户";
+                break;
+            case "UNEXECUTED":
+                return "意向客户";
+                break;
 
+
+        }
+    }
     render() {
         return (
             <div className="visit-plan" >

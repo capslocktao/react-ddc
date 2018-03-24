@@ -114,6 +114,12 @@ class Router extends Component {
                     component:Search
 
                 },
+                {
+                    path: `${HOST}/addVisitRecord/:id`,//拜访计划
+                    component: AddVisitRecord
+
+                },
+
 
                 //---------------------------------------------------财务
                 {
@@ -131,10 +137,10 @@ class Router extends Component {
                 },
                 //-----------------------------------------------------仓库人员
                 {
+
                     path:`${HOST}/sendManagement/operationOrderDetail/:id`,
                     component:OperationOrderDetail
-                }
-
+                },
             ]
         }
     }

@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import { NavBar, Icon, List, DatePicker ,Picker,Toast} from 'antd-mobile';
+import { NavBar, Icon, List, DatePicker ,Picker} from 'antd-mobile';
 import convertTime from "../../../../util/convertTime"
-import { Link} from "react-router-dom"
 import './addVisitPlan.less';
 import {HOST} from "../../../../const/host";
 import axios from "axios/index";
+import {Toast} from "antd-mobile/lib/index";
 const API = "http://192.168.31.13:8080";
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
@@ -120,7 +120,15 @@ class AddVisitPlan extends Component {
         };
         axios.post(`${API}/base/visitPlan/add`,{...submitData}).then(response=>{
             let res = response.data;
-            console.log(res);
+            if(res.result){
+                Toast.success(res.msg,1);
+                this.props.history.push(`${HOST}/index/visitPlan`)
+                setTimeout(()=>{
+
+                },1000)
+            }else{
+                Toast.fail(res.msg,1);
+            }
         })
         console.log(submitData)
     }
@@ -135,15 +143,12 @@ class AddVisitPlan extends Component {
                             icon={<Icon type="left" />}
                             onLeftClick={() => {this.props.history.push(`../index/visitPlan`)}}
 
-                            rightContent={
-
-                                <Link onClick={()=>{this.submit()}}  to={`${HOST}../index/visitPlan`} className="text-color">完成</Link>
-                            }
+                            rightContent={<div onClick={()=>{this.submit()}}>完成</div>}
                         >添加拜访计划</NavBar>
                     </div>
                     <div className="start-name">
                         <div className="state-sides">
-                            <div className="text-size">
+                            <div>
                                 <List  className="date-picker-list" >
                                     <Picker data={this.state.cuntomer} extra={this.state.cuntomerName} cols={1} onOk={(v)=>{this.cuntomerOk(v)}}>
                                         <List.Item arrow="horizontal">客户名称:</List.Item>
