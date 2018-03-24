@@ -32,6 +32,7 @@ class MyCustomer extends Component{
             this.setState({
                 data:res
             })
+            console.log(res);
         })
     }
     changeType(val){
@@ -74,46 +75,31 @@ class MyCustomer extends Component{
                         <Tabs tabs={this.state.tabs}
                               onChange={this.changeType}
                               renderTabBar={renderTabBar}
-                        >
-                            <div className="customer-wrapper">
-                                <List>
+                        >{
+                            this.state.data?
 
-                                    {
-                                        this.state.data?
-                                        this.state.data.map(v=>
-                                            <Item arrow="horizontal"key={v.id} multipleLine onClick={() => {this.props.history.push(`${HOST}/myCustomer/customerDetail/${v.id}`)}} extra={v.customerType}>
-                                                <div className="name">
-                                                    <span>{v.customerName}</span>
-                                                    <span>({v.status})</span>
+                                    <div className="customer-wrapper">
+                                        <List>
+                                            {
+                                                this.state.data.map(v=>(
+                                                    <Item arrow="horizontal"  key={v.id} multipleLine onClick={() => {this.props.history.push(`${HOST}/myCustomer/customerDetail/${v.id}`)}} extra={v.customerType}>
+                                                        <div className="name">
+                                                            <span>{v.customerName}</span>
+                                                            <span>({v.status})</span>
+                                                        </div>
+                                                        <Brief>{v.mobilePhone}</Brief>
+                                                    </Item>
 
-                                                </div>
-                                                <Brief>{v.mobilePhone}</Brief>
-                                            </Item>
-                                        )
-                                            :
-                                            ""
-                                    }
+                                                ))
+                                            }
 
-                                </List>
-                            </div>
-                            <div className="customer-wrapper">
-                                <List>
+                                        </List>
+                                    </div>
 
-                                    {
-                                        this.state.data?
-                                            this.state.data.map(v=>
-                                                <Item arrow="horizontal"key={v.id} multipleLine onClick={() => {this.props.history.push(`${HOST}/myCustomer/customerDetail/${v.id}`)}} extra={v.customerType}>
-                                                    <div className="name">
-                                                        <span>{v.customerName}</span>
-                                                    </div>
-                                                    <Brief>{v.mobilePhone}</Brief>
-                                                </Item>
-                                            )
-                                            :
-                                            ""
-                                    }
-                                </List>
-                            </div>
+
+                                :
+                                ""
+                        }
 
                         </Tabs>
                     </StickyContainer>

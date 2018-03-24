@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import {withRouter, Route,Switch,Redirect } from 'react-router-dom';
-
+import {Toast} from "antd-mobile";
 import Container from './containers/container/container'
-import {HOST,API} from './const/host'//全局服务器路径
+import {HOST} from './const/host'//全局服务器路径
 import { connect } from 'react-redux'
 import axios from "axios";
 
 //-----------------------------------------公共
 import AddressManage from "./containers/publicView/addressManage/addressManage"
 import NewAddress from "./containers/publicView/addressManage/newAddress/newAddress";
+import Message from "./containers/publicView/message/message";
 
 //------------------------------------------客户
 
@@ -27,6 +28,7 @@ import VisitDetail from "./containers/roleSale/visitPlan/visitDetail/visitDetail
 import CustomerDetail from "./containers/roleSale/myCustomer/customerDetail/customerDetail";
 
 import AddVisitRecord from "./containers/roleSale/visitPlan/addVisitPlan/addVisitRecord/addVisitRecord";
+import DataStatistics from "./containers/roleSale/dataStatistics/dataStatistics"//数据分析
 
 //-------------------------------------------财务
 import PaymentOrderDetail from "./containers/roleAccountant/paymentCheck/paymentOederDetail/paymentOederDetail";
@@ -36,6 +38,7 @@ import OperationOrderDetail from "./containers/roleOperation/sendManagement/oper
 
 //-------------------------------------------查看图片
 import Preview from "./containers/publicView/previewImg/previewImg"
+const API = "http://192.168.31.168:8080"
 @withRouter
 @connect(
     state=>state.count
@@ -53,6 +56,10 @@ class Router extends Component {
                 {
                     path:`${HOST}/newAddress`,
                     component:NewAddress
+                },
+                {
+                    path:`${HOST}/message`,
+                    component:Message
                 },
                 //--------------------------------------------------主页面
                 {
@@ -79,11 +86,6 @@ class Router extends Component {
                     path:`${HOST}/addVisitPlan`,
                     component:AddVisitPlan
                 },
-                {
-                    path:`${HOST}/addVisitRecord`,
-                    component:AddVisitRecord
-                },
-
                 {
                     path:`${HOST}/visitDetail/:id`,
                     component:VisitDetail
@@ -117,7 +119,10 @@ class Router extends Component {
                 {
                     path: `${HOST}/addVisitRecord/:id`,//拜访计划
                     component: AddVisitRecord
-
+                },
+                {
+                    path: `${HOST}/dataStatistics`,//数据分析
+                    component: DataStatistics
                 },
 
 
@@ -160,13 +165,16 @@ class Router extends Component {
                 }
                 if(response.data.flag === 'SESSION_INVALID'){
                     console.log('失效');
+                    Toast.info("用户身份过期，请重新登陆",1)
+                    sessionStorage.clear();
+                    localStorage.clear();
                     this.props.history.push('/login');
                 }else{
                     sessionStorage.setItem('user',JSON.stringify(response.data.data));
                     this.user = JSON.parse(localStorage.getItem('user'));
                     let refrashPath = sessionStorage.getItem("currentPath");
                     if(refrashPath){
-                        console.log(888);
+
                         this.props.history.push(refrashPath)
                     }else{
                         switch (response.data.data.roleCode){

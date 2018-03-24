@@ -20,18 +20,17 @@ class VisitPlan extends Component {
             this.setState({
                 content:res
             })
+            console.log(res);
         })
     }
     customerType(type){
         switch (type){
             case "UNEXECUTED":
-                return "意向客户";
+                return "未执行";
                 break;
             case "UNEXECUTED":
-                return "意向客户";
+                return "已执行";
                 break;
-
-
         }
     }
     render() {
@@ -60,10 +59,10 @@ class VisitPlan extends Component {
                                       <WingBlank className="big-title">
                                               <div className ="title" >
                                                   <p>客户名称：{v.customerName}</p>
-                                                  <p>[客户]：{v.status}</p>
+                                                  <p className="stage">执行阶段：{this.customerType(v.status)}</p>
                                               </div>
                                               <div className="next-text">
-                                                  <p>{v.date}</p>
+                                                  <div>{v.date}</div>
                                               </div>
                                       </WingBlank>
                                 </div>

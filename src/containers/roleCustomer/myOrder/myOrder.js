@@ -33,6 +33,7 @@ class MyOrder extends Component {
             params:{status:"UNCONFIRMED"}
         }).then(response=>{
             let res = response.data;
+            console.log(res);
             this.setState({
                 data:res
             });

@@ -44,15 +44,15 @@ class ComponentName extends Component {
                 console.log(res);
 
             });
-        })
+        });
         //请求物流公司
         axios.get(`http://192.168.31.13:8080/base/logisticsCompany/findAll`).then(response=>{
             let res = response.data;
             console.log(res);
             res.forEach(v=>{
-                v.label = v.shipperName
+                v.label = v.shipperName;
                 v.value = v.shipperCode
-            })
+            });
             this.setState({
                 shipper:res
             })
@@ -62,7 +62,7 @@ class ComponentName extends Component {
     linkToPreview(v){
 
         if(!this.state.data[v]){
-            Toast.info("未上传凭证",1)
+            Toast.info("未上传凭证",1);
             return
         }
         let imgs = this.state.data[v].split(",");
@@ -105,7 +105,7 @@ class ComponentName extends Component {
     }
     send(){
         if(this.state.shipperCode === ""){
-            Toast.fail("请选择物流公司或填写单号",1)
+            Toast.fail("请选择物流公司或填写单号",1);
             return
         }
         let submitData = {

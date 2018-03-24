@@ -118,11 +118,20 @@ class add extends Component {
             axios.post(`${API}/base/order/addOrder`,params).then(response=>{
                 console.log(response)
                 let res=response.data;
-                Toast.fail(res.msg, 1);
-                this.props.history.push(`${HOST}/index/orderManagement`)
+                console.log(res);
+                if(res.result){
+                    Toast.success(res.msg,1)
+                    setTimeout(()=>{
+                        this.props.history.push(`${HOST}/index/orderManagement`)
+                    },1000)
+                }else{
+                    Toast.fail(res.msg, 1);
+                }
+
+
             })
         }else{
-            Toast.fail('请输入', 1);
+            Toast.fail('请选择客户或者商品', 1);
         }
     }
     select(e){
