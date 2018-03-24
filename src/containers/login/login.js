@@ -21,7 +21,7 @@ class Login extends Component {
     }
     login(){
         if(this.state.userName!==""&&this.state.password!==""){
-            axios.post(`http://192.168.31.168:8080/login`,{
+            axios.post(`${API}/login`,{
                 userName:this.state.userName,
                 password:this.state.password
             }).then(response=>{

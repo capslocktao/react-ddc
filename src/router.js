@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {withRouter, Route,Switch,Redirect } from 'react-router-dom';
 import {Toast} from "antd-mobile";
 import Container from './containers/container/container'
-import {HOST} from './const/host'//全局服务器路径
+import {HOST,API} from './const/host'//全局服务器路径
 import { connect } from 'react-redux'
 import axios from "axios";
 
@@ -38,7 +38,7 @@ import OperationOrderDetail from "./containers/roleOperation/sendManagement/oper
 
 //-------------------------------------------查看图片
 import Preview from "./containers/publicView/previewImg/previewImg"
-const API = "http://192.168.31.168:8080"
+//const API = "http://192.168.31.168:8080"
 @withRouter
 @connect(
     state=>state.count

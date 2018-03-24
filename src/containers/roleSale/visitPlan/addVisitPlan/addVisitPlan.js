@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import { NavBar, Icon, List, DatePicker ,Picker,TextareaItem,Toast} from 'antd-mobile';
 import convertTime from "../../../../util/convertTime"
 import './addVisitPlan.less';
-import {HOST} from "../../../../const/host";
+import {HOST,API} from "../../../../const/host";
 import axios from "axios/index";
-const API = "http://192.168.31.13:8080";
+//const API = "http://192.168.31.13:8080";
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
 let time = convertTime(now.getTime());
@@ -50,7 +50,7 @@ class AddVisitPlan extends Component {
         this.setTime = this.setTime.bind(this);
     };
     componentDidMount() {
-        console.log(API)
+
         axios.post(`${API}/base/customer/appFindAll`, {customerName:"", status: ""}).then((response) => {
             console.log(response.data)
             let res = response.data;

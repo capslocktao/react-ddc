@@ -3,8 +3,8 @@ import { NavBar, Icon ,WingBlank,List,Steps,WhiteSpace} from 'antd-mobile';
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import "./logistics.less"
-import {HOST} from "../../../const/host";
-const API = "http://192.168.31.13:8080";
+import {HOST,API} from "../../../const/host";
+
 const Item = List.Item;
 const Brief = Item.Brief;
 

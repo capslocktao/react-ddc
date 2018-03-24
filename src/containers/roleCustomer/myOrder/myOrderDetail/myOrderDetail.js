@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import { NavBar,List,Icon,WingBlank,Radio,TextareaItem,Toast,Button,ImagePicker,InputItem,Modal } from "antd-mobile";
-import { HOST } from "../../../../const/host";
+import { HOST,API } from "../../../../const/host";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./myOrderDetail.less";
 const RadioItem = Radio.RadioItem;
-const API = "http://192.168.31.34:8080";
 const alert = Modal.alert;
 const Item = List.Item;
 class MyOrderDetail extends Component {
@@ -91,7 +90,7 @@ class MyOrderDetail extends Component {
         let config={
             headers: {'Content-Type': 'multipart/form-data'}
         };
-        axios.post(`http://192.168.31.34:8080/base/attachment/upload/signal/uploadImg`,formData,config).then(response=>{
+        axios.post(`${API}/base/attachment/upload/signal/uploadImg`,formData,config).then(response=>{
             let res = response.data;
             if(res.result){
                 this.state.imgUrl.push(res.data)

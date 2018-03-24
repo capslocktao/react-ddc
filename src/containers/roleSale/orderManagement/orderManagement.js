@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { NavBar,Icon, WingBlank,List,Tabs, WhiteSpace ,Flex } from 'antd-mobile';
 import { StickyContainer, Sticky } from 'react-sticky';
 import { Link } from 'react-router-dom';
-import { HOST } from '../../../const/host';
+import { HOST,API } from '../../../const/host';
 import axios from "axios"
 import "./orderManagement.less"
 const Item = List.Item;
@@ -32,7 +32,7 @@ const branchTabs = [
 
 const tab = sessionStorage.getItem("roleSymbol") === "sales"?branchTabs:saleTabs;
 
-const API="http://192.168.31.168:8080"
+//const API="http://192.168.31.168:8080"
 class OrderManagement extends Component {
 
     constructor(props) {

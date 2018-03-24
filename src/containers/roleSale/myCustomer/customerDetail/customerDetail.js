@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {NavBar,Icon,List, Picker,InputItem,TextareaItem,Toast } from "antd-mobile";
 import ReactCascader from "../../../../components/react-cascader/react-cascader";
-import { HOST } from '../../../../const/host'
+import { HOST,API } from '../../../../const/host'
 import axios from 'axios'
-const API = "http://192.168.31.222:8080";
-const API2 = "http://192.168.31.13:8080";
+//const API = "http://192.168.31.222:8080";
+//const API2 = "http://192.168.31.13:8080";
 
 class CustomerDetail extends Component {
     constructor(props) {
@@ -83,7 +83,7 @@ class CustomerDetail extends Component {
         })
         let id = this.props.match.params.id;
         if(id){
-            axios.get(`${API2}/base/customer/findAppInfo`,{params:{id}}).then(response=>{
+            axios.get(`${API}/base/customer/findAppInfo`,{params:{id}}).then(response=>{
 
                 let res = response.data;
 
@@ -213,9 +213,9 @@ class CustomerDetail extends Component {
 
         };
         console.log(submitData);
-        let url = `${API2}/base/customer/addApp`
+        let url = `${API}/base/customer/addApp`
         if(this.props.match.params.id){
-            url=`${API2}/base/customer/updateApp`;
+            url=`${API}/base/customer/updateApp`;
             submitData.id = this.props.match.params.id;
         }
         axios.post(url,{...submitData}).then(response=>{

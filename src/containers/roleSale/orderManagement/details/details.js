@@ -3,7 +3,7 @@ import {NavBar, Icon, WingBlank, List, InputItem, Accordion, Flex, Steps, WhiteS
 import {Link} from 'react-router-dom';
 import axios from "axios"
 import "./dateils.less"
-import {HOST} from "../../../../const/host";
+import {HOST,API} from "../../../../const/host";
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -34,7 +34,7 @@ const customIcon = () => (
     </svg>
 );
 
-const API = "http://192.168.31.34:8080"
+//const API = "http://192.168.31.34:8080"
 
 class details extends Component {
     constructor(props) {

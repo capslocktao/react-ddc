@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import { NavBar,WingBlank,InputItem,TextareaItem,Button,List,Icon,Toast,Modal } from "antd-mobile";
 import axios from "axios";
 import './paymentOederDetail.less';
-import { HOST } from "../../../../const/host"
-const API = "http://192.168.31.34:8080";
+import { HOST,API } from "../../../../const/host"
+
 const Item = List.Item;
 const alert = Modal.alert;
 class PaymentOrderDetail extends Component {

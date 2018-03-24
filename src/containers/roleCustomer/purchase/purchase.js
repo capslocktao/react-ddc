@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { NavBar } from 'antd-mobile';
 import GoodsList from "../../../components/goodsList/goodsList";
-import { HOST } from "../../../const/host"
+import { HOST,API } from "../../../const/host"
 import axios from "axios";
 import './purchase.less';
 class Purchase extends Component {
@@ -17,7 +17,7 @@ class Purchase extends Component {
         this.submitOrder = this.submitOrder.bind(this)
     };
     componentDidMount(){
-        axios.post(`http://192.168.31.168:8080/base/stockInfo/findAllStockInfo`).then(response=>{
+        axios.post(`${API}/base/stockInfo/findAllStockInfo`).then(response=>{
             if(response){
                 let res = response.data;
                 this.setState({

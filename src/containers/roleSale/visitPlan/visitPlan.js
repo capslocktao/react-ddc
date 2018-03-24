@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import { NavBar, Icon,WingBlank} from 'antd-mobile';
-import {HOST} from "../../../const/host";
+import {HOST,API} from "../../../const/host";
 import { Link } from 'react-router-dom';
 import './visitPlan.less';
 import axios from "axios/index";
-const API = "http://192.168.31.13:8080";
+//const API = "http://192.168.31.13:8080";
 class VisitPlan extends Component {
     constructor(props) {
         super(props);

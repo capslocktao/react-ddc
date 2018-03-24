@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import { NavBar,Icon,Picker,List,DatePicker,TextareaItem,Button,Toast,ImagePicker,WingBlank} from 'antd-mobile';
 import axios from "axios/index";
 // import { Link } from 'react-router-dom';
-import {HOST} from "../../../../../const/host";
+import {HOST,API} from "../../../../../const/host";
 import './addVisitRecord.less';
 import convertTime from "../../../../../util/convertTime";
 
-const API = "http://192.168.31.13:8080";
+//const API = "http://192.168.31.13:8080";
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
 let time = convertTime(now.getTime());
@@ -131,7 +131,7 @@ class AddVisitRecord extends Component {
         let config={
             headers: {'Content-Type': 'multipart/form-data'}
         };
-        axios.post(`http://192.168.31.168:8080/base/attachment/upload/signal/uploadImg`,formData,config).then(response=>{
+        axios.post(`${API}/base/attachment/upload/signal/uploadImg`,formData,config).then(response=>{
             let res = response.data;
             if(res.result){
                 this.state.imgUrl.push(res.data)

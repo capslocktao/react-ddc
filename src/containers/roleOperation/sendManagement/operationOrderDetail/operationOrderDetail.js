@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import { NavBar,Icon,WingBlank,InputItem,TextareaItem,Button,List,ImagePicker,Toast,Modal,Picker } from "antd-mobile"
 import "./operationOrderDetail.less";
-import {HOST} from "../../../../const/host";
+import {HOST,API} from "../../../../const/host";
 import axios from "axios";
 const Item = List.Item;
 const alert = Modal.alert;
-const API = "http://192.168.31.168:8080"
+//const API = "http://192.168.31.168:8080"
 class ComponentName extends Component {
     constructor(props) {
         super(props);
@@ -34,7 +34,7 @@ class ComponentName extends Component {
     };
     componentDidMount(){
         //调用仓库
-        axios.get(`http://192.168.31.222:8080/base/warehouse/warehouseFindAll`).then(response=> {
+        axios.get(`${API}/base/warehouse/warehouseFindAll`).then(response=> {
             let res = response.data;
             res.forEach(v=>{
                 v.label = v.warehouseName;
@@ -64,7 +64,7 @@ class ComponentName extends Component {
             });
         });
         //请求物流公司
-        axios.get(`http://192.168.31.13:8080/base/logisticsCompany/findAll`).then(response=>{
+        axios.get(`${API}/base/logisticsCompany/findAll`).then(response=>{
             let res = response.data;
             console.log(res);
             res.forEach(v=>{
@@ -101,7 +101,7 @@ class ComponentName extends Component {
         let config={
             headers: {'Content-Type': 'multipart/form-data'}
         };
-        axios.post(`http://192.168.31.34:8080/base/attachment/upload/signal/uploadImg`,formData,config).then(response=>{
+        axios.post(`${API}/base/attachment/upload/signal/uploadImg`,formData,config).then(response=>{
             let res = response.data;
             if(res.result){
                 this.state.imgUrl.push(res.data)

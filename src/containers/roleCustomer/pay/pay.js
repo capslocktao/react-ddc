@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import { NavBar,Icon,Radio,Button,WingBlank,ImagePicker,Toast,TextareaItem } from 'antd-mobile';
 import axios from "axios"
 import { Link } from "react-router-dom";
-import {HOST} from "../../../const/host";
+import {HOST,API} from "../../../const/host";
 import './pay.less';
-const API = "http://192.168.31.34:8080"
+//const API = "http://192.168.31.34:8080"
 const RadioItem = Radio.RadioItem;
 class Pay extends Component {
     constructor(props) {
@@ -42,7 +42,7 @@ class Pay extends Component {
         });
         let userId = JSON.parse(sessionStorage.getItem("user")).id;
 
-        axios.get(`http://192.168.31.222:8080/base/area/updatePre`,{
+        axios.get(`${API}/base/area/updatePre`,{
                 params:{
                     id:userId
                 }

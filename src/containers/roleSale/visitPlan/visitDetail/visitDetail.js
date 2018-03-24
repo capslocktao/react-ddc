@@ -3,8 +3,8 @@ import { NavBar, Icon,List,WingBlank,TextareaItem,Toast } from 'antd-mobile';
 import axios from "axios/index";
 import { Link } from 'react-router-dom';
 import './visitDetail.less';
-import {HOST} from "../../../../const/host";
-const API = "http://192.168.31.13:8080";
+import {HOST,API} from "../../../../const/host";
+//const API = "http://192.168.31.13:8080";
 const Item = List.Item;
 class VisitDetail extends Component {
     constructor(props) {

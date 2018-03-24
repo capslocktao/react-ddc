@@ -2,14 +2,14 @@ import React, {Component} from 'react';
 import { NavBar, Icon ,WingBlank,List,InputItem, Accordion,Flex , WhiteSpace ,Picker,Toast,TextareaItem } from 'antd-mobile';
 import { Link } from 'react-router-dom';
 import axios from "axios"
-import {HOST} from "../../../../const/host";
+import {HOST,API} from "../../../../const/host";
 import GoodsList from "../../../../components/goodsList/goodsList"
 /*import { createForm } from 'rc-form';
 import arrayTreeFilter from 'array-tree-filter';
 import { district, provinceLite } from 'antd-mobile-demo-data';*/
 import "./add.less"
 
-const API = "http://192.168.31.34:8080"
+//const API = "http://192.168.31.34:8080"
 const Item = List.Item;
 const Brief = Item.Brief;
 

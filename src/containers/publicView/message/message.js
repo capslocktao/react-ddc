@@ -3,7 +3,8 @@ import "./message.less";
 import { NavBar,Icon,Tabs } from "antd-mobile";
 import { StickyContainer, Sticky } from 'react-sticky';
 import axios from "axios";
-const API = "http://192.168.31.13:8080";
+import {API} from "../../../const/host"
+
 function renderTabBar(props) {
     return (<Sticky topOffset={-45}>
         {({ style }) => <div style={{ ...style, top:45, zIndex: 1 }}><Tabs.DefaultTabBar {...props} /></div>}
