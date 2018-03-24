@@ -18,15 +18,33 @@ class ComponentName extends Component {
             shipper:"",
             shipperName:"",
             shipperCode:"",
-            logisticCode:""
+            logisticCode:"",
+            warehouse:"",
+            warehouseId:"",
+            warehouseName:"",
+
         };
         this.onChange = this.onChange.bind(this);
         this.selectShipper = this.selectShipper.bind(this);
         this.setlogisticCode = this.setlogisticCode.bind(this);
         this.send = this.send.bind(this)
         this.linkToPreview = this.linkToPreview.bind(this)
+        this.selectWarehouse = this.selectWarehouse.bind(this)
+
     };
     componentDidMount(){
+        //调用仓库
+        axios.get(`http://192.168.31.222:8080/base/warehouse/warehouseFindAll`).then(response=> {
+            let res = response.data;
+            res.forEach(v=>{
+                v.label = v.warehouseName;
+                v.value = v.id
+            });
+            this.setState({
+                warehouse:res
+            })
+        });
+
         axios.get(`${API}/base/orderItem/findAllAppOrderItem`,{
             params:{id:this.props.match.params.id}
         }).then(response=>{
@@ -53,6 +71,11 @@ class ComponentName extends Component {
                 v.label = v.shipperName;
                 v.value = v.shipperCode
             });
+            res[0] = {
+                label:"取消选择",
+                value:""
+            };
+
             this.setState({
                 shipper:res
             })
@@ -94,6 +117,28 @@ class ComponentName extends Component {
                 this.setState({
                     shipperName:v.label,
                     shipperCode:v.value
+                },()=>{
+                    if(val[0] === ""){
+                        console.log(this.state.shipperName);
+                        this.setState({
+                            shipperName:"",
+                            shipperCode:""
+                        })
+                    }
+
+                })
+            }
+        });
+    }
+    selectWarehouse(val){
+        console.log(val);
+        this.setState({
+            warehouseId:val[0]
+        });
+        this.state.warehouse.forEach(v=>{
+            if(val[0] === v.value){
+                this.setState({
+                    warehouseName:v.label
                 })
             }
         });
@@ -103,16 +148,22 @@ class ComponentName extends Component {
             logisticCode:val
         })
     }
+
     send(){
-        if(this.state.shipperCode === ""){
-            Toast.fail("请选择物流公司或填写单号",1);
+        if(this.state.warehouseId === ""){
+            Toast.fail("请选择仓库",1);
             return
+        }else if((this.state.shipperCode === "" || this.state.logisticCode === "" )&& this.state.imgUrl.length === 0){
+            Toast.fail("物流公司和运单号以及发货凭证不能为空",1);
+            return
+
         }
         let submitData = {
             paymentVoucher :this.state.imgUrl.join(","),
             shipperCode:this.state.shipperCode,
             logisticCode:this.state.logisticCode,
-            orderId:this.state.data.orderId
+            orderId:this.state.data.orderId,
+            wareHouseId:this.state.warehouseId
         };
 
         console.log(submitData);
@@ -232,6 +283,18 @@ class ComponentName extends Component {
                                         :
                                         ""
                                 }
+                                {
+
+                                    this.state.warehouse?
+                                            <Picker  style={{marginTop:10}} data={this.state.warehouse} extra={this.state.warehouseName} onChange={(val)=>{this.selectWarehouse(val)}} cols={1}>
+                                                <List.Item arrow="horizontal">仓库</List.Item>
+                                            </Picker>
+                                        :
+                                        ""
+
+                                }
+
+
                                 {
                                     this.state.status === "完成"?
                                         <Item arrow="horizontal" onClick={() => {this.props.history.push(`${HOST}/logistics/${this.state.data.orderNo}`)}}>

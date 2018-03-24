@@ -121,7 +121,7 @@ class MyOrderDetail extends Component {
 
     //确认销售发来的订单
     submit(){
-        if(this.state.files.length === 0){
+        if(this.state.files.length === 0 && this.state.payType!=="UNPAID"){
             Toast.fail("请上传转账凭证",1);
             return
         }
