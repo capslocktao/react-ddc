@@ -178,10 +178,10 @@ class Router extends Component {
                         this.props.history.push(refrashPath)
                     }else{
                         switch (response.data.data.roleCode){
-                            case 0:
+                            case "admin":
                                 this.props.history.push(`${HOST}/index/team`);
                                 break;
-                            case 1:
+                            case "subadmin":
                                 this.props.history.push(`${HOST}/index/customerOrderForm`);
                                 break;
                             case "sales":
