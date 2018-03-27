@@ -7,7 +7,6 @@ import { Switch,Route } from 'react-router-dom';
 import NavLinkBar from '../../components/nav-link-bar/nav-link-bar'
 //公共页面
 import TeamManagement from '../publicView/teamManagement/teamManagement'//团队管理
-
 import CustomerOrderForm from '../publicView/customerOrderForm/customerOrderForm'//客户管理
 
 //总管理员
@@ -81,7 +80,7 @@ class Container extends Component {
             branchManager:[
                 {
                     path:`${HOST}/index/myCustomer`,
-                    name:`我的客户`,
+                    name:`客户管理`,
                     icon:"icon-customer",
                     component:MyCustomer
                 },
@@ -262,11 +261,11 @@ class Container extends Component {
                 },
                 {
                    path:`${HOST}/index/topUserCenter`,
-                   component:BranchUserCenter
+                   component:TopUserCenter
                 },
                 {
                    path:`${HOST}/index/branchUserCenter`,
-                   component:TopUserCenter
+                   component:BranchUserCenter
                 },
                 {
                    path:`${HOST}/index/accountantUserCenter`,
@@ -345,7 +344,6 @@ class Container extends Component {
                 case "subadmin":
                     return this.state.branchManager;
                 case "sales":
-                     
                     return this.state.roleSale;
                 case "customer":
                     return this.state.roleCustomer;

@@ -10,7 +10,9 @@ import axios from "axios";
 import AddressManage from "./containers/publicView/addressManage/addressManage"
 import NewAddress from "./containers/publicView/addressManage/newAddress/newAddress";
 import Message from "./containers/publicView/message/message";
-
+import TeamManagement from "./containers/publicView/teamManagement/teamManagement"
+import TeamSearch from "./containers/publicView/teamManagement/teamSearch/teamSearch"//团队管理--搜索团队成员
+import AddTeamMember from "./containers/publicView/teamManagement/addTeamMember/addTeamMember"
 //------------------------------------------客户
 
 import Pay from "./containers/roleCustomer/pay/pay"
@@ -60,6 +62,22 @@ class Router extends Component {
                 {
                     path:`${HOST}/message`,
                     component:Message
+                },
+                {
+                    path:`${HOST}/team`,
+                    component:TeamManagement
+                },
+                {
+                    path:`${HOST}/teamSearch`,
+                    component:TeamSearch
+                },
+                {
+                    path:`${HOST}/addTeamMember`,
+                    component:AddTeamMember
+                },
+                {
+                    path:`${HOST}/editTeamMember/:id`,
+                    component:AddTeamMember
                 },
                 //--------------------------------------------------主页面
                 {
@@ -174,7 +192,6 @@ class Router extends Component {
                     this.user = JSON.parse(localStorage.getItem('user'));
                     let refrashPath = sessionStorage.getItem("currentPath");
                     if(refrashPath){
-
                         this.props.history.push(refrashPath)
                     }else{
                         switch (response.data.data.roleCode){
@@ -182,7 +199,7 @@ class Router extends Component {
                                 this.props.history.push(`${HOST}/index/team`);
                                 break;
                             case "subadmin":
-                                this.props.history.push(`${HOST}/index/customerOrderForm`);
+                                this.props.history.push(`${HOST}/index/myCustomer`);
                                 break;
                             case "sales":
                                 this.props.history.push(`${HOST}/index/myCustomer`);

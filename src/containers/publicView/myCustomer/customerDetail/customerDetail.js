@@ -86,7 +86,6 @@ class CustomerDetail extends Component {
             axios.get(`${API}/base/customer/findAppInfo`,{params:{id}}).then(response=>{
 
                 let res = response.data;
-
                 this.state.statusType.forEach(v=>{
                     if(res.status === v.label){
 
@@ -105,6 +104,7 @@ class CustomerDetail extends Component {
                         })
                     }
                 })
+
                 if(this.props.match.params.id){
                     this.setState({
                         area:`${res.address[0]}/${res.address[1]}/${res.address[2]}`,

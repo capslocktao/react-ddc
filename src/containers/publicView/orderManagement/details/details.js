@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {NavBar, Icon, WingBlank, List, InputItem, Accordion, Flex, Steps, WhiteSpace} from 'antd-mobile';
+import {NavBar, Icon, List, Flex, Steps,} from 'antd-mobile';
 import {Link} from 'react-router-dom';
 import axios from "axios"
 import "./dateils.less"

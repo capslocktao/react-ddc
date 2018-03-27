@@ -23,7 +23,6 @@ class PaymentCheck extends Component {
                 { title: '已发货',value:"ALLSEND" },
                 { title: '完成',value:"COMPLETE" },
             ],
-
             data:[]
         };
         this.changeType = this.changeType.bind(this)

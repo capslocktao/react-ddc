@@ -37,7 +37,7 @@ class Login extends Component {
                                     this.props.history.push(`${HOST}/index/team`);
                                     break;
                                 case "subadmin":
-                                    this.props.history.push(`${HOST}/index/customerOrderForm`);
+                                    this.props.history.push(`${HOST}/index/myCustomer`);
                                     break;
                                 case "sales":
                                     this.props.history.push(`${HOST}index/myCustomer`);

@@ -117,7 +117,7 @@ class OrderManagement extends Component {
                                                                 className="order-list"
                                                             >
                                                                 {v.orderNo} {v.customerName}
-                                                                <Brief>{v.address} {v.status}</Brief>
+                                                                <Brief>{v.status}</Brief>
                                                                 <Flex justify="end">
 
                                                                     {

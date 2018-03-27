@@ -51,7 +51,10 @@ class BranchUserCenter extends Component {
                         <Item align="top" >
                             {this.state.user.nickName} <Brief>{this.state.user.userName}</Brief>
                         </Item>
+{/*
                         <Item arrow="horizontal" onClick={() => {this.props.history.push(`${HOST}/addressManage`)}}>地址管理</Item>
+*/}
+                        <Item arrow="horizontal" onClick={() => {this.props.history.push(`${HOST}/team`)}}>团队管理</Item>
                     </List>
                 </div>
                 <div className="logout">
