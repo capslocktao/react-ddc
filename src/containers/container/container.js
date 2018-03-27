@@ -7,7 +7,7 @@ import { Switch,Route } from 'react-router-dom';
 import NavLinkBar from '../../components/nav-link-bar/nav-link-bar'
 //公共页面
 import TeamManagement from '../publicView/teamManagement/teamManagement'//团队管理
-import CustomerManagement from '../publicView/customerManagement/customerManagement'//客户管理
+
 import CustomerOrderForm from '../publicView/customerOrderForm/customerOrderForm'//客户管理
 
 //总管理员
@@ -17,13 +17,14 @@ import TopUserCenter from '../topManager/topUserCenter/topUserCenter';//库存�
 //分公司（暂无单独页面）
 import BranchUserCenter from '../branchManager/branchUserCenter/branchUserCenter'
 //销售
-import VisitPlan from '../roleSale/visitPlan/visitPlan';//拜访计划
-import MyCustomer from '../roleSale/myCustomer/myCustomer'//客户管理
+import VisitPlan from '../publicView/visitPlan/visitPlan';//拜访计划
+import MyCustomer from '../publicView/myCustomer/myCustomer'//客户管理
 
-import orderManagement from '../roleSale/orderManagement/orderManagement'//订单管理
+import orderManagement from '../publicView/orderManagement/orderManagement'//订单管理
 import SalesUserCenter from '../roleSale/salesUserCenter/salesUserCenter'//用户中心
-
-import OrderManagement from '../roleSale/orderManagement/orderManagement'//订单管理
+//分公司管理
+import OrderManagement from '../publicView/orderManagement/orderManagement'//订单管理
+import CustomerManagement from '../branchManager/customerManagement/customerManagement'//客户管理
 
 //客户
 import Purchase from '../roleCustomer/purchase/purchase';//商品采购
@@ -79,6 +80,26 @@ class Container extends Component {
             //分公司管理员
             branchManager:[
                 {
+                    path:`${HOST}/index/myCustomer`,
+                    name:`我的客户`,
+                    icon:"icon-customer",
+                    component:MyCustomer
+                },
+                {
+                    path:`${HOST}/index/orderManagement`,
+                    name:`订单管理`,
+                    icon:"icon-orderForm",
+                    component:OrderManagement
+                },
+                {
+                    path:`${HOST}/index/visitPlan`,
+                    name:`拜访计划`,
+                    icon:"icon-visitPlan",
+                    component:VisitPlan
+                },
+
+/*
+                {
                     path:`${HOST}/index/customerOrderForm`,
                     name:`客户订单`,
                     icon:"icon-orderForm",
@@ -96,6 +117,7 @@ class Container extends Component {
                     icon:"icon-team",
                     component:TeamManagement
                 },
+*/
                 {
                     path:`${HOST}/index/branchUserCenter`,
                     name:`我的`,
@@ -318,9 +340,9 @@ class Container extends Component {
         if(JSON.parse(sessionStorage.getItem('user'))){
             let roleCode = JSON.parse(sessionStorage.getItem('user')).roleCode;
             switch (roleCode){
-                case "0":
+                case "admin":
                     return this.state.topManager;
-                case "1":
+                case "subadmin":
                     return this.state.branchManager;
                 case "sales":
                     return this.state.roleSale;

@@ -19,15 +19,15 @@ import Logistics from "./containers/publicView/logistics/logistics"//物流查�
 
 //------------------------------------------销售
 import ellipsis from "./containers/roleSale/ellipsis/ellipsis";
-import Add from "./containers/roleSale/orderManagement/add/add"//销售订单添加
-import Details from "./containers/roleSale/orderManagement/details/details"//销售订单详情
-import Search from "./containers/roleSale/orderManagement/search/search"//销售订单搜索
-import AddVisitPlan from "./containers/roleSale/visitPlan/addVisitPlan/addVisitPlan";
-import Searchs from "./containers/roleSale/visitPlan/searchs/searchs"//拜访计划搜索
-import VisitDetail from "./containers/roleSale/visitPlan/visitDetail/visitDetail";
-import CustomerDetail from "./containers/roleSale/myCustomer/customerDetail/customerDetail";
+import Add from "./containers/publicView/orderManagement/add/add"//销售订单添加
+import Details from "./containers/publicView/orderManagement/details/details"//销售订单详情
+import Search from "./containers/publicView/orderManagement/search/search"//销售订单搜索
+import AddVisitPlan from "./containers/publicView/visitPlan/addVisitPlan/addVisitPlan";
+import Searchs from "./containers/publicView/visitPlan/searchs/searchs"//拜访计划搜索
+import VisitDetail from "./containers/publicView/visitPlan/visitDetail/visitDetail";
+import CustomerDetail from "./containers/publicView/myCustomer/customerDetail/customerDetail";
 
-import AddVisitRecord from "./containers/roleSale/visitPlan/addVisitPlan/addVisitRecord/addVisitRecord";
+import AddVisitRecord from "./containers/publicView/visitPlan/addVisitPlan/addVisitRecord/addVisitRecord";
 import DataStatistics from "./containers/roleSale/dataStatistics/dataStatistics"//数据分析
 
 //-------------------------------------------财务
