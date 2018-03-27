@@ -318,11 +318,12 @@ class Container extends Component {
         if(JSON.parse(sessionStorage.getItem('user'))){
             let roleCode = JSON.parse(sessionStorage.getItem('user')).roleCode;
             switch (roleCode){
-                case "0":
+                case "admin":
                     return this.state.topManager;
-                case "1":
+                case "subadmin":
                     return this.state.branchManager;
                 case "sales":
+                     
                     return this.state.roleSale;
                 case "customer":
                     return this.state.roleCustomer;

@@ -44,18 +44,29 @@ class PaymentOrderDetail extends Component {
         sessionStorage.setItem("backTo",this.props.match.url);
         this.props.history.push(`${HOST}/previewImg`)
     }
-    checkPayment(){
-        alert('确认通过审核吗？？',"请确认收到货款", [
+    checkPayment(flag){
+        let title = "确认通过审核吗?";
+        let msg = "请确认收到货款";
+        let status = "UNSEND";
+        let toast = "审核成功";
+        if(!flag){
+            title = "确认不通过吗?";
+            msg = "";
+            status="CLOSE";
+            toast = "拒绝成功";
+        }
+        alert(title,msg, [
             { text: '取消', onPress: () => {} },
             { text: '确认', onPress: () => {
                     axios.get(`${API}/base/order/financeConfirm`,{
                         params:{
-                            id:this.state.data.orderId
+                            id:this.state.data.orderId,
+                            status
                         }
                     }).then(response=>{
                         let res = response.data;
                         if(res.result){
-                            Toast.success(res.msg,1);
+                            Toast.success(toast,1);
                             setTimeout(()=>{
                                 this.props.history.push(`${HOST}/index/paymentCheck`)
                             },1000)
@@ -175,7 +186,8 @@ class PaymentOrderDetail extends Component {
                                     :
                                     <div className="submit-btn">
                                         <WingBlank>
-                                            <Button type="primary" onClick={this.checkPayment}>审核通过</Button>
+                                            <Button type="primary" onClick={()=>{this.checkPayment(true)}}>审核通过</Button>
+                                            <Button type="default" onClick={()=>{this.checkPayment(false)}} style={{marginTop:15}}>不通过</Button>
                                         </WingBlank>
                                     </div>
 

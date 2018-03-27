@@ -119,25 +119,38 @@ class MyOrderDetail extends Component {
     }
 
     //确认销售发来的订单
-    submit(){
-        if(this.state.files.length === 0 && this.state.payType!=="UNPAID"){
+    submit(flag){
+
+        if(this.state.files.length === 0 && this.state.payType!=="UNPAID" && flag){
             Toast.fail("请上传转账凭证",1);
             return
         }
-        alert('确认订单吗？',"请务必确认订单信息准确", [
+        let title = "确认订单吗?";
+        let msg = "请确认信息无误";
+        let status = "UNFINANCECONFIRMED";
+        let toast = "确认成功";
+        if(!flag){
+            title = "确认拒绝吗?";
+            msg = "";
+            status="CLOSE";
+            toast="拒绝成功"
+        }
+
+        alert(title,msg, [
             { text: '取消', onPress: () => console.log('cancel') },
             { text: '确认', onPress: () => {
                     let submitData={
                         paymentVoucher :this.state.imgUrl.join(","),
                         payType:this.state.payType,
                         mark:this.state.mark,
-                        id:this.state.data.orderId
+                        id:this.state.data.orderId,
+                        status
                     };
                     axios.post(`${API}/base/order/customerPay`, submitData).then(response => {
                         let res = response.data;
                         console.log(res);
                         if (res.result) {
-                            Toast.success(res.msg, 1);
+                            Toast.success(toast, 1);
                             setTimeout(() => {
                                 this.props.history.push(`${HOST}/index/purchase`)
                             }, 1000)
@@ -237,7 +250,8 @@ class MyOrderDetail extends Component {
 
                         </div>
                         <WingBlank style={{marginTop:20}}>
-                            <Button type="primary" onClick={this.submit}>确认订单</Button>
+                            <Button type="primary" onClick={()=>{this.submit(true)}}>确认订单</Button>
+                            <Button type="default" style={{marginTop:15}} onClick={()=>{this.submit(false)}}>拒绝</Button>
                         </WingBlank>
                     </div>;
                     break;
