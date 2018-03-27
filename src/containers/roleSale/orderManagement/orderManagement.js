@@ -76,7 +76,7 @@ class OrderManagement extends Component {
                                     <Icon  type="search" style={{ marginRight: '16px' ,color:"#fff"}} />
                                 </Link>,
                                 <Link key="1" to={`${HOST}/orderManagement/add`}>
-                                    <a style={{ marginRight: '16px' ,color:"#fff"}}>新增</a>
+                                    <b style={{ marginRight: '16px' ,color:"#fff"}}>新增</b>
                                 </Link>
                             ]
                         }

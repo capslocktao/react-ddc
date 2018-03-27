@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { NavBar, Icon ,WingBlank,List,InputItem, Accordion,Flex ,Steps, WhiteSpace} from 'antd-mobile';
-import { Link } from 'react-router-dom';
+import {NavBar, Icon, WingBlank, List, InputItem, Accordion, Flex, Steps, WhiteSpace} from 'antd-mobile';
+import {Link} from 'react-router-dom';
 import axios from "axios"
 import "./dateils.less"
 import {HOST} from "../../../../const/host";
@@ -22,50 +22,54 @@ const steps = [{
 }, {
     title: 'Waiting',
     description: 'This is description',
-}].map((s, i) => <Step key={i} title={s.title} description={s.description} />);
+}].map((s, i) => <Step key={i} title={s.title} description={s.description}/>);
 
 const customIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 42 42" className="am-icon am-icon-md">
         <g fillRule="evenodd" stroke="transparent" strokeWidth="4">
-            <path d="M21 0C9.402 0 0 9.402 0 21c0 11.6 9.402 21 21 21s21-9.4 21-21C42 9.402 32.598 0 21 0z" />
-            <path fill="#FFF" d="M29 18.73c0-.55-.447-1-1-1H23.36l4.428-5.05c.407-.46.407-1.208 0-1.668-.407-.46-1.068-.46-1.476 0l-5.21 5.89-5.21-5.89c-.406-.46-1.067-.46-1.475 0-.406.46-.406 1.207 0 1.667l4.43 5.05H14.23c-.55 0-.998.45-.998 1 0 .554.448.97 1 .97h5.9v3.942h-5.9c-.552 0-1 .448-1 1s.448.985 1 .985h5.9v4.896c0 .552.448 1 1 1 .55 0 .968-.284.968-.836v-5.06H28c.553 0 1-.433 1-.985s-.447-1-1-1h-5.9v-3.94H28c.553 0 1-.418 1-.97z" />
+            <path d="M21 0C9.402 0 0 9.402 0 21c0 11.6 9.402 21 21 21s21-9.4 21-21C42 9.402 32.598 0 21 0z"/>
+            <path fill="#FFF"
+                  d="M29 18.73c0-.55-.447-1-1-1H23.36l4.428-5.05c.407-.46.407-1.208 0-1.668-.407-.46-1.068-.46-1.476 0l-5.21 5.89-5.21-5.89c-.406-.46-1.067-.46-1.475 0-.406.46-.406 1.207 0 1.667l4.43 5.05H14.23c-.55 0-.998.45-.998 1 0 .554.448.97 1 .97h5.9v3.942h-5.9c-.552 0-1 .448-1 1s.448.985 1 .985h5.9v4.896c0 .552.448 1 1 1 .55 0 .968-.284.968-.836v-5.06H28c.553 0 1-.433 1-.985s-.447-1-1-1h-5.9v-3.94H28c.553 0 1-.418 1-.97z"/>
         </g>
     </svg>
 );
 
-const API="http://192.168.31.34:8080"
+const API = "http://192.168.31.34:8080"
 
 class details extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data:""
+            data: ""
         };
         console.log(this.props.match.params.id)
-        this.linkToPreview=this.linkToPreview.bind(this);
+        this.linkToPreview = this.linkToPreview.bind(this);
     };
-    componentDidMount(){
+
+    componentDidMount() {
         console.log(this.props.match.params.id)
 
-        axios.get(`${API}/base/orderItem/findAllAppOrderItem`,{params:{id:this.props.match.params.id}}).then(response=>{
-           console.log(response)
-            let res=response.data;
+        axios.get(`${API}/base/orderItem/findAllAppOrderItem`, {params: {id: this.props.match.params.id}}).then(response => {
+            console.log(response)
+            let res = response.data;
             this.setState({
-               data:res
-           })
+                data: res
+            })
         })
     }
-    linkToPreview(v){
+
+    linkToPreview(v) {
         console.log(v)
-        if(this.state.data[v]){
+        if (this.state.data[v]) {
             let imgs = this.state.data[v].split(",");
-            sessionStorage.setItem("preview",JSON.stringify(imgs));
-            sessionStorage.setItem("backTo",this.props.match.url);
+            sessionStorage.setItem("preview", JSON.stringify(imgs));
+            sessionStorage.setItem("backTo", this.props.match.url);
             this.props.history.push(`${HOST}/previewImg`)
-        }else{
+        } else {
 
         }
     }
+
     render() {
         return (
             <div>
@@ -75,7 +79,7 @@ class details extends Component {
                         mode="light"
                         leftContent={
                             <Link to={`${HOST}/index/orderManagement`}>
-                                <Icon type="left" style={{marginRight: '16px' ,color:"#fff"}}/>
+                                <Icon type="left" style={{marginRight: '16px', color: "#fff"}}/>
                             </Link>
                         }
                     >订单详情</NavBar>
@@ -88,25 +92,25 @@ class details extends Component {
                         </WingBlank>
                     </div>*/}
                     {
-                        this.state.data?
+                        this.state.data ?
                             <div>
-                                <List renderHeader={() => '| 商品'}  className="my-list">
+                                <List renderHeader={() => '| 商品'} className="my-list">
                                     {
-                                        this.state.data.appOrderItemModels.map((item,index)=>(
-                                             <div key={index}>
-                                                 <Item align="middle">
-                                                     <Flex  justify="between">
-                                                         <Flex.Item>商品名称</Flex.Item>
-                                                         <Flex.Item>{item.productName}</Flex.Item>
-                                                     </Flex>
-                                                 </Item>
-                                                 <Item align="middle">
-                                                     <Flex justify="between">
-                                                         <Flex.Item>价格：{item.price}</Flex.Item>
-                                                         <Flex.Item>数量：${item.num}</Flex.Item>
-                                                     </Flex>
-                                                 </Item>
-                                             </div>
+                                        this.state.data.appOrderItemModels.map((item, index) => (
+                                            <div key={index}>
+                                                <Item align="middle">
+                                                    <Flex justify="between">
+                                                        <Flex.Item>商品名称</Flex.Item>
+                                                        <Flex.Item>{item.productName}</Flex.Item>
+                                                    </Flex>
+                                                </Item>
+                                                <Item align="middle">
+                                                    <Flex justify="between">
+                                                        <Flex.Item>价格：{item.price}</Flex.Item>
+                                                        <Flex.Item>数量：${item.num}</Flex.Item>
+                                                    </Flex>
+                                                </Item>
+                                            </div>
                                         ))
                                     }
 
@@ -117,11 +121,11 @@ class details extends Component {
                                         </Flex>
                                     </Item>
                                 </List>
-                                <List renderHeader={() => '| 配送信息'}  className="my-list">
+                                <List renderHeader={() => '| 配送信息'} className="my-list">
                                     <Item align="middle">
                                         <Flex justify="between">
-                                            <Flex.Item>收件人</Flex.Item>
-                                            <Flex.Item>手机号</Flex.Item>
+                                            <Flex.Item>收货人:{this.state.data.customerName}</Flex.Item>
+                                            <Flex.Item>手机号:{this.state.data.mobilePhone}</Flex.Item>
                                         </Flex>
                                     </Item>
                                     <Item align="middle">
@@ -130,19 +134,7 @@ class details extends Component {
                                         </Flex>
                                     </Item>
                                 </List>
-                                <List >
-                                    <Item arrow="horizontal"  multipleLine onClick={()=>{
-                                        this.linkToPreview("paymentVoucher")
-                                    }}>
-                                        查看付款凭证
-                                    </Item>
-                                    <Item arrow="horizontal"  multipleLine onClick={()=>{
-                                        this.linkToPreview("thumbnail")
-                                    }}>
-                                        查看发货凭证
-                                    </Item>
-                                </List>
-                                <List renderHeader={() => '| 时间'}  className="my-list">
+                                {/*<List renderHeader={() => '| 时间'}  className="my-list">
                                     <Item align="middle">
                                         客户确认时间
                                     </Item>
@@ -155,41 +147,88 @@ class details extends Component {
                                     <Item align="middle">
                                         确认收货时间
                                     </Item>
+                                </List>*/}
+                                {
+                                    this.state.data.shipperCode||this.state.data.logisticCode?
+                                        <List renderHeader={() => '| 物流信息'} className="my-list">
+                                            <Item align="middle">
+                                                <Flex justify="between">
+                                                    {
+                                                        this.state.data.shipperCode?
+                                                            <Flex.Item>快递公司编码{this.state.data.shipperCode}</Flex.Item>
+                                                            :""
+                                                    }
+                                                    {
+                                                        this.state.data.logisticCode?
+                                                            <Flex.Item>物流单号:{this.state.data.logisticCode}</Flex.Item>
+                                                            :""
+                                                    }
+                                                </Flex>
+                                            </Item>
+                                            {/*<Item>
+                                        运费 0
+                                        <  /Item>*/}
+                                       </List>
+                                        :""
+                                }
+                                <List>
+                                    {
+                                        this.state.data.paymentVoucher ?
+                                            <Item arrow="horizontal" multipleLine onClick={() => {
+                                                this.linkToPreview("paymentVoucher")
+                                            }}>
+                                                查看付款凭证
+                                            </Item>
+                                            : ""
+                                    }
+                                    {
+                                        this.state.data.thumbnail ?
+                                            <Item arrow="horizontal" multipleLine onClick={() => {
+                                                this.linkToPreview("thumbnail")
+                                            }}>
+                                                查看发货凭证
+                                            </Item>
+                                            : ""
+                                    }
+
                                 </List>
-                                <List renderHeader={() => '| 物流信息'}  className="my-list">
-                                    <Item align="middle">
-                                        <Flex justify="between">
-                                            <Flex.Item>快递公司编码</Flex.Item>
-                                            <Flex.Item>物流单号</Flex.Item>
-                                        </Flex>
-                                    </Item>
-                                    <Item>
-                                        运费
-                                    </Item>
-                                </List>
-                                <List renderHeader={() => '| 订单信息'}  className="my-list">
+                                < List renderHeader={() => '| 订单信息'} className="my-list">
                                     <Item align="middle">
                                         <Flex justify="between">
                                             <Flex.Item>订单号</Flex.Item>
-                                            <Flex.Item>类</Flex.Item>
+                                            <Flex.Item>{this.state.data.orderNo}</Flex.Item>
                                         </Flex>
                                     </Item>
                                     <Item align="middle">
                                         <Flex justify="between">
                                             <Flex.Item>下单时间</Flex.Item>
-                                            <Flex.Item>类</Flex.Item>
+                                            <Flex.Item>{this.state.data.createTime}</Flex.Item>
                                         </Flex>
                                     </Item>
                                 </List>
-                                <List renderHeader={() => '| 买家留言'}  className="my-list">
+                                <List renderHeader={() => '| 买家留言'} className="my-list">
                                     <Item align="middle">
                                         <Flex justify="between">
                                             <Flex.Item style={{fontSize: '12px'}}>留言:{this.state.data.mark}</Flex.Item>
                                         </Flex>
                                     </Item>
                                 </List>
+                                <List renderHeader={() => '| 付款'} className="my-list">
+                                    <Item align="middle">
+                                        <Flex justify="between">
+                                            <Flex.Item>付款类型</Flex.Item>
+                                            <Flex.Item>{this.state.data.payType}</Flex.Item>
+                                        </Flex>
+                                    </Item>
+                                    <Item align="middle">
+                                        <Flex justify="between">
+                                            <Flex.Item>付款金额</Flex.Item>
+                                            <Flex.Item>￥{this.state.data.totalGoodsPrice}</Flex.Item>
+                                        </Flex>
+                                    </Item>
+                                </List>
                             </div>
-                            :""
+                            : ""
                     }
                     {/*<List renderHeader={() => '| 用户信息'}  className="my-list">
                                     <Item align="middle">
@@ -211,36 +250,18 @@ class details extends Component {
                                         </Flex>
                                     </Item>
                                 </List>*/}
-                    {/*<List renderHeader={() => '| 付款'}  className="my-list">
-                                    <Item align="middle">
-                                        <Flex justify="between">
-                                            <Flex.Item>在线支付</Flex.Item>
-                                            <Flex.Item>类</Flex.Item>
-                                        </Flex>
-                                    </Item>
-                                    <Item align="middle">
-                                        <Flex justify="between">
-                                            <Flex.Item>货到付款</Flex.Item>
-                                            <Flex.Item>类</Flex.Item>
-                                        </Flex>
-                                    </Item>
-                                    <Item align="middle">
-                                        <Flex justify="between">
-                                            <Flex.Item>付款时间</Flex.Item>
-                                            <Flex.Item>类</Flex.Item>
-                                        </Flex>
-                                    </Item>
-                                </List>*/}
+
                 </div>
                 <List
 
-                    onClick={()=>{
+                    onClick={() => {
 
                     }}
                     className="my-list">
                     <Item
                         multipleLine
-                        onClick={() => {}}
+                        onClick={() => {
+                        }}
                         platform="android"
                         className="order-list"
                     >
