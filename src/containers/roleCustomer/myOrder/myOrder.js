@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import './myOrder.less'
 import { NavBar,List ,Tabs  } from "antd-mobile";
 import { StickyContainer, Sticky } from 'react-sticky';
-import {HOST} from "../../../const/host";
+import {HOST,API} from "../../../const/host";
 import axios from "axios"
 const Item = List.Item;
 const Brief = Item.Brief;
-const API = "http://192.168.31.34:8080";
+//const API = "http://192.168.31.34:8080";
 function renderTabBar(props) {
     return (<Sticky  topOffset={-45}>
         {({ style }) => <div style={{ ...style,top:45,zIndex: 1,display: 'flex', alignItems: 'center', justifyContent: 'center', }}><Tabs.DefaultTabBar {...props} /></div>}
@@ -33,6 +33,7 @@ class MyOrder extends Component {
             params:{status:"UNCONFIRMED"}
         }).then(response=>{
             let res = response.data;
+            console.log(res);
             this.setState({
                 data:res
             });

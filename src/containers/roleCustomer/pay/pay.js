@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import { NavBar,Icon,Radio,Button,WingBlank,ImagePicker,Toast,TextareaItem } from 'antd-mobile';
 import axios from "axios"
 import { Link } from "react-router-dom";
-import {HOST} from "../../../const/host";
+import {HOST,API} from "../../../const/host";
 import './pay.less';
-const API = "http://192.168.31.34:8080"
+//const API = "http://192.168.31.34:8080"
 const RadioItem = Radio.RadioItem;
 class Pay extends Component {
     constructor(props) {
@@ -18,7 +18,8 @@ class Pay extends Component {
             },
             payMethod:[
                 { value:"TRANSFER",label:"转账支付" },
-                { value:"ALIPAY",label:"支付宝支付" }
+                { value:"ALIPAY",label:"支付宝支付" },
+                { value:"UNPAID",label:"未付款先发货" }
             ],
             payType:"TRANSFER",
             files:[],
@@ -41,7 +42,7 @@ class Pay extends Component {
         });
         let userId = JSON.parse(sessionStorage.getItem("user")).id;
 
-        axios.get(`http://192.168.31.222:8080/base/area/updatePre`,{
+        axios.get(`${API}/base/area/updatePre`,{
                 params:{
                     id:userId
                 }
@@ -51,8 +52,7 @@ class Pay extends Component {
             this.setState({
                 address:res
             });
-            console.log(8989);
-            console.log(res)
+
         })
     }
     changePayType(val){
@@ -68,7 +68,7 @@ class Pay extends Component {
         let config={
             headers: {'Content-Type': 'multipart/form-data'}
         };
-        axios.post(`http://192.168.31.34:8080/base/attachment/upload/signal/uploadImg`,formData,config).then(response=>{
+        axios.post(`${API}/base/attachment/upload/signal/uploadImg`,formData,config).then(response=>{
             let res = response.data;
             if(res.result){
                 this.state.imgUrl.push(res.data)
@@ -86,7 +86,7 @@ class Pay extends Component {
         })
     }
     submit(){
-        if(this.state.files.length === 0){
+        if(this.state.files.length === 0 && this.state.payType!=="UNPAID"){
             Toast.fail("请上传转账凭证",1)
             return
         }
@@ -192,18 +192,24 @@ class Pay extends Component {
                         </WingBlank>
 
                     </div>
-                    <div className="upload">
-                        <WingBlank>
-                            <div className="upload-title">上传转账凭证(最多3张)</div>
-                            <ImagePicker
-                                files={this.state.files}
-                                onChange={this.onChange}
-                                onImageClick={(index, fs) => console.log(index, fs)}
-                                selectable={this.state.files.length < 3}
-                                multiple={true}
-                            />
-                        </WingBlank>
-                    </div>
+                    {
+                        this.state.payType === "UNPAID"?
+                            ""
+                            :
+                            <div className="upload">
+                                <WingBlank>
+                                    <div className="upload-title">上传转账凭证(最多3张)</div>
+                                    <ImagePicker
+                                        files={this.state.files}
+                                        onChange={this.onChange}
+                                        onImageClick={(index, fs) => console.log(index, fs)}
+                                        selectable={this.state.files.length < 3}
+                                        multiple={true}
+                                    />
+                                </WingBlank>
+                            </div>
+                    }
+
 
 
                 </div>

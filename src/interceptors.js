@@ -18,7 +18,10 @@ axios.interceptors.request.use((config)=>{
 axios.interceptors.response.use((config)=>{
     Toast.hide();
     if(config.data.flag === 'SESSION_INVALID'){
+        sessionStorage.clear();
+        localStorage.clear();
         Toast.info("用户身份过期，请重新登陆")
+        console.log("过期")
         window.location.pathname = "/login";
         return
     }

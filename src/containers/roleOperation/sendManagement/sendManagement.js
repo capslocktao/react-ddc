@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import {NavBar,List,Tabs} from "antd-mobile";
 import { StickyContainer, Sticky } from 'react-sticky';
 import './sendManagement.less'
-import {HOST} from "../../../const/host";
+import {HOST,API} from "../../../const/host";
 import axios from "axios"
-const API = "http://192.168.31.34:8080"
+//const API = "http://192.168.31.34:8080"
 const Item = List.Item;
 const Brief = Item.Brief;
 function renderTabBar(props) {

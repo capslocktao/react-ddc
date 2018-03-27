@@ -53,6 +53,13 @@ class CustomerUserCenter extends Component {
                         <Item align="top" >
                             {this.state.user.nickName} <Brief>{this.state.user.userName}</Brief>
                         </Item>
+                    </List>
+                    <List style={{marginTop:10}}>
+                        <Item arrow="horizontal" onClick={() => {
+                            sessionStorage.setItem("backTo",this.props.match.url);
+                            this.props.history.push(`${HOST}/message`)
+                        }
+                        }>消息提醒</Item>
 
                         {/*<Item arrow="horizontal" onClick={() => {this.props.history.push(`${HOST}/addressManage`)}}>地址管理</Item>*/}
                     </List>

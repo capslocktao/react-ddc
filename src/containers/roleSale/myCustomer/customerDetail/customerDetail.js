@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {NavBar,Icon,List, Picker,InputItem,TextareaItem,Toast } from "antd-mobile";
 import ReactCascader from "../../../../components/react-cascader/react-cascader";
-import { HOST } from '../../../../const/host'
+import { HOST,API } from '../../../../const/host'
 import axios from 'axios'
-const API = "http://192.168.31.222:8080";
-const API2 = "http://192.168.31.13:8080";
+//const API = "http://192.168.31.222:8080";
+//const API2 = "http://192.168.31.13:8080";
 
 class CustomerDetail extends Component {
     constructor(props) {
@@ -33,11 +33,15 @@ class CustomerDetail extends Component {
             typeName:"",
             statusType:[
                 {
+                    label:"未拜访",
+                    value:"ZERO"
+                },
+                {
                     label:"一次拜访",
                     value:"ONE"
                 },
                 {
-                    label:"二次拜访",
+                    label:"两次拜访",
                     value:"TWO"
                 },
                 {
@@ -79,11 +83,13 @@ class CustomerDetail extends Component {
         })
         let id = this.props.match.params.id;
         if(id){
-            axios.get(`${API2}/base/customer/findAppInfo`,{params:{id}}).then(response=>{
-                console.log(response);
+            axios.get(`${API}/base/customer/findAppInfo`,{params:{id}}).then(response=>{
+
                 let res = response.data;
+
                 this.state.statusType.forEach(v=>{
                     if(res.status === v.label){
+
                         this.setState({
                             statusName:v.label,
                             status:v.value,
@@ -207,16 +213,16 @@ class CustomerDetail extends Component {
 
         };
         console.log(submitData);
-        let url = `${API2}/base/customer/addApp`
+        let url = `${API}/base/customer/addApp`
         if(this.props.match.params.id){
-            url=`${API2}/base/customer/updateApp`;
+            url=`${API}/base/customer/updateApp`;
             submitData.id = this.props.match.params.id;
         }
         axios.post(url,{...submitData}).then(response=>{
             let res = response.data;
             if(res.result){
                 Toast.success(res.msg,1);
-                this.props.history.push(`${HOST}/index/myCustomer`)
+                this.props.history.push(`${HOST}/index/myCustomer`);
                 setTimeout(()=>{
 
                 },1000)
@@ -246,7 +252,7 @@ class CustomerDetail extends Component {
                 >新增客户</NavBar>
         };*/
         return (
-            <div className="custoomer-detail">
+            <div className="customer-detail">
                 <div className="custoomer-detail-header">
                     <NavBar
                         mode="dark"
@@ -303,15 +309,18 @@ class CustomerDetail extends Component {
                         />
                     </List>
                 </div>
-                <ReactCascader
-                    cascaderShow={this.state.cascaderShow}
-                    onCancel={this.onCancel}
-                    getData={this.getData.bind(this)}
-                    data={this.state.areaData}
-                    onOk={this.onOk.bind(this)}
-                >
+                <div style={{position:"relative",zIndex:9999}}>
+                    <ReactCascader
+                        cascaderShow={this.state.cascaderShow}
+                        onCancel={this.onCancel}
+                        getData={this.getData.bind(this)}
+                        data={this.state.areaData}
+                        onOk={this.onOk.bind(this)}
+                    >
 
-                </ReactCascader>
+                    </ReactCascader>
+
+                </div>
 
             </div>
         )

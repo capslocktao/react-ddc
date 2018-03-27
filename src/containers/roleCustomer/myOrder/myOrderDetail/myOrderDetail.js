@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import { NavBar,List,Icon,WingBlank,Radio,TextareaItem,Toast,Button,ImagePicker,InputItem,Modal } from "antd-mobile";
-import { HOST } from "../../../../const/host";
+import { HOST,API } from "../../../../const/host";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./myOrderDetail.less";
 const RadioItem = Radio.RadioItem;
-const API = "http://192.168.31.34:8080";
 const alert = Modal.alert;
 const Item = List.Item;
 class MyOrderDetail extends Component {
@@ -20,7 +19,8 @@ class MyOrderDetail extends Component {
             imgUrl:[],
             payMethod:[
                 { value:"TRANSFER",label:"转账支付" },
-                { value:"ALIPAY",label:"支付宝支付" }
+                { value:"ALIPAY",label:"支付宝支付" },
+                { value:"UNPAID",label:"未付款先发货" }
             ],
             payType:"TRANSFER",
             mark:"",
@@ -90,7 +90,7 @@ class MyOrderDetail extends Component {
         let config={
             headers: {'Content-Type': 'multipart/form-data'}
         };
-        axios.post(`http://192.168.31.34:8080/base/attachment/upload/signal/uploadImg`,formData,config).then(response=>{
+        axios.post(`${API}/base/attachment/upload/signal/uploadImg`,formData,config).then(response=>{
             let res = response.data;
             if(res.result){
                 this.state.imgUrl.push(res.data)
@@ -120,7 +120,7 @@ class MyOrderDetail extends Component {
 
     //确认销售发来的订单
     submit(){
-        if(this.state.files.length === 0){
+        if(this.state.files.length === 0 && this.state.payType!=="UNPAID"){
             Toast.fail("请上传转账凭证",1);
             return
         }
@@ -200,18 +200,24 @@ class MyOrderDetail extends Component {
                                 </WingBlank>
 
                             </div>
-                            <div className="upload">
-                                <WingBlank>
-                                    <div className="upload-title">上传转账凭证(最多3张)</div>
-                                    <ImagePicker
-                                        files={this.state.files}
-                                        onChange={this.onChange}
-                                        onImageClick={(index, fs) => console.log(index, fs)}
-                                        selectable={this.state.files.length < 3}
-                                        multiple={true}
-                                    />
-                                </WingBlank>
-                            </div>
+                        {
+                            this.state.payType === "UNPAID"?
+                                ""
+                                :
+                                <div className="upload">
+                                    <WingBlank>
+                                        <div className="upload-title">上传转账凭证(最多3张)</div>
+                                        <ImagePicker
+                                            files={this.state.files}
+                                            onChange={this.onChange}
+                                            onImageClick={(index, fs) => console.log(index, fs)}
+                                            selectable={this.state.files.length < 3}
+                                            multiple={true}
+                                        />
+                                    </WingBlank>
+                                </div>
+
+                        }
                         <div className="pay-method">
                             {this.state.payMethod.map(i => (
                                 <RadioItem key={i.value} checked={this.state.payType === i.value} onChange={() => this.changePayType(i.value)}>
@@ -305,7 +311,7 @@ class MyOrderDetail extends Component {
                         </div>
                     </div>;
                     break;
-                case "待发货":
+                case "未发货":
                     return <div className="order-detail-body">
                         <div className="address-box">
                             <WingBlank>
@@ -427,6 +433,7 @@ class MyOrderDetail extends Component {
                         <div className="pay-method">
                             <InputItem editable={false} value={`${this.state.status}`} style={{textAlign:"right"}}>订单状态</InputItem>
                         </div>
+
                         <List className="logistics">
                             <Item extra={"申通物流"}>
                                 物流公司
