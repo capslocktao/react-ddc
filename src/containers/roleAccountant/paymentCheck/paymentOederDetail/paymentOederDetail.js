@@ -112,7 +112,7 @@ class PaymentOrderDetail extends Component {
                                                     </div>
                                                     <div className="bottom">
                                                         <div className="size">型号：{v.modelSize}</div>
-                                                        <div className="num">数量：{v.num}</div>
+                                                        <div className="num">数量：x{v.num}</div>
                                                     </div>
                                                     <div className="unit">单位：{v.units}</div>
 

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {NavBar, Icon, WingBlank, List, InputItem, Accordion, Flex, Steps, WhiteSpace} from 'antd-mobile';
 import {Link} from 'react-router-dom';
+import convertTime from '../../../../util/convertTime';
 import axios from "axios"
 import "./dateils.less"
 import {HOST,API} from "../../../../const/host";
@@ -106,8 +107,8 @@ class details extends Component {
                                                 </Item>
                                                 <Item align="middle">
                                                     <Flex justify="between">
-                                                        <Flex.Item>价格：{item.price}</Flex.Item>
-                                                        <Flex.Item>数量：${item.num}</Flex.Item>
+                                                        <Flex.Item className="total-price">价格：￥{item.price}</Flex.Item>
+                                                        <Flex.Item>数量：x{item.num}</Flex.Item>
                                                     </Flex>
                                                 </Item>
                                             </div>
@@ -116,7 +117,7 @@ class details extends Component {
 
                                     <Item align="middle">
                                         <Flex justify="between">
-                                            <Flex.Item>总计：{this.state.data.totalGoodsPrice}</Flex.Item>
+                                            <Flex.Item>总计：￥{this.state.data.totalGoodsPrice}</Flex.Item>
                                             <Flex.Item>{this.state.data.status}</Flex.Item>
                                         </Flex>
                                     </Item>
@@ -130,7 +131,7 @@ class details extends Component {
                                     </Item>
                                     <Item align="middle">
                                         <Flex justify="between">
-                                            <Flex.Item>收获地址 {this.state.data.address}</Flex.Item>
+                                            <Flex.Item>收货地址:{this.state.data.address}</Flex.Item>
                                         </Flex>
                                     </Item>
                                 </List>
@@ -202,7 +203,7 @@ class details extends Component {
                                     <Item align="middle">
                                         <Flex justify="between">
                                             <Flex.Item>下单时间</Flex.Item>
-                                            <Flex.Item>{this.state.data.createTime}</Flex.Item>
+                                            <Flex.Item>{convertTime(this.state.data.createTime)}</Flex.Item>
                                         </Flex>
                                     </Item>
                                 </List>
