@@ -33,10 +33,10 @@ class Login extends Component {
                             sessionStorage.setItem('user',JSON.stringify(response.data.data));//为了防止刷新后用户数据丢失，存到sessionStorege里一份
                             localStorage.setItem('xAuthToken',response.headers[k]);//将token长期存储，便于下次进入系统验证dd
                             switch (response.data.data.roleCode){
-                                case 0:
+                                case "admin":
                                     this.props.history.push(`${HOST}/index/team`);
                                     break;
-                                case 1:
+                                case "subadmin":
                                     this.props.history.push(`${HOST}/index/customerOrderForm`);
                                     break;
                                 case "sales":
