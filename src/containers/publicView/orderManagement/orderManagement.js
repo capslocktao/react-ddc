@@ -15,8 +15,8 @@ function renderTabBar(props) {
 }
 //销售tabs
 const saleTabs = [
-    { title: '待确认',status:"UNCONFIRMED" },
-    { title: '财务确认',status:"UNFINANCECONFIRMED" },
+    { title: '客户确认',status:"UNCONFIRMED" },
+    { title: '财务审核',status:"UNFINANCECONFIRMED" },
     { title: '待发货',status:"UNSEND" },
     { title: '待收货',status:"ALLSEND" },
     { title: '完成',status:"COMPLETE" },
@@ -24,9 +24,9 @@ const saleTabs = [
 //分公司管理员tabs
 const branchTabs = [
     { title: '全部',status:"UNCONFIRMED" },
-    { title: '财务确认',status:"UNFINANCECONFIRMED" },
-    { title: '未发货',status:"UNSEND" },
-    { title: '已发货',status:"ALLSEND" },
+    { title: '财务审核',status:"UNFINANCECONFIRMED" },
+    { title: '待发货',status:"UNSEND" },
+    { title: '待收货',status:"ALLSEND" },
     { title: '完成',status:"COMPLETE" },
 ];
 
