@@ -36,10 +36,13 @@ class ComponentName extends Component {
         //调用仓库
         axios.get(`${API}/base/warehouse/warehouseFindAll`).then(response=> {
             let res = response.data;
-            res.forEach(v=>{
-                v.label = v.warehouseName;
-                v.value = v.id
-            });
+            if(res){
+                res.forEach(v=>{
+                    v.label = v.warehouseName;
+                    v.value = v.id
+                });
+            }
+
             this.setState({
                 warehouse:res
             })
@@ -159,7 +162,7 @@ class ComponentName extends Component {
 
         }
         let submitData = {
-            paymentVoucher :this.state.imgUrl.join(","),
+            thumbnail :this.state.imgUrl.join(","),
             shipperCode:this.state.shipperCode,
             logisticCode:this.state.logisticCode,
             orderId:this.state.data.orderId,
@@ -338,7 +341,6 @@ class ComponentName extends Component {
                                                 onChange={this.onChange}
                                                 onImageClick={(index, fs) => console.log(index, fs)}
                                                 selectable={this.state.files.length < 3}
-                                                multiple={true}
                                             />
                                         </WingBlank>
                                     </div>

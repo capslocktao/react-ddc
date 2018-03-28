@@ -18,10 +18,10 @@ class MyOrder extends Component {
         super(props);
         this.state = {
             tabs:[
-                { title: '待确认',value:"UNCONFIRMED" },
-                { title: '财务确认',value:"UNFINANCECONFIRMED" },
-                { title: '未发货',value:"UNSEND" },
-                { title: '已发货',value:"ALLSEND" },
+                { title: '客户确认',value:"UNCONFIRMED" },
+                { title: '财务审核',value:"UNFINANCECONFIRMED" },
+                { title: '待发货',value:"UNSEND" },
+                { title: '待收货',value:"ALLSEND" },
                 { title: '完成',value:"COMPLETE" },
             ],
             data:[],

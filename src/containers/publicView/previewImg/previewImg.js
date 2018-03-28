@@ -31,7 +31,7 @@ class PreviewImg extends Component {
                             this.props.history.push(sessionStorage.getItem("backTo"))
                         }}
                     >
-                        查看转账凭证
+                        查看图片
                     </NavBar>
                 </div>
                 <div className="preview-img-body">

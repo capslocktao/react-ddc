@@ -52,7 +52,7 @@ class add extends Component {
     };
     componentDidMount(){
 
-        axios.post(`${API}/base/customer/appFindAll`,{customerName:""}).then(response=>{
+        axios.post(`${API}/base/customer/findCustomerName`,{customerName:"no",status:"no"}).then(response=>{
             let res = response.data;
             let arr=[];
             res.map((item,index)=>{

@@ -184,7 +184,6 @@ class AddVisitRecord extends Component {
                                     onChange={this.onChange}
                                     onImageClick={(index, fs) => console.log(index, fs)}
                                     selectable={this.state.files.length < 3}
-                                    multiple={true}
                                 />
                             </WingBlank>
                         </div>

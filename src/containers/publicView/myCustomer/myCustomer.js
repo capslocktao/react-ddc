@@ -39,7 +39,7 @@ class MyCustomer extends Component{
         let status="";
         switch(val.title){
             case "意向客户":
-                status="suibian";
+                status="yes";
                 break;
             case "成交客户":
                 status="SUCCESS";

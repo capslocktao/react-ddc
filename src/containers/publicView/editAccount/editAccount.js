@@ -37,7 +37,7 @@ class EditAccount extends Component {
         let config={
             headers: {'Content-Type': 'multipart/form-data'}
         };
-        axios.post(`http://192.168.31.34:8080/base/attachment/upload/signal/uploadImg`,formData,config).then(response=>{
+        axios.post(`${API}/base/attachment/upload/signal/uploadImg`,formData,config).then(response=>{
             let res = response.data;
             if(res.result){
                 this.state.imgUrl.push(res.data)

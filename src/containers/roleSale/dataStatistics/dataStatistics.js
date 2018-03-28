@@ -112,7 +112,7 @@ class Ware extends Component {
     }
 }
 
-const api = "http://192.168.31.174:8080";
+//const api = "http://192.168.31.174:8080";
 
 
 class DataStatistics extends Component {
@@ -139,7 +139,7 @@ class DataStatistics extends Component {
         }
         /*time,customer,goods*/
         console.log(params)
-        axios.post(`${api}/base/salesData/count`, params).then(response => {
+        axios.post(`${API}/base/salesData/count`, params).then(response => {
             console.log(response)
             let res = response.data;
             if (res.result) {
@@ -159,7 +159,7 @@ class DataStatistics extends Component {
             endTime:this.state.endTime,
             countType: tab.type
         }
-        axios.post(`${api}/base/salesData/count`, params).then(response => {
+        axios.post(`${API}/base/salesData/count`, params).then(response => {
             // console.log(response)
             let res = response.data;
             if (res.result) {
@@ -177,7 +177,7 @@ class DataStatistics extends Component {
             endTime:this.state.endTime,
             countType: this.state.status
         }
-        axios.post(`${api}/base/salesData/count`, params).then(response => {
+        axios.post(`${API}/base/salesData/count`, params).then(response => {
             // console.log(response)
             let res = response.data;
             if (res.result) {
@@ -194,7 +194,7 @@ class DataStatistics extends Component {
             endTime:sdate,
             countType: this.state.status
         }
-        axios.post(`${api}/base/salesData/count`, params).then(response => {
+        axios.post(`${API}/base/salesData/count`, params).then(response => {
             // console.log(response)
             let res = response.data;
             if (res.result) {

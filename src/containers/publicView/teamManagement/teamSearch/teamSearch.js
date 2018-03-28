@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {NavBar,Icon,SearchBar,List} from "antd-mobile";
 import "./teamSearch.less"
-import axios from "axios"
+import axios from "axios";
+import {Link} from "react-router-dom"
 import {HOST,API} from "../../../../const/host";
 import convertTime from "../../../../util/convertTime";
 const Item = List.Item;
@@ -57,13 +58,15 @@ class TeamSearch extends Component {
                                 ""
                                 :
                                 this.state.data.map((v,i)=>(
-                                    <Item arrow="horizontal" multipleLine onClick={() => {}} key={i}>
-                                        <div className="team-member">
-                                            <div className="name">{v.nickName}</div>
-                                            <div className="phone">{v.mobile}</div>
-                                        </div>
-                                        <Brief>{convertTime(v.createTime)}</Brief>
-                                    </Item>
+                                    <Link  key={i} to={`${HOST}/editTeamMember/${v.id}`}>
+                                        <Item arrow="horizontal" multipleLine onClick={() => {}} key={i}>
+                                            <div className="team-member">
+                                                <div className="name">{v.nickName}</div>
+                                                <div className="phone">{v.mobile}</div>
+                                            </div>
+                                            <Brief>{convertTime(v.createTime)}</Brief>
+                                        </Item>
+                                    </Link>
                                 ))
                         }
                     </List>

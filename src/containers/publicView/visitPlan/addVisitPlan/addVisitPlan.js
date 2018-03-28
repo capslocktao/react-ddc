@@ -51,7 +51,7 @@ class AddVisitPlan extends Component {
     };
     componentDidMount() {
 
-        axios.post(`${API}/base/customer/appFindAll`, {customerName:"", status: ""}).then((response) => {
+        axios.post(`${API}/base/customer/findCustomerName`, {customerName:"no", status: "no"}).then((response) => {
             console.log(response.data)
             let res = response.data;
             res.forEach(v => {
