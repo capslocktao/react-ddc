@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {NavBar, Icon, List, Flex, Steps,} from 'antd-mobile';
+import {NavBar, Icon, WingBlank, List, InputItem, Accordion, Flex, Steps, WhiteSpace} from 'antd-mobile';
 import {Link} from 'react-router-dom';
 import convertTime from '../../../../util/convertTime';
 import axios from "axios"
 import "./dateils.less"
-import {HOST, API} from "../../../../const/host";
+import {HOST,API} from "../../../../const/host";
 
 const Item = List.Item;
 const Brief = Item.Brief;
@@ -35,9 +35,9 @@ const customIcon = () => (
     </svg>
 );
 
-// const API = "http://192.168.31.34:8080";
+//const API = "http://192.168.31.34:8080"
 
-class details extends Component {
+class Details extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -85,162 +85,181 @@ class details extends Component {
                         }
                     >订单详情</NavBar>
                 </div>
-                {/*<div style={{width:'100%',overflow:'auto'}}>
+                <div>
+                    {/*<div style={{width:'100%',overflow:'auto'}}>
                         <WingBlank mode={20} className="stepsExample">
                             <WhiteSpace />
                             <Steps current={2} direction="horizontal" size="small">{steps}</Steps>
                         </WingBlank>
                     </div>*/}
+                    {
+                        this.state.data ?
+                            <div>
+                                <List renderHeader={() => '| 商品'} className="my-list">
+                                    {
+                                        this.state.data.appOrderItemModels.map((item, index) => (
+                                            <div key={index}>
+                                                <Item align="middle">
+                                                    <Flex justify="between">
+                                                        <Flex.Item>商品名称</Flex.Item>
+                                                        <Flex.Item>{item.productName}</Flex.Item>
+                                                    </Flex>
+                                                </Item>
+                                                <Item align="middle">
+                                                    <Flex justify="between">
+                                                        <Flex.Item className="total-price">价格：￥{item.price}</Flex.Item>
+                                                        <Flex.Item>数量：x{item.num}</Flex.Item>
+                                                    </Flex>
+                                                </Item>
+                                            </div>
+                                        ))
+                                    }
 
-                {
-                    this.state.data ?
-                        <div>
-                            <List renderHeader={() => '| 商品'} className="my-list">
+                                    <Item align="middle">
+                                        <Flex justify="between">
+                                            <Flex.Item>总计：￥{this.state.data.totalGoodsPrice}</Flex.Item>
+                                            <Flex.Item>{this.state.data.status}</Flex.Item>
+                                        </Flex>
+                                    </Item>
+                                </List>
+                                <List renderHeader={() => '| 配送信息'} className="my-list">
+                                    <Item align="middle">
+                                        <Flex justify="between">
+                                            <Flex.Item>收货人:{this.state.data.customerName}</Flex.Item>
+                                            <Flex.Item>手机号:{this.state.data.mobilePhone}</Flex.Item>
+                                        </Flex>
+                                    </Item>
+                                    <Item align="middle">
+                                        <Flex justify="between">
+                                            <Flex.Item>收货地址:{this.state.data.address}</Flex.Item>
+                                        </Flex>
+                                    </Item>
+                                </List>
+                                {/*<List renderHeader={() => '| 时间'}  className="my-list">
+                                    <Item align="middle">
+                                        客户确认时间
+                                    </Item>
+                                    <Item align="middle">
+                                        财务确认时间
+                                    </Item>
+                                    <Item align="middle">
+                                       发货时间
+                                    </Item>
+                                    <Item align="middle">
+                                        确认收货时间
+                                    </Item>
+                                </List>*/}
                                 {
-                                    this.state.data.appOrderItemModels.map((item, index) => (
-                                        <div key={index}>
+                                    this.state.data.shipperCode||this.state.data.logisticCode?
+                                        <List renderHeader={() => '| 物流信息'} className="my-list">
                                             <Item align="middle">
                                                 <Flex justify="between">
-                                                    <Flex.Item>商品名称</Flex.Item>
-                                                    <Flex.Item>{item.productName}</Flex.Item>
+                                                    {
+                                                        this.state.data.shipperCode?
+                                                            <Flex.Item>快递公司编码{this.state.data.shipperCode}</Flex.Item>
+                                                            :""
+                                                    }
+                                                    {
+                                                        this.state.data.logisticCode?
+                                                            <Flex.Item>物流单号:{this.state.data.logisticCode}</Flex.Item>
+                                                            :""
+                                                    }
                                                 </Flex>
                                             </Item>
-                                            <Item align="middle">
-                                                <Flex justify="between">
-                                                    <Flex.Item>价格：{item.price}</Flex.Item>
-                                                    <Flex.Item>数量：${item.num}</Flex.Item>
-                                                </Flex>
-                                            </Item>
-                                        </div>
-                                    ))
-                                }
-
-                                <Item align="middle">
-                                    <Flex justify="between">
-                                        <Flex.Item>总计：{this.state.data.totalGoodsPrice}</Flex.Item>
-                                        <Flex.Item>{this.state.data.status}</Flex.Item>
-                                    </Flex>
-                                </Item>
-                            </List>
-                            <List renderHeader={() => '| 配送信息'} className="my-list">
-                                <Item align="middle">
-                                    <Flex justify="between">
-                                        <Flex.Item>收货人:{this.state.data.customerName}</Flex.Item>
-                                        <Flex.Item>手机号:{this.state.data.mobilePhone}</Flex.Item>
-                                    </Flex>
-                                </Item>
-                                <Item align="middle">
-                                    <Flex justify="between">
-                                        <Flex.Item>收获地址 {this.state.data.address}</Flex.Item>
-                                    </Flex>
-                                </Item>
-                            </List>
-
-                            {
-                                this.state.data.shipperCode || this.state.data.logisticCode ?
-                                    <List renderHeader={() => '| 物流信息'} className="my-list">
-                                        <Item align="middle">
-                                            <Flex justify="between">
-                                                {
-                                                    this.state.data.shipperCode ?
-                                                        <Flex.Item>快递公司编码{this.state.data.shipperCode}</Flex.Item>
-                                                        : ""
-                                                }
-                                                {
-                                                    this.state.data.logisticCode ?
-                                                        <Flex.Item>物流单号:{this.state.data.logisticCode}</Flex.Item>
-                                                        : ""
-                                                }
-                                            </Flex>
-                                        </Item>
-                                        {/*<Item>
+                                            {/*<Item>
                                         运费 0
                                         <  /Item>*/}
-                                    </List>
-                                    : ""
-                            }
-                            <List>
-                                {
-                                    this.state.data.paymentVoucher ?
-                                        <Item arrow="horizontal" multipleLine onClick={() => {
-                                            this.linkToPreview("paymentVoucher")
-                                        }}>
-                                            查看付款凭证
-                                        </Item>
-                                        : ""
+                                       </List>
+                                        :""
                                 }
-                                {
-                                    this.state.data.thumbnail ?
-                                        <Item arrow="horizontal" multipleLine onClick={() => {
-                                            this.linkToPreview("thumbnail")
-                                        }}>
-                                            查看发货凭证
-                                        </Item>
-                                        : ""
-                                }
+                                <List>
+                                    {
+                                        this.state.data.paymentVoucher ?
+                                            <Item arrow="horizontal" multipleLine onClick={() => {
+                                                this.linkToPreview("paymentVoucher")
+                                            }}>
+                                                查看付款凭证
+                                            </Item>
+                                            : ""
+                                    }
+                                    {
+                                        this.state.data.thumbnail ?
+                                            <Item arrow="horizontal" multipleLine onClick={() => {
+                                                this.linkToPreview("thumbnail")
+                                            }}>
+                                                查看发货凭证
+                                            </Item>
+                                            : ""
+                                    }
 
+                                </List>
+                                < List renderHeader={() => '| 订单信息'} className="my-list">
+                                    <Item align="middle">
+                                        <Flex justify="between">
+                                            <Flex.Item>订单号</Flex.Item>
+                                            <Flex.Item>{this.state.data.orderNo}</Flex.Item>
+                                        </Flex>
+                                    </Item>
+                                    <Item align="middle">
+                                        <Flex justify="between">
+                                            <Flex.Item>下单时间</Flex.Item>
+                                            <Flex.Item>{convertTime(this.state.data.createTime)}</Flex.Item>
+                                        </Flex>
+                                    </Item>
+                                </List>
+                                <List renderHeader={() => '| 买家留言'} className="my-list">
+                                    <Item align="middle">
+                                        <Flex justify="between">
+                                            <Flex.Item style={{fontSize: '16px'}}>留言：{this.state.data.mark}</Flex.Item>
+                                        </Flex>
+                                    </Item>
+                                </List>
+                                <List renderHeader={() => '| 付款'} className="my-list">
+                                    <Item align="middle">
+                                        <Flex justify="between">
+                                            <Flex.Item>付款类型</Flex.Item>
+                                            <Flex.Item>{this.state.data.payType}</Flex.Item>
+                                        </Flex>
+                                    </Item>
+                                    <Item align="middle">
+                                        <Flex justify="between">
+                                            <Flex.Item>付款金额</Flex.Item>
+                                            <Flex.Item>￥{this.state.data.totalGoodsPrice}</Flex.Item>
+                                        </Flex>
+                                    </Item>
+                                </List>
+                            </div>
+                            : ""
+                    }
+                    {/*<List renderHeader={() => '| 用户信息'}  className="my-list">
+                                    <Item align="middle">
+                                        <Flex justify="between">
+                                            <Flex.Item>用户ID</Flex.Item>
+                                            <Flex.Item>ID</Flex.Item>
+                                        </Flex>
+                                    </Item>
+                                    <Item align="middle">
+                                        <Flex justify="between">
+                                            <Flex.Item>用户名</Flex.Item>
+                                            <Flex.Item>ID</Flex.Item>
+                                        </Flex>
+                                    </Item>
+                                    <Item align="middle">
+                                        <Flex justify="between">
+                                            <Flex.Item>手机号</Flex.Item>
+                                            <Flex.Item>ID</Flex.Item>
+                                        </Flex>
+                                    </Item>
+                                </List>*/}
 
-                            </List>
-                            < List renderHeader={() => '| 订单信息'} className="my-list">
-                                <Item align="middle">
-                                    <Flex justify="between">
-                                        <Flex.Item>订单号</Flex.Item>
-                                        <Flex.Item>{this.state.data.orderNo}</Flex.Item>
-                                    </Flex>
-                                </Item>
-                                <Item align="middle">
-                                    <Flex justify="between">
-                                        <Flex.Item>下单时间</Flex.Item>
-                                        <Flex.Item>{this.state.data.createTime}</Flex.Item>
-                                    </Flex>
-                                </Item>
-                            </List>
-                            <List renderHeader={() => '| 买家留言'} className="my-list">
-                                <Item align="middle">
-                                    <Flex justify="between">
-                                        <Flex.Item style={{fontSize: '16px'}}>留言：{this.state.data.mark}</Flex.Item>
-                                    </Flex>
-                                </Item>
-                            </List>
-                            <List renderHeader={() => '| 付款'} className="my-list">
-                                <Item align="middle">
-                                    <Flex justify="between">
-                                        <Flex.Item>付款类型</Flex.Item>
-                                        <Flex.Item>{this.state.data.payType}</Flex.Item>
-                                    </Flex>
-                                </Item>
-                                <Item align="middle">
-                                    <Flex justify="between">
-                                        <Flex.Item>付款金额</Flex.Item>
-                                        <Flex.Item>￥{this.state.data.totalGoodsPrice}</Flex.Item>
-                                    </Flex>
-                                </Item>
-                            </List>
-                        </div>
-                        : ""
-                }
-
-                <List
-
-                    onClick={() => {
-
-                    }}
-                    className="my-list">
-                    <Item
-                        multipleLine
-                        onClick={() => {
-                        }}
-                        platform="android"
-                        className="order-list"
-                    ></Item>
-                </List>
+                </div>
 
             </div>
         );
     }
 }
 
-export default details
+export default Details
 
 
 /*
