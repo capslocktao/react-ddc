@@ -111,7 +111,7 @@ class TopManagerTeam extends Component {
                                     </div>
                                 </Popover>
                                 :
-                            <div onClick={()=>{}}>新增</div>
+                            <div onClick={()=>{this.props.history.push(`${HOST}/addTeamMember`)}}>新增</div>
                         }
                     >
                         团队管理
@@ -142,7 +142,7 @@ class TopManagerTeam extends Component {
                         this.state.data.length === 0?
                             ""
                             :
-                            <div className="pagination">
+                            <div className="pagination" style={{bottom:this.state.roleCode === "subadmin"?0:55}}>
                                 <Pagination total={this.state.total}
                                             className="custom-pagination-with-icon"
                                             onChange={(val)=>this.pagination(val)}

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { NavBar,Icon, WingBlank,List,Tabs, WhiteSpace ,Flex } from 'antd-mobile';
+import { NavBar,Icon,List,Tabs ,Flex } from 'antd-mobile';
 import { StickyContainer, Sticky } from 'react-sticky';
 import { Link } from 'react-router-dom';
 import { HOST,API } from '../../../const/host';

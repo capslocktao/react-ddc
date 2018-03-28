@@ -39,6 +39,7 @@ class SalesUserCenter extends Component {
         console.log('挂载后')
     }
     componentWillUnmount = () => {
+        sessionStorage.setItem("backTo",this.props.match.url)
         this.setState = (state,callback)=>{
             return;
         };
@@ -52,8 +53,12 @@ class SalesUserCenter extends Component {
                 >用户中心</NavBar>
                 <div className="user-center-body">
                     <List>
-                        <Item align="top" >
-                            {this.state.user.nickName} <Brief>{this.state.user.userName}</Brief>
+                        <Item
+                            arrow="horizontal"
+                            onClick={()=>{this.props.history.push(`${HOST}/editAccount`)}}
+                            thumb={this.state.user.thumbnail}
+                        >
+                            用户名：{this.state.user.nickName} <Brief>账户：{this.state.user.userName}</Brief>
                         </Item>
                     </List>
                     <List style={{marginTop:10}}>
@@ -62,13 +67,18 @@ class SalesUserCenter extends Component {
                         }}>
                             数据统计
                         </Item>
-{/*
+
                         <Item arrow="horizontal" onClick={() => {
                             sessionStorage.setItem("backTo",this.props.match.url);
                             this.props.history.push(`${HOST}/message`)
                         }
                         }>消息提醒</Item>
-*/}
+                        <Item arrow="horizontal" onClick={() => {
+                            sessionStorage.setItem("backTo",this.props.match.url);
+                            this.props.history.push(`${HOST}/editPwd`)
+                        }
+                        }>修改密码</Item>
+
                         {/*<Item arrow="horizontal" onClick={() => {this.props.history.push(`${HOST}/addressManage`)}}>地址管理</Item>*/}
 
                     </List>

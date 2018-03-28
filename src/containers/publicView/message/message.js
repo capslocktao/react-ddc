@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import "./message.less";
-import { NavBar,Icon,Tabs } from "antd-mobile";
+import { NavBar,Icon,Tabs,List } from "antd-mobile";
 import { StickyContainer, Sticky } from 'react-sticky';
 import axios from "axios";
-import {API} from "../../../const/host"
-
+import {API, HOST} from "../../../const/host"
+const Item = List.Item;
 function renderTabBar(props) {
     return (<Sticky topOffset={-45}>
         {({ style }) => <div style={{ ...style, top:45, zIndex: 1 }}><Tabs.DefaultTabBar {...props} /></div>}
@@ -17,26 +17,47 @@ class Message extends Component {
             tabs:[
                 {
                     title:"未读消息",
-                    value:"1"
+                    read:false
                 },
                 {
                     title:"已读消息",
-                    value:"2"
+                    read:true
                 }
-            ]
+            ],
+            data:[]
         };
+        this.changeTab = this.changeTab.bind(this)
     };
     componentDidMount(){
-        axios.get(`${API}/base/notic/findCome`).then(response=>{
+        axios.get(`${API}/base/notic/findCome`,{params:{
+            read:false
+            }}).then(response=>{
             let res = response.data;
+            this.setState({
+                data:res
+            });
             console.log(res);
+        })
+    }
+    changeTab(val){
+        axios.get(`${API}/base/notic/findCome`,{params:{
+                read:val.read
+            }}).then(response=>{
+            let res = response.data;
+            this.setState({
+                data:res
+            },()=>{
+                console.log(res);
+            });
+
         })
 
     }
     componentWillUnmount(){
-        sessionStorage.removeItem("backTo");
+
     }
     render() {
+
         return (
             <div className="message">
                 <div className="message-header">
@@ -51,19 +72,37 @@ class Message extends Component {
                     </NavBar>
                 </div>
                 <div className="message-body">
-                    <StickyContainer>
                     <Tabs tabs={this.state.tabs}
-                          initalPage={'t2'}
-                          renderTabBar={renderTabBar}
+                          onChange={(val)=>{this.changeTab(val)}}
+
                     >
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
-                            Content of first tab
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '250px', backgroundColor: '#fff' }}>
-                            Content of second tab
+                        <List>
+                            {
+                                this.state.data.map((v,i)=>(
+                                        <Item style={{marginBottom:5}} key={i} onClick={()=>{
+                                            this.props.history.push(`${HOST}/messageDetail`);
+                                            sessionStorage.setItem("message",JSON.stringify(v))
+                                        }}>{v.content}</Item>
+                                    )
+                                )
+                            }
+
+                        </List>
+                        <div className="message-box">
+                            <List>
+                                {
+                                    this.state.data.map((v,i)=>(
+                                            <Item style={{marginBottom:5}} key={i} onClick={()=>{
+                                                this.props.history.push(`${HOST}/messageDetail`);
+                                                sessionStorage.setItem("message",JSON.stringify(v))
+                                            }}>{v.content}</Item>
+                                        )
+                                    )
+                                }
+                            </List>
                         </div>
                     </Tabs>
-                </StickyContainer>
+
                 </div>
             </div>
         )

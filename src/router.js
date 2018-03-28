@@ -12,7 +12,10 @@ import NewAddress from "./containers/publicView/addressManage/newAddress/newAddr
 import Message from "./containers/publicView/message/message";
 import TeamManagement from "./containers/publicView/teamManagement/teamManagement"
 import TeamSearch from "./containers/publicView/teamManagement/teamSearch/teamSearch"//团队管理--搜索团队成员
-import AddTeamMember from "./containers/publicView/teamManagement/addTeamMember/addTeamMember"
+import AddTeamMember from "./containers/publicView/teamManagement/addTeamMember/addTeamMember";
+import MessageDetail from "./containers/publicView/message/messageDetail/messageDetail"//消息管理
+import EditAccount from "./containers/publicView/editAccount/editAccount"//修改资料
+import EditPwd from "./containers/publicView/editPwd/editPwd"
 //------------------------------------------客户
 
 import Pay from "./containers/roleCustomer/pay/pay"
@@ -78,6 +81,18 @@ class Router extends Component {
                 {
                     path:`${HOST}/editTeamMember/:id`,
                     component:AddTeamMember
+                },
+                {
+                    path:`${HOST}/messageDetail`,
+                    component:MessageDetail
+                },
+                {
+                    path:`${HOST}/editAccount`,
+                    component:EditAccount
+                },
+                {
+                    path:`${HOST}/editPwd`,
+                    component:EditPwd
                 },
                 //--------------------------------------------------主页面
                 {
@@ -183,13 +198,14 @@ class Router extends Component {
                 }
                 if(response.data.flag === 'SESSION_INVALID'){
                     console.log('失效');
-                    Toast.info("用户身份过期，请重新登陆",1)
+                    Toast.info("用户身份过期，请重新登陆",1);
                     sessionStorage.clear();
                     localStorage.clear();
                     this.props.history.push('/login');
                 }else{
+
                     sessionStorage.setItem('user',JSON.stringify(response.data.data));
-                    this.user = JSON.parse(localStorage.getItem('user'));
+
                     let refrashPath = sessionStorage.getItem("currentPath");
                     if(refrashPath){
                         this.props.history.push(refrashPath)

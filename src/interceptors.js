@@ -17,6 +17,7 @@ axios.interceptors.request.use((config)=>{
 });
 axios.interceptors.response.use((config)=>{
     Toast.hide();
+
     if(config.data.flag === 'SESSION_INVALID'){
         sessionStorage.clear();
         localStorage.clear();
@@ -25,6 +26,8 @@ axios.interceptors.response.use((config)=>{
         window.location.pathname = "/login";
         return
     }
+
+    //sessionStorage.setItem('user',JSON.stringify(config.data.data));
 
     //获取token,验证，跳转
     return config

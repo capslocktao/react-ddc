@@ -91,7 +91,7 @@ class AddVisitRecord extends Component {
         time = convertTime(v.getTime())
     }
     submit(){
-        if(this.state.statusId === ""){
+/*        if(this.state.statusId === ""){
             Toast.info("请选择客户状态",1)
             return
         }else if(this.state.reachContent === ""){
@@ -101,7 +101,7 @@ class AddVisitRecord extends Component {
             Toast.info("请上传拜访图片",1)
             return
 
-        }
+        }*/
         let submitData = {
             planId:this.props.match.params.id,
             status:this.state.statusId,

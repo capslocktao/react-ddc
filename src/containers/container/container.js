@@ -57,7 +57,7 @@ class Container extends Component {
                     component:TeamManagement
                 },
                 {
-                    path:`${HOST}/index/customer`,
+                    path:`${HOST}/index/myCustomer`,
                     name:`客户管理`,
                     icon:"icon-customer",
                     component:CustomerManagement

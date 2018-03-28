@@ -31,7 +31,7 @@ class TeamSearch extends Component {
                     data:res.content,
                     total:res.totalPages
                 });
-                this.props.history.push(this.state.backLink)
+
             }
         });
 
