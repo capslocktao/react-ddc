@@ -1,28 +1,117 @@
 .date-picker-list .am-list-item .am-list-line .am-list-extra {
   flex-basis: initial;
 }
-.tabList{
- width: 100% ;
-  overflow: auto;
-  background: white;
 
-  table{
-    width:800px;
-    tr{
-      th{
-        padding: 0;
-        padding-top:5px;
-        font-size:16px;
-        border-bottom: #a8a8a8 dotted 2px;
-        height:40px;
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+}
+
+.count {
+  margin-top: 5px;
+  width: 100%;
+  background: #FFF;
+  .count_pack {
+    width: 100%;
+    display: flex;
+    flex-flow: nowrap row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    .count_left {
+      width: 8%;
+      font-size: 16px;
+      -webkit-writing-mode: vertical-rl;
+      writing-mode: tb-rl;
+      writing-mode: vertical-rl;
+      text-align: justify;
+      text-align: center;
+    }
+    .count_right {
+      width: 91%;
+      .count_list_pack {
+        width: 100%;
+        overflow-x: auto;
+        .count_list {
+          width: 400px;
+          span {
+            font-size:14px;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+          }
+          li:first-child {
+            width: 100%;
+            span {
+              display: inline-block;
+              font-size: 16px;
+              width: 60px;
+              height: 50px;
+              text-align: center;
+              line-height: 50px;
+            }
+            span:first-child {
+              width: 100px;
+            }
+          }
+          span:first-child {
+            font-size:14px;
+            display: inline-block;
+            width: 100px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+          }
+        }
       }
-      td{
-        padding: 0;
-        height: 40px;
-        font-size:14px;
-        text-align: center;
-        border-bottom: #a8a8a8 dotted 1px;
+      p{
+        padding:5px 10px;
+        text-align: end;
       }
     }
+  }
+}
+.count_num{
+  background: white;
+  font-size: 20px;
+  padding:10px;
+}
+.goods_list {
+  width: 100%;
+  background: white;
+  span {
+    font-size:14px;
+    display: inline-block;
+    width:19%;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+  }
+
+  li:first-child {
+    width: 100%;
+    span {
+      display: inline-block;
+      font-size: 16px;
+      font-weight: 600;
+      width: 19%;
+      height: 50px;
+      text-align: center;
+      line-height: 50px;
+    }
+    span:first-child {
+      width:24%;
+    }
+  }
+  span:first-child {
+    font-size:14px;
+    display: inline-block;
+    width: 24%;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
   }
 }
