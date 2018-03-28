@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {NavBar, Icon, List, Flex, Steps,} from 'antd-mobile';
 import {Link} from 'react-router-dom';
+import convertTime from '../../../../util/convertTime';
 import axios from "axios"
 import "./dateils.less"
 import {HOST, API} from "../../../../const/host";
@@ -90,6 +91,7 @@ class details extends Component {
                             <Steps current={2} direction="horizontal" size="small">{steps}</Steps>
                         </WingBlank>
                     </div>*/}
+
                 {
                     this.state.data ?
                         <div>
@@ -133,20 +135,7 @@ class details extends Component {
                                     </Flex>
                                 </Item>
                             </List>
-                            {/*<List renderHeader={() => '| 时间'}  className="my-list">
-                                    <Item align="middle">
-                                        客户确认时间
-                                    </Item>
-                                    <Item align="middle">
-                                        财务确认时间
-                                    </Item>
-                                    <Item align="middle">
-                                       发货时间
-                                    </Item>
-                                    <Item align="middle">
-                                        确认收货时间
-                                    </Item>
-                                </List>*/}
+
                             {
                                 this.state.data.shipperCode || this.state.data.logisticCode ?
                                     <List renderHeader={() => '| 物流信息'} className="my-list">
@@ -190,6 +179,7 @@ class details extends Component {
                                         : ""
                                 }
 
+
                             </List>
                             < List renderHeader={() => '| 订单信息'} className="my-list">
                                 <Item align="middle">
@@ -229,26 +219,7 @@ class details extends Component {
                         </div>
                         : ""
                 }
-                {/*<List renderHeader={() => '| 用户信息'}  className="my-list">
-                                    <Item align="middle">
-                                        <Flex justify="between">
-                                            <Flex.Item>用户ID</Flex.Item>
-                                            <Flex.Item>ID</Flex.Item>
-                                        </Flex>
-                                    </Item>
-                                    <Item align="middle">
-                                        <Flex justify="between">
-                                            <Flex.Item>用户名</Flex.Item>
-                                            <Flex.Item>ID</Flex.Item>
-                                        </Flex>
-                                    </Item>
-                                    <Item align="middle">
-                                        <Flex justify="between">
-                                            <Flex.Item>手机号</Flex.Item>
-                                            <Flex.Item>ID</Flex.Item>
-                                        </Flex>
-                                    </Item>
-                                </List>*/}
+
                 <List
 
                     onClick={() => {

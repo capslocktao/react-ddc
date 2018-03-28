@@ -13,7 +13,7 @@ import CustomerOrderForm from '../publicView/customerOrderForm/customerOrderForm
 import StockCheck from '../topManager/stockCheck/stockCheck';//库存查询
 import TopUserCenter from '../topManager/topUserCenter/topUserCenter';//库存查询
 
-//分公司（暂无单独页面）
+//分公司
 import BranchUserCenter from '../branchManager/branchUserCenter/branchUserCenter'
 //销售
 import VisitPlan from '../publicView/visitPlan/visitPlan';//拜访计划
