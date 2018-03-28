@@ -200,7 +200,7 @@ class Details extends Component {
                                             <Flex.Item>{this.state.data.orderNo}</Flex.Item>
                                         </Flex>
                                     </Item>
-                                    <Item align="middle">
+                                     <Item align="middle">
                                         <Flex justify="between">
                                             <Flex.Item>下单时间</Flex.Item>
                                             <Flex.Item>{convertTime(this.state.data.createTime)}</Flex.Item>
