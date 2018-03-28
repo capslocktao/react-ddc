@@ -79,7 +79,10 @@ class OrderManagement extends Component {
 
                         }
                         rightContent={
-                                <Link to={`${HOST}/orderManagement/add`}>
+                                <Link key="0" to={`${HOST}/orderManagement/search`}>
+                                    <Icon  type="search" style={{ marginRight: '16px' ,color:"#fff"}} />
+                                </Link>,
+                                <Link key="1" to={`${HOST}/orderManagement/add`}>
                                     <div style={{color:"#fff"}}>新增</div>
                                 </Link>
                         }
