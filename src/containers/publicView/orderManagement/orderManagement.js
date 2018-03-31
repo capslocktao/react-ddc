@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { NavBar,Icon, WingBlank,List,Tabs, WhiteSpace ,Flex } from 'antd-mobile';
+import { NavBar,Icon, Picker,List,Tabs,Flex } from 'antd-mobile';
 import { StickyContainer, Sticky } from 'react-sticky';
 import { Link } from 'react-router-dom';
 import { HOST,API } from '../../../const/host';
@@ -39,9 +39,11 @@ class OrderManagement extends Component {
         super(props);
         this.state = {
            list:"",
-           status:"UNCONFIRMED"
+           status:"UNCONFIRMED",
+
         };
         this.orderTab=this.orderTab.bind(this);
+
     };
     componentDidMount(){
         /*
@@ -102,8 +104,10 @@ class OrderManagement extends Component {
                             {
                                 tab.map(v=>(
                                     <div key={v.status}>
+
                                         <div>
                                             {/*列表循环*/}
+
                                             {
                                                 this.state.list?
                                                     this.state.list.map(v=>(
@@ -120,9 +124,16 @@ class OrderManagement extends Component {
                                                                 className="order-list"
                                                             >
                                                                 {v.orderNo} {v.customerName}
-                                                                <Brief>{v.status}</Brief>
-                                                                <Flex justify="end">
+                                                                <Brief>{v.status}
 
+                                                                </Brief>
+                                                                <Flex justify="end">
+                                                                    {
+                                                                        v.isPay === "0"?
+                                                                            <span style={{color:"red",float:"left",marginRight:10}}>欠款订单</span>
+                                                                            :
+                                                                            ""
+                                                                    }
                                                                     {
                                                                         this.state.status === "ALLSEND" || this.state.status === "COMPLETE"?
                                                                             <Link to={ `${HOST}/logistics/${v.orderId}`} className="option">

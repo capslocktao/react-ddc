@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './myOrder.less'
-import { NavBar,List ,Tabs  } from "antd-mobile";
+import { NavBar,List ,Tabs,Icon  } from "antd-mobile";
 import { StickyContainer, Sticky } from 'react-sticky';
 import {HOST,API} from "../../../const/host";
 import axios from "axios"
@@ -25,6 +25,8 @@ class MyOrder extends Component {
                 { title: '完成',value:"COMPLETE" },
             ],
             data:[],
+
+
         };
         this.changeType = this.changeType.bind(this)
     };
@@ -49,6 +51,12 @@ class MyOrder extends Component {
             });
         });
     }
+    debtStatus(val){
+
+        this.setState({
+            debtStatus:val
+        })
+    }
 
     render() {
         return (
@@ -71,13 +79,14 @@ class MyOrder extends Component {
                                 this.state.tabs?
                                     this.state.tabs.map(v=>
                                         <div key={v.value}>
+
                                             {
                                                 this.state.data.length===0?
                                                     ""
                                                     :
                                                 this.state.data?
                                                     this.state.data.map(v=>(
-                                                        <Item arrow="horizontal"key={v.orderId} multipleLine onClick={() => {this.props.history.push(`${HOST}/myOrder/myOrderDetail/${v.orderId}`)}} extra={v.customerType}>
+                                                        <Item arrow="horizontal" key={v.orderId} multipleLine onClick={() => {this.props.history.push(`${HOST}/myOrder/myOrderDetail/${v.orderId}`)}} extra={v.customerType}>
                                                             <div className="name">
                                                                 <span>订单号：{v.orderNo}</span>
                                                                 <span className="total-price">¥{v.totalGoodsPrice}</span>
@@ -85,6 +94,12 @@ class MyOrder extends Component {
                                                             <Brief>
                                                                 <div className="brief">
                                                                     <span>{v.createTime}</span>
+                                                                    {
+                                                                        v.isPay === "0"?
+                                                                            <span style={{color:"red",float:"right"}}>欠款订单</span>
+                                                                            :
+                                                                            ""
+                                                                    }
                                                                 </div>
                                                             </Brief>
                                                         </Item>

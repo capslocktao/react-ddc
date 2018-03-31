@@ -81,6 +81,12 @@ class PaymentCheck extends Component {
                                                         <Brief>
                                                             <div className="brief">
                                                                 <span>{v.createTime}</span>
+                                                                {
+                                                                    v.isPay === "0"?
+                                                                        <span style={{color:"red",float:"right"}}>欠款订单</span>
+                                                                        :
+                                                                        ""
+                                                                }
                                                             </div>
                                                         </Brief>
                                                     </Item>

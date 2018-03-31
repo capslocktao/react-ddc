@@ -32,6 +32,7 @@ class MyOrderDetail extends Component {
         this.setMarkValue = this.setMarkValue.bind(this)
         this.linkToPreview = this.linkToPreview.bind(this)
         this.confirm = this.confirm.bind(this)
+        this.payDebt = this.payDebt.bind(this)
     };
     componentDidMount(){
         //初始请求订单信息
@@ -162,6 +163,32 @@ class MyOrderDetail extends Component {
         ])
 
 
+    }
+    payDebt(){
+        alert("确认补交欠款吗？","", [
+            { text: '取消', onPress: () => console.log('cancel') },
+            { text: '确认', onPress: () => {
+                    let submitData={
+                        paymentVoucher :this.state.imgUrl.join(","),
+                        id:this.state.data.orderId,
+                        payType:this.state.payType,
+                        status:"COMPLETE"
+                    };
+                    console.log(submitData);
+                    axios.post(`${API}/base/order/pay`, submitData).then(response => {
+                        let res = response.data;
+                        console.log(res);
+                        if (res.result) {
+                            Toast.success("成功", 1);
+                            setTimeout(() => {
+                                this.props.history.push(`${HOST}/index/purchase`)
+                            }, 1000)
+                        } else {
+                            Toast.fail(res.msg, 1);
+                        }
+                    });
+                }},
+        ])
     }
     componentWillUnmount(){
         sessionStorage.setItem("backTo",this.props.match.url)
@@ -502,7 +529,6 @@ class MyOrderDetail extends Component {
                             </WingBlank>
                         </div>
                         <div className="goods-box">
-
                             {
                                 this.state.data.appOrderItemModels.map((v,i)=>
                                     <div key={i} className="goods-item">
@@ -521,7 +547,6 @@ class MyOrderDetail extends Component {
                                     </div>
                                 )
                             }
-
                         </div>
                         <div className="totalPrice-wrapper">
                             <WingBlank>
@@ -551,16 +576,55 @@ class MyOrderDetail extends Component {
                             </Item>
 
                         </List>
-                        <Item arrow="horizontal"  multipleLine onClick={()=>{
-                            this.linkToPreview("paymentVoucher")
-                        }}>
-                            查看付款凭证
-                        </Item>
+                        {
+                            this.state.data.isPay !=="0"?
+                                <Item arrow="horizontal"  multipleLine onClick={()=>{
+                                    this.linkToPreview("paymentVoucher")
+                                }}>
+                                    查看付款凭证
+                                </Item>
+                                :
+                                ""
+                        }
+
                         <Item arrow="horizontal"  multipleLine onClick={()=>{
                             this.linkToPreview("thumbnail")
                         }}>
                             查看发货凭证
                         </Item>
+
+                        {
+                            this.state.data.isPay !=="0"?
+                                ""
+                                :
+                                <div className="upload">
+                                    <WingBlank>
+                                        <div className="upload-title">上传转账凭证(最多3张)</div>
+                                        <ImagePicker
+                                            files={this.state.files}
+                                            onChange={this.onChange}
+                                            onImageClick={(index, fs) => console.log(index, fs)}
+                                            selectable={this.state.files.length < 3}
+                                        />
+                                    </WingBlank>
+                                </div>
+                        }
+                        {
+                            this.state.data.isPay !=="0"?
+                                ""
+                                :
+                                <div className="pay-method">
+                                    {this.state.payMethod.map(i => (
+                                        i.value !== "UNPAID"?
+                                            <RadioItem key={i.value} checked={this.state.payType === i.value} onChange={() => this.changePayType(i.value)}>
+                                                {i.label}
+                                            </RadioItem>
+                                            :
+                                            ""
+                                    ))}
+                                </div>
+                        }
+
                         <div className="mark">
                             <TextareaItem
                                 title="订单备注"
@@ -570,6 +634,14 @@ class MyOrderDetail extends Component {
                                 editable={false}
                             />
                         </div>
+                        {
+                            this.state.data.isPay === "0"?
+                                <WingBlank style={{marginTop:20}}>
+                                    <Button type="primary" onClick={this.payDebt}>补交欠款</Button>
+                                </WingBlank>
+                                :
+                                ""
+                        }
                     </div>;
                     break
             }
