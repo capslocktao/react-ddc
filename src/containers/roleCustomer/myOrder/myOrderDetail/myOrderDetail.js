@@ -165,6 +165,10 @@ class MyOrderDetail extends Component {
 
     }
     payDebt(){
+        if(this.state.files.length === 0){
+            Toast.fail("请上传转账凭证",1);
+            return
+        }
         alert("确认补交欠款吗？","", [
             { text: '取消', onPress: () => console.log('cancel') },
             { text: '确认', onPress: () => {
