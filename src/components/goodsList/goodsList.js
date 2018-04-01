@@ -18,7 +18,6 @@ class GoodsList extends Component {
     };
 
     componentWillMount(){
-
         this.props.data.forEach(v=>{
             this.state.nums.push(1)
         })

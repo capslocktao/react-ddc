@@ -85,11 +85,14 @@ class SendManagement extends Component {
                                                 </div>
                                                 <Brief>
                                                     <div className="brief">
-                                                        <span>{v.customerName}</span>
-                                                        <span>{v.createTime}</span>
+                                                        <div>
+                                                            <span>{v.customerName}</span>
+                                                            <span>{v.createTime}</span>
+
+                                                        </div>
                                                         {
                                                             v.isPay === "0"?
-                                                                <span style={{color:"red"}}>欠款订单</span>
+                                                                <span style={{color:"red",marginRight:0}}>欠款订单</span>
                                                                 :
                                                                 ""
                                                         }

@@ -100,6 +100,12 @@ class MyOrder extends Component {
                                                                             :
                                                                             ""
                                                                     }
+                                                                    {
+                                                                        v.isPay === "1"?
+                                                                            <span style={{color:"red",float:"right"}}>已补交待审核...</span>
+                                                                            :
+                                                                            ""
+                                                                    }
                                                                 </div>
                                                             </Brief>
                                                         </Item>

@@ -44,10 +44,13 @@ class PaymentOrderDetail extends Component {
         sessionStorage.setItem("backTo",this.props.match.url);
         this.props.history.push(`${HOST}/previewImg`)
     }
-    checkPayment(flag){
+    checkPayment(flag,sta){
         let title = "确认通过审核吗?";
         let msg = "请确认收到货款";
         let status = "UNSEND";
+        if(sta){
+            status = "COMPLETE"
+        }
         let toast = "审核成功";
         if(!flag){
             title = "确认不通过吗?";
@@ -171,7 +174,7 @@ class PaymentOrderDetail extends Component {
                                 <div className="pay-method">
                                     <InputItem editable={false} value={`${this.state.status}`} style={{textAlign:"right"}}>订单状态</InputItem>
                                 </div>
-                                <div className="mark">
+                                <div className="mark" style={{marginTop:10}}>
                                     <TextareaItem
                                         title="订单备注"
                                         value={this.state.data.mark}
@@ -190,6 +193,18 @@ class PaymentOrderDetail extends Component {
                                             <Button type="default" onClick={()=>{this.checkPayment(false)}} style={{marginTop:15}}>不通过</Button>
                                         </WingBlank>
                                     </div>
+
+                            }
+                            {
+                                this.state.data.isPay === "1"?
+                                    <div className="submit-btn">
+                                        <WingBlank>
+                                            <Button type="primary" onClick={()=>{this.checkPayment(true,"COMPLETE")}}>审核通过</Button>
+                                            <Button type="default" onClick={()=>{this.checkPayment(false)}} style={{marginTop:15}}>不通过</Button>
+                                        </WingBlank>
+                                    </div>
+                                    :
+                                    ""
 
                             }
 

@@ -175,7 +175,7 @@ class MyOrderDetail extends Component {
                     let submitData={
                         paymentVoucher :this.state.imgUrl.join(","),
                         id:this.state.data.orderId,
-                        payType:this.state.payType,
+                        payType:"UNPAID",
                         status:"COMPLETE"
                     };
                     console.log(submitData);
@@ -613,6 +613,8 @@ class MyOrderDetail extends Component {
                                     </WingBlank>
                                 </div>
                         }
+{/*
+------------------------------------------补交欠款时候暂时不可选支付方式-----------------------------------------
                         {
                             this.state.data.isPay !=="0"?
                                 ""
@@ -627,7 +629,7 @@ class MyOrderDetail extends Component {
                                             ""
                                     ))}
                                 </div>
-                        }
+                        }*/}
 
                         <div className="mark">
                             <TextareaItem

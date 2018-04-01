@@ -65,14 +65,18 @@ class PaymentCheck extends Component {
                           renderTabBar={renderTabBar}
                     >
                         {
-                            this.state.tabs.map(v=>
-                                <div key={v.value} className="payment-check-body">
+                            this.state.tabs.map(k=>
+                                <div key={k.value} className="payment-check-body">
                                     {
                                         this.state.data.length===0?
                                             ""
                                             :
                                             this.state.data?
                                                 this.state.data.map(v=>(
+
+                                                        v.isPay === "0" && k.value !== "COMPLETE"?
+                                                            ""
+                                                            :
                                                     <Item arrow="horizontal"key={v.orderId} multipleLine onClick={() => {this.props.history.push(`${HOST}/paymentOrderDetail/${v.orderId}`)}} extra={v.customerType}>
                                                         <div className="name">
                                                             <span>订单号：{v.orderNo}</span>
@@ -82,8 +86,14 @@ class PaymentCheck extends Component {
                                                             <div className="brief">
                                                                 <span>{v.createTime}</span>
                                                                 {
-                                                                    v.isPay === "0"?
+                                                                    v.isPay === "0" && k.value === "COMPLETE"?
                                                                         <span style={{color:"red",float:"right"}}>欠款订单</span>
+                                                                        :
+                                                                        ""
+                                                                }
+                                                                {
+                                                                    v.isPay === "1" && k.value === "COMPLETE"?
+                                                                        <span style={{color:"red",float:"right"}}>补交欠款待审核</span>
                                                                         :
                                                                         ""
                                                                 }

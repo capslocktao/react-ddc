@@ -102,8 +102,8 @@ class OrderManagement extends Component {
                               }}
                         >
                             {
-                                tab.map(v=>(
-                                    <div key={v.status}>
+                                tab.map(k=>(
+                                    <div key={k.status}>
 
                                         <div>
                                             {/*列表循环*/}
@@ -131,6 +131,12 @@ class OrderManagement extends Component {
                                                                     {
                                                                         v.isPay === "0"?
                                                                             <span style={{color:"red",float:"left",marginRight:10}}>欠款订单</span>
+                                                                            :
+                                                                            ""
+                                                                    }
+                                                                    {
+                                                                        v.isPay === "1"?
+                                                                            <span style={{color:"red",float:"left",marginRight:10}}>已补交待审核</span>
                                                                             :
                                                                             ""
                                                                     }
