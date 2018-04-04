@@ -31,6 +31,7 @@ import AddVisitPlan from "./containers/publicView/visitPlan/addVisitPlan/addVisi
 import Searchs from "./containers/publicView/visitPlan/searchs/searchs"//拜访计划搜索
 import VisitDetail from "./containers/publicView/visitPlan/visitDetail/visitDetail";
 import CustomerDetail from "./containers/publicView/myCustomer/customerDetail/customerDetail";
+import PriceSetting from "./containers/publicView/myCustomer/priceSetting/priceSetting"//进货价格设置
 
 import AddVisitRecord from "./containers/publicView/visitPlan/addVisitPlan/addVisitRecord/addVisitRecord";
 import DataStatistics from "./containers/roleSale/dataStatistics/dataStatistics"//数据分析
@@ -93,6 +94,10 @@ class Router extends Component {
                 {
                     path:`${HOST}/editPwd`,
                     component:EditPwd
+                },
+                {
+                    path:`${HOST}/priceSetting/:id`,//进货价格设置
+                    component:PriceSetting
                 },
                 //--------------------------------------------------主页面
                 {

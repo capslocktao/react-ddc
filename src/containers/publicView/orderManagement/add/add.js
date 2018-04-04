@@ -54,6 +54,7 @@ class add extends Component {
 
         axios.post(`${API}/base/customer/findCustomerName`,{customerName:"no",status:"no"}).then(response=>{
             let res = response.data;
+            console.log(res);
             let arr=[];
             res.map((item,index)=>{
                 // console.log(item,index)
@@ -67,21 +68,7 @@ class add extends Component {
             })
         })
 
-        axios.post(`${API}/base/stockInfo/findAllStockInfo`,{
-            currentPage :1,
-            pageSize : 100
-        }).then(response=>{
-            let res = response.data;
-            console.log(res);
-            // res.map((item)=>{
-            //     item['nums']=1;
-            //     item['num']=1;
-            // })
-            // console.log(res);
-            this.setState({
-                goodsList:res
-            })
-        })
+
     }
     customerWay=(v)=>{
         let name;
@@ -94,6 +81,25 @@ class add extends Component {
         this.setState({
             customerName:name,
             customerId:v
+        },()=>{
+            axios.get(`${API}/base/stockInfo/findAllStockInfo`,{
+                params:{
+                    customerId:this.state.customerId[0],
+                    flag:true
+                }
+
+            }).then(response=>{
+                let res = response.data;
+                console.log(res);
+                // res.map((item)=>{
+                //     item['nums']=1;
+                //     item['num']=1;
+                // })
+                // console.log(res);
+                this.setState({
+                    goodsList:res
+                })
+            })
         })
 
     }

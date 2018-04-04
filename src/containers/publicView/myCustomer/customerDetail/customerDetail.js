@@ -92,7 +92,6 @@ class CustomerDetail extends Component {
                         this.setState({
                             statusName:v.label,
                             status:v.value,
-
                         })
                     }
                 })
@@ -291,6 +290,12 @@ class CustomerDetail extends Component {
                         <Picker data={this.state.statusType} extra={this.state.statusName} cols={1} onOk={(v)=>{this.statusOk(v)}}>
                             <List.Item arrow="horizontal">客户状态</List.Item>
                         </Picker>
+                        {
+                            this.state.status === "SUCCESS"?
+                                <List.Item arrow="horizontal" onClick={()=>{this.props.history.push(`${HOST}/priceSetting/${this.props.match.params.id}`)}}>进货价格设置</List.Item>
+                                :
+                                ""
+                        }
 
                         <List.Item arrow="horizontal"
                             extra={this.state.area}

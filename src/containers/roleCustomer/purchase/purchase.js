@@ -17,7 +17,13 @@ class Purchase extends Component {
         this.submitOrder = this.submitOrder.bind(this)
     };
     componentDidMount(){
-        axios.post(`${API}/base/stockInfo/findAllStockInfo`).then(response=>{
+        axios.get(`${API}/base/stockInfo/findAllStockInfo`,
+            {
+                params:{
+                    customerId:"",
+                    flag:true
+                }
+            }).then(response=>{
             if(response){
                 let res = response.data;
                 this.setState({
