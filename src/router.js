@@ -17,6 +17,7 @@ import MessageDetail from "./containers/publicView/message/messageDetail/message
 import EditAccount from "./containers/publicView/editAccount/editAccount"//修改资料
 import EditPwd from "./containers/publicView/editPwd/editPwd"
 //------------------------------------------客户
+import Recharge from "./containers/roleCustomer/recharge/recharge"
 
 import Pay from "./containers/roleCustomer/pay/pay"
 import MyOrderDetail from "./containers/roleCustomer/myOrder/myOrderDetail/myOrderDetail"
@@ -116,6 +117,10 @@ class Router extends Component {
                 {
                     path:`${HOST}/myOrder/myOrderDetail/:id`,
                     component:MyOrderDetail
+                },
+                {
+                    path:`${HOST}/recharge`,
+                    component:Recharge
                 },
 
 

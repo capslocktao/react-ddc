@@ -68,6 +68,11 @@ class CustomerUserCenter extends Component {
                         }
                         }>消息提醒</Item>
                         <Item arrow="horizontal" onClick={() => {
+                            //sessionStorage.setItem("backTo",this.props.match.url);
+                            this.props.history.push(`${HOST}/recharge`)
+                            }
+                        }>余额充值</Item>
+                        <Item arrow="horizontal" onClick={() => {
                             sessionStorage.setItem("backTo",this.props.match.url);
                             this.props.history.push(`${HOST}/editPwd`)
                         }
