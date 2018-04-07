@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {NavBar, Icon, DatePicker, List, Tabs, WhiteSpace, Badge, Flex} from "antd-mobile";
+import {NavBar, Icon, DatePicker, List, Tabs} from "antd-mobile";
 import axios from 'axios';
 import {API, HOST} from '../../../const/host';
 import "./dataStatistics.less";
@@ -45,7 +45,7 @@ class Client extends Component {
                 <div className="count">
                 {
                     Object.keys(this.state.list).map((key) => (
-                        <div className="count_pack">
+                        <div className="count_pack" key={key}>
                             <div className="count_left">
                                 {key}
                             </div>
@@ -211,7 +211,7 @@ class DataStatistics extends Component {
                         mode="dark"
                         icon={<Icon type="left"/>}
                         onLeftClick={() => {
-                            this.props.history.push(`${HOST}/index/salesUserCenter`)
+                            this.props.history.push(sessionStorage.getItem("backTo"))
                         }}
                     >
                         数据统计
@@ -220,7 +220,7 @@ class DataStatistics extends Component {
                 <List className="date-picker-list" style={{backgroundColor: 'white'}}>
                     <DatePicker
                         mode="date"
-                        title="Select Date"
+                        title="选择日期"
                         extra="Optional"
                         value={this.state.searchTimed}
                         onChange={this.searchClick}
@@ -229,7 +229,7 @@ class DataStatistics extends Component {
                     </DatePicker>
                     <DatePicker
                         mode="date"
-                        title="Select Date"
+                        title="选择日期"
                         extra="Optional"
                         value={this.state.endTimed}
                         onChange={this.endClick}

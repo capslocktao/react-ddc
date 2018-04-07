@@ -35,7 +35,7 @@ import CustomerDetail from "./containers/publicView/myCustomer/customerDetail/cu
 import PriceSetting from "./containers/publicView/myCustomer/priceSetting/priceSetting"//进货价格设置
 
 import AddVisitRecord from "./containers/publicView/visitPlan/addVisitPlan/addVisitRecord/addVisitRecord";
-import DataStatistics from "./containers/roleSale/dataStatistics/dataStatistics"//数据分析
+import DataStatistics from "./containers/publicView/dataStatistics/dataStatistics"//数据分析
 
 //-------------------------------------------财务
 import PaymentOrderDetail from "./containers/roleAccountant/paymentCheck/paymentOederDetail/paymentOederDetail";

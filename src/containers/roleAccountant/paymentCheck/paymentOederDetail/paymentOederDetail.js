@@ -200,7 +200,7 @@ class PaymentOrderDetail extends Component {
                                     <div className="submit-btn">
                                         <WingBlank>
                                             <Button type="primary" onClick={()=>{this.checkPayment(true,"COMPLETE")}}>审核通过</Button>
-                                            <Button type="default" onClick={()=>{this.checkPayment(false)}} style={{marginTop:15}}>不通过</Button>
+                                            {/*<Button type="default" onClick={()=>{this.checkPayment(false)}} style={{marginTop:15}}>不通过</Button>*/}
                                         </WingBlank>
                                     </div>
                                     :

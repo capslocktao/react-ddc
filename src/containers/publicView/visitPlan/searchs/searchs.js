@@ -18,7 +18,9 @@ class Searchs extends Component {
 //搜索
     submit(value){
         let customerName = value;
-        axios.post(`${API}/base/visitPlan/findAll`,{customerName}).then((response)=>{
+        axios.get(`${API}/base/visitPlan/findAll`,{
+            params:{customerName}
+        }).then((response)=>{
             console.log(response.data)
             let res = response.data;
             this.setState({
@@ -27,46 +29,57 @@ class Searchs extends Component {
         })
 
     }
+    customerType(type){
+        switch (type){
+            case "UNEXECUTED":
+                return "未执行";
+                break;
+            case "UNEXECUTED":
+                return "已执行";
+                break;
+            case "SUCCESS":
+                return "签单";
+                break;
+        }
+    }
+
 
     render() {
         return (
-            <div className="sub-title">
-                <div className="visit-plan" >
-                    <div className="visit-smile">
-                        <NavBar
-                            mode="dark"
-                            icon={<Icon type="left" />}
-                            onLeftClick={() => {this.props.history.push(`../index/visitPlan`)}}
-                            rightContent={
-                                <Link to={`${HOST}/addVisitPlan`} style={{color:"white"}}>
-                                    <Icon key="1" type="" />
-                                </Link>
-                            }
-                        >搜索</NavBar>
-                    </div>
-
+            <div className="visit-search">
+                <div className="visit-header">
+                    <NavBar
+                        mode="dark"
+                        icon={<Icon type="left" />}
+                        onLeftClick={() => {this.props.history.push(`../index/visitPlan`)}}
+                        rightContent={
+                            <Link to={`${HOST}/addVisitPlan`} style={{color:"white"}}>
+                                <Icon key="1" type="" />
+                            </Link>
+                        }
+                    >搜索</NavBar>
                 </div>
-                <SearchBar placeholder="点击查询"
+
+                <SearchBar placeholder="必须输入客户的全名"
                            ref={ref => this.autoFocusInst = ref}
                            onSubmit={(value)=>{this.submit(value)}}
+                           style={{marginTop:45}}
                 />
                 <WhiteSpace />
                 {
                     this.state.content?
                         this.state.content.map((v=>
-                                    <Link to={`${HOST}/visitDetail/${v.id}`} key={v.id}>
-                                        <div className="goods-item ">
-                                            <WingBlank className="big-title">
-                                                <div className ="title" >
-                                                    <p>客户名称：{v.customerName}</p>
-                                                    <p>[客户]：{v.status}</p>
-                                                </div>
-                                                <div className="next-text">
-                                                    <p>{v.visitTime}</p>
-                                                </div>
-                                            </WingBlank>
-                                        </div>
-                                    </Link>
+                            <Link to={`${HOST}/visitDetail/${v.id}`} key={v.id} className="goods-item">
+                                <WingBlank className="goods-item-inner">
+                                    <div className ="title">
+                                        <p>客户名称：{v.customerName}</p>
+                                        <p>执行阶段：{this.customerType(v.status)}</p>
+                                    </div>
+                                    <div className="visit-time">
+                                        {v.date}
+                                    </div>
+                                </WingBlank>
+                            </Link>
                             )
                         )
                         :""

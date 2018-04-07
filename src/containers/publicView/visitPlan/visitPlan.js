@@ -17,7 +17,13 @@ class VisitPlan extends Component {
     };
     componentDidMount(){
 
-        axios.post(`${API}/base/visitPlan/findAll`,{customerName:""}).then((response)=>{
+        axios.get(`${API}/base/visitPlan/findAll`,
+            {
+                params:{
+                    customerName:""
+                }
+            }
+            ).then((response)=>{
             let res = response.data;
             this.setState({
                 content:res
@@ -33,31 +39,34 @@ class VisitPlan extends Component {
             case "UNEXECUTED":
                 return "已执行";
                 break;
+            case "SUCCESS":
+                return "签单";
+                break;
         }
     }
     render() {
         return (
             <div className="visit-plan" >
-                <div className="visit-smile">
-                <NavBar
-                    mode="dark"
-                    leftContent={
-                        <Link to={`${HOST}/searchs`}>
-                            <Icon key="0" type="search" style={{ marginRight: '16px',color:"white" }} />
-                        </Link>
-                    }
-                    rightContent={
-                        <Link to={`${HOST}/addVisitPlan`} style={{color:"white"}}>
-                        <Icon key="1" type="" />添加
-                        </Link>
-                    }
-                >拜访计划</NavBar>
+                <div className="visit-header">
+                    <NavBar
+                        mode="dark"
+                        leftContent={
+                            <Link to={`${HOST}/searchs`}>
+                                <Icon key="0" type="search" style={{ marginRight: '16px',color:"white" }} />
+                            </Link>
+                        }
+                        rightContent={
+                            <Link to={`${HOST}/addVisitPlan`} style={{color:"white"}}>
+                            <Icon key="1" type="" />添加
+                            </Link>
+                        }
+                    >拜访计划</NavBar>
                 </div>
                 <List>
                     {
                         this.state.content?
                             this.state.content.map((v=>
-                                <Link to={`${HOST}/visitDetail/${v.id}`} key={v.id}>
+                                <Link to={`${HOST}/visitDetail/${v.id}`} key={v.id} style={{marginBottom:20}}>
                                     <WingBlank style={{marginBottom:5}}>
                                         <Item className="goods-item " extra={v.date} arrow="horizontal">
                                             客户名称：{v.customerName}
